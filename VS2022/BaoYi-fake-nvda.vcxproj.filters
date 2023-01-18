@@ -23,5 +23,8 @@
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\nvda.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
