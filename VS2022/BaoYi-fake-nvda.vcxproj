@@ -25,6 +25,9 @@
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
     <ClInclude Include="..\nvda.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dll.def" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -88,6 +91,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"</Command>
@@ -111,6 +115,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"</Command>
@@ -130,6 +135,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(TargetDir)"</Command>
@@ -153,6 +159,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(TargetDir)"</Command>
