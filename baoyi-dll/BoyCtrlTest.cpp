@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 #include <Windows.h>
-#include "../BoyCtrl/BoyCtrl.h"
+#include "BoyCtrl.h"
 
 using namespace std;
 
