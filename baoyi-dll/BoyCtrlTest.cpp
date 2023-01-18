@@ -1,6 +1,4 @@
 // BoyCtrlTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -9,7 +7,8 @@
 
 using namespace std;
 
-void __stdcall speakCompleteCallback()
+
+void __stdcall speakCompleteCallback(int reason)
 {
     MessageBeep(0xffffffff);
 }
@@ -85,10 +84,10 @@ int main()
         {
             wostringstream oss;
             oss << i << L"使用独立语音朗读，打断模式，有完成通知";
-            err = speakFunc(oss.str().c_str(), true, false, speakCompleteCallback);
+            err = speakFunc(oss.str().c_str(), true, false, true, speakCompleteCallback);
         }
         else
-            err = speakU8Func(u8"朗读字符串使用UTF-8", true, false, speakCompleteCallback);
+            err = speakU8Func(u8"朗读字符串使用UTF-8", true, false, true, speakCompleteCallback);
         if (err != e_bcerr_success)
         {
             cerr << "error = " << err << endl;
