@@ -183,6 +183,65 @@ error_status_t __stdcall nvdaController_brailleMessage(const wchar_t* message)
 #pragma endregion
 
 
+#ifndef BUILD_EXE
+/**
+ * @brief DLL 主函数
+ * @param hinstDLL handle to DLL module
+ * @param fdwReason reason for calling function
+ * @param __lpvReserved reserved
+ * @return 
+*/
+BOOL WINAPI DllMain(
+    HINSTANCE hinstDLL,
+    DWORD fdwReason,
+    LPVOID __lpvReserved)
+{
+    std::cout
+        << "[DllMain] BaoYi Dll API Version: " << BOY_DLL_VERSION << "\n"
+        << "[DllMain] Compiled at: " << __DATE__ << " " << __TIME__
+        << std::endl;
+
+    // 派发调用原因
+    switch (fdwReason)
+    {
+    case DLL_PROCESS_ATTACH:
+        {
+            // Initialize once for each new process.
+            bool has_error = loadBaoYiDll();
+            if (has_error) {
+                // Return FALSE to fail DLL load.
+                return FALSE;
+            }
+        }
+        break;
+
+    case DLL_THREAD_ATTACH:
+        // Do thread-specific initialization.
+        break;
+
+    case DLL_THREAD_DETACH:
+        // Do thread-specific cleanup.
+        break;
+
+    case DLL_PROCESS_DETACH:
+        {
+            if (__lpvReserved != nullptr)
+            {
+                // do not do cleanup if process termination scenario
+                break; 
+            }
+
+            // Perform any necessary cleanup.
+            FreeLibrary(dllHandle);
+        }
+        break;
+    }
+
+    return TRUE;
+}
+
+#else  // defined( BUILD_EXE )
+/// exe 主函数
 int main()
 {
     std::cout 
@@ -198,3 +257,4 @@ int main()
     std::cout << "Hello World!\n";
     return EXIT_SUCCESS;
 }
+#endif // BUILD_EXE
