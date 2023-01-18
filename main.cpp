@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#include "nvda.h"
+#include <iostream>
 #include "BoyCtrl.h"
 #include <Windows.h>
 
@@ -23,6 +24,14 @@ BoyCtrlUninitializeFunc boyCtrlUninitialize;
 BoyCtrlSpeakFunc boyCtrlSpeak;
 BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
 BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
+
+// -- 参数常量
+/// false=使用读屏通道，true=使用独立通道
+const bool SPEAK_WITH_SLAVE = true;
+/// 是否排队朗读
+const bool SPEAK_APPEND = false;
+/// 是否允许用户打断.使用读屏通道时该参数被忽略
+const bool SPEAK_ALLOW_BREAK = true;
 
 
 /// 加载函数指针
@@ -106,6 +115,70 @@ bool loadBaoYiDll()
 void __stdcall speakCompleteCallback(int reason)
 {
     return;
+}
+#pragma endregion
+
+
+#pragma region DLL 导出函数实现
+/// 返回值转换：BoyCtrlError => error_status_t
+error_status_t convertBoyCtrlError(BoyCtrlError err)
+{
+    switch (err)
+    {
+    case e_bcerr_success:
+        return RPC_S_OK;
+    case e_bcerr_fail:
+        return RPC_S_CALL_FAILED;
+    case e_bcerr_arg:
+        return RPC_S_INVALID_ARG;
+    case e_bcerr_unavailable:
+        return RPC_S_CANNOT_SUPPORT;
+
+    default:
+        return RPC_S_CALL_FAILED;
+    }
+}
+
+error_status_t __stdcall nvdaController_testIfRunning()
+{
+    if (nullptr == dllHandle)
+    {
+        return RPC_S_CALL_FAILED;
+    }
+    else
+    {
+        return RPC_S_OK;
+    }
+}
+
+error_status_t __stdcall nvdaController_speakText(const wchar_t* text)
+{
+#ifdef _DEBUG
+    std::wcout << "[nvdaController_speakText] "
+        << "text=" << text
+        << std::endl;
+#endif // def _DEBUG
+
+    auto err = boyCtrlSpeak(text, SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK, speakCompleteCallback);
+
+#ifdef _DEBUG
+    std::wcout << "[nvdaController_speakText] "
+        << "ret err=" << err
+        << std::endl;
+#endif // def _DEBUG
+
+    return convertBoyCtrlError(err);
+}
+
+error_status_t __stdcall nvdaController_cancelSpeech()
+{
+    auto err = boyCtrlStopSpeaking(SPEAK_WITH_SLAVE);
+    return convertBoyCtrlError(err);
+}
+
+error_status_t __stdcall nvdaController_brailleMessage(const wchar_t* message)
+{
+    return RPC_S_CANNOT_SUPPORT;
 }
 #pragma endregion
 
