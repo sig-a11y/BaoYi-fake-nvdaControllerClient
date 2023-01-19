@@ -5,9 +5,23 @@
 #include <Windows.h>
 #include "loguru.hpp"
 #include <cassert>
+#include <pathcch.h>
+#pragma comment(lib, "pathcch.lib")
+#include <Shlwapi.h>
+#pragma comment(lib, "shlwapi.lib")
+#include <vector>
+#include <stdio.h>
+#include <stdio.h>
 
 
 #pragma region 常量及全局变量定义
+/// 允许的长路径长度
+const int PATH_NO_LIMIT_SIZE = 1024;
+/// DLL 路径
+TCHAR DLL_PATH[MAX_PATH];
+/// DLL 所在文件夹路径
+TCHAR DLL_DIR_PATH[MAX_PATH];
+
 /// 保益 DLL 版本
 const LPCSTR BOY_DLL_VERSION = "v1.5.2";
 
@@ -312,6 +326,44 @@ error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
 
 #ifndef BUILD_EXE
 /**
+ * @brief 获取并保存 DLL 所在文件夹路径.
+ * @param hinstDLL DLL 实例句柄
+*/
+void saveDllDirPath(HINSTANCE hinstDLL)
+{
+    // 获取 DLL 完整路径
+    GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
+
+    // -- 打印完整路径
+    size_t i;
+    char errMsg[PATH_NO_LIMIT_SIZE];
+    wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, DLL_PATH, (size_t)MAX_PATH - 1);
+    DLOG_F(INFO, "DLL_PATH[]: %s", errMsg);
+
+    // -- 拆分路径
+    std::wstring filename;
+    /// 盘符
+    std::vector<wchar_t> disk(8);
+    /// 层级路径（不含盘符、最终文件名）
+    std::vector<wchar_t> dirname(1024);
+    filename = DLL_PATH;
+    _wsplitpath_s(
+        filename.c_str(),
+        disk.data(), _MAX_DRIVE,
+        dirname.data(), _MAX_DIR,
+        nullptr, 0,
+        nullptr, 0
+    );
+
+    // 拼接文件夹路径
+    _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
+    // -- 打印文件夹路径
+    char errMsg2[PATH_NO_LIMIT_SIZE];
+    wcstombs_s(&i, errMsg2, (size_t)PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, (size_t)MAX_PATH - 1);
+    DLOG_F(INFO, "DLL_DIR_PATH[]: %s", errMsg2);
+}
+
+/**
  * @brief DLL 主函数
  * @param hinstDLL handle to DLL module
  * @param fdwReason reason for calling function
@@ -335,6 +387,8 @@ BOOL WINAPI DllMain(
             DLOG_F(INFO, "loguru init.");
             DLOG_F(INFO, "BaoYi Dll API Version: %s", BOY_DLL_VERSION);
             DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
+
+            saveDllDirPath(hinstDLL);
         }
         break;
 
