@@ -4,6 +4,7 @@
 #include <sstream>
 #include <Windows.h>
 #include "loguru.hpp"
+#include <cassert>
 
 
 #pragma region 加载保益 DLL
@@ -215,7 +216,9 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         if (has_error) {
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
+        assert(nullptr != boyCtrlSpeak);
     }
+
     auto err = boyCtrlSpeak(text, SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK, speakCompleteCallback);
 
 #ifdef _DEBUG
@@ -235,6 +238,7 @@ error_status_t __stdcall cancelSpeech_impl()
         if (has_error) {
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
+        assert(nullptr != boyCtrlStopSpeaking);
     }
 
     auto err = boyCtrlStopSpeaking(SPEAK_WITH_SLAVE);
