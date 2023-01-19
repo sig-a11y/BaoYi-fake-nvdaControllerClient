@@ -1,6 +1,7 @@
 ﻿#include "nvda.h"
 #include "BoyCtrl.h"
 #include <iostream>
+#include <sstream>
 #include <Windows.h>
 #include "loguru.hpp"
 
@@ -35,45 +36,66 @@ const bool SPEAK_APPEND = false;
 const bool SPEAK_ALLOW_BREAK = true;
 
 
+/// 释放 DLL
+void freeDll()
+{
+    if (nullptr != dllHandle)
+    {
+        bool freeRet = FreeLibrary(dllHandle);
+        DLOG_F(INFO, "FreeLibrary ret=%d", freeRet);
+    }
+}
+
 /// 加载函数指针
 FARPROC loadFunctionPtr(_In_ LPCSTR lpProcName)
 {
+    std::stringstream eout;
+
     if (nullptr == dllHandle)
     {
-        std::cerr << "[loadFunctionPtr] "
+        eout.clear();
+        eout << "[loadFunctionPtr] "
             << "DLL dllHandle==nullptr. "
             << "DLL 句柄为空。"
             << std::endl;
+        DLOG_F(INFO, eout.str().c_str());
         return nullptr;
     }
 
     auto funcHandle = GetProcAddress(dllHandle, lpProcName);
     if (!funcHandle)
     {
-        std::cerr << "[loadFunctionPtr] "
+        eout.clear();
+        eout << "[loadFunctionPtr] "
             << "Failed to get '" << lpProcName << "'. " 
             << "获取函数指针失败：'" << lpProcName << "'" 
             << std::endl;
-        FreeLibrary(dllHandle);
+        DLOG_F(INFO, eout.str().c_str());
+        freeDll();
         return nullptr;
     }
 
     return funcHandle;
 }
 
+
 /// 加载 DLL 及导入函数
 bool loadBaoYiDll()
 {
+    std::stringstream eout;
+
     // -- 加载 DLL
     dllHandle = LoadLibrary(DLL_NAME);
     if (!dllHandle)
     {
-        std::wcout 
-            << "[loadBaoYiDll] Failed to load " << DLL_NAME << ". "
-            << "尝试加载 " << DLL_NAME << " 失败。"
+        // TODO: 打印错误详细信息。打印实际的 dll 名，处理 wstring => string
+        eout.clear();
+        eout
+            << "[loadBaoYiDll] Failed to load DLL. "
+            << "尝试加载 DLL 失败。"
             << "错误原因为：" << GetLastError()
             << std::endl;
-        DLOG_F(INFO, "GetLastError() = %d", GetLastError());
+        DLOG_F(INFO, eout.str().c_str());
         return EXIT_FAILURE;
     }
 
@@ -94,18 +116,22 @@ bool loadBaoYiDll()
     auto err = boyCtrlInitialize(DLL_LOG_NAME);
     if (err != e_bcerr_success)
     {
-        std::cerr << "[loadBaoYiDll] "
+        eout.clear();
+        eout << "[loadBaoYiDll] "
             << "Initialize failed. "
             << "初始化失败，调用返回值为：" << err 
             << std::endl;
-        FreeLibrary(dllHandle);
+        DLOG_F(INFO, eout.str().c_str());
+        freeDll();
         return EXIT_FAILURE;
     }
 
-    std::cout << "[loadBaoYiDll] "
+    eout.clear();
+    eout << "[loadBaoYiDll] "
         << "API Ready! " 
         << "DLL API 初始化成功。"
         << std::endl;
+    DLOG_F(INFO, eout.str().c_str());
     return EXIT_SUCCESS;
 }
 
@@ -153,11 +179,14 @@ void initDllIfNull()
 
 error_status_t __stdcall nvdaController_testIfRunning()
 {
-    initDllIfNull();
-
     if (nullptr == dllHandle)
     {
-        return RPC_S_CALL_FAILED;
+        DLOG_F(INFO, "nullptr == dllHandle: trying to loadBaoYiDll()...");
+        bool has_error = loadBaoYiDll();
+        if (has_error) {
+            return RPC_X_SS_CONTEXT_MISMATCH;
+        }
+        DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%d", dllHandle);
     }
     else
     {
@@ -173,6 +202,13 @@ error_status_t __stdcall nvdaController_speakText(const wchar_t* text)
         << std::endl;
 #endif // def _DEBUG
 
+    if (nullptr == boyCtrlSpeak)
+    {
+        bool has_error = loadBaoYiDll();
+        if (has_error) {
+            return RPC_X_SS_CONTEXT_MISMATCH;
+        }
+    }
     auto err = boyCtrlSpeak(text, SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK, speakCompleteCallback);
 
 #ifdef _DEBUG
@@ -186,6 +222,14 @@ error_status_t __stdcall nvdaController_speakText(const wchar_t* text)
 
 error_status_t __stdcall nvdaController_cancelSpeech()
 {
+    if (nullptr == boyCtrlStopSpeaking)
+    {
+        bool has_error = loadBaoYiDll();
+        if (has_error) {
+            return RPC_X_SS_CONTEXT_MISMATCH;
+        }
+    }
+
     auto err = boyCtrlStopSpeaking(SPEAK_WITH_SLAVE);
     return convertBoyCtrlError(err);
 }
@@ -210,11 +254,6 @@ BOOL WINAPI DllMain(
     DWORD fdwReason,
     LPVOID __lpvReserved)
 {
-    std::cout
-        << "[DllMain] BaoYi Dll API Version: " << BOY_DLL_VERSION << "\n"
-        << "[DllMain] Compiled at: " << __DATE__ << " " << __TIME__
-        << std::endl;
-
     // 派发调用原因
     switch (fdwReason)
     {
@@ -244,9 +283,9 @@ BOOL WINAPI DllMain(
                 break; 
             }
 
-            DLOG_F(INFO, "Perform any necessary cleanup.");
             // Perform any necessary cleanup.
-            FreeLibrary(dllHandle);
+            DLOG_F(INFO, "Perform any necessary cleanup.");
+            freeDll();
         }
         break;
     }
