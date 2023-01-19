@@ -177,7 +177,7 @@ void initDllIfNull()
     }
 }
 
-error_status_t __stdcall nvdaController_testIfRunning()
+error_status_t __stdcall testIfRunning_impl()
 {
     if (nullptr == dllHandle)
     {

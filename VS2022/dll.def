@@ -1,6 +1,6 @@
 LIBRARY
 EXPORTS
-	nvdaController_brailleMessage   @1
+	nvdaController_brailleMessage	@1
 	nvdaController_cancelSpeech     @2
 	nvdaController_speakText        @3
-	nvdaController_testIfRunning    @4
+	nvdaController_testIfRunning = testIfRunning_impl   @4

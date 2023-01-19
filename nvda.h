@@ -18,7 +18,7 @@ extern "C" {
  * @brief 检查读屏器是否在运行
  * @return 错误码
 */
-NVDA_API error_status_t __stdcall nvdaController_testIfRunning();
+NVDA_API error_status_t __stdcall testIfRunning_impl();
 
 /**
  * @brief 向读屏器输出文本
