@@ -19,12 +19,12 @@ const LPCWSTR DLL_NAME = L"BoyCtrl.dll";
 const LPCWSTR DLL_LOG_NAME = L"boyCtrl.log";
 
 /// DLL 句柄
-HMODULE dllHandle;
-BoyCtrlInitializeFunc boyCtrlInitialize;
-BoyCtrlUninitializeFunc boyCtrlUninitialize;
-BoyCtrlSpeakFunc boyCtrlSpeak;
-BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
-BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
+static HMODULE dllHandle;
+static BoyCtrlInitializeFunc boyCtrlInitialize;
+static BoyCtrlUninitializeFunc boyCtrlUninitialize;
+static BoyCtrlSpeakFunc boyCtrlSpeak;
+static BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
+static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
 
 // -- 参数常量
 /// false=使用读屏通道，true=使用独立通道
@@ -141,8 +141,20 @@ error_status_t convertBoyCtrlError(BoyCtrlError err)
     }
 }
 
+/// 单例模式。尝试在第一次使用时加载 DLL
+void initDllIfNull()
+{
+    if (nullptr == dllHandle)
+    {
+        DLOG_F(INFO, "nullptr == dllHandle: start to loadBaoYiDll()...");
+        loadBaoYiDll();
+    }
+}
+
 error_status_t __stdcall nvdaController_testIfRunning()
 {
+    initDllIfNull();
+
     if (nullptr == dllHandle)
     {
         return RPC_S_CALL_FAILED;
@@ -208,17 +220,11 @@ BOOL WINAPI DllMain(
     {
     case DLL_PROCESS_ATTACH:
         {
+            // Initialize once for each new process.
             loguru::add_file("nvda.log", loguru::Append, loguru::Verbosity_INFO);
             DLOG_F(INFO, "loguru init.");
             DLOG_F(INFO, "BaoYi Dll API Version: %s", BOY_DLL_VERSION);
             DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
-            // Initialize once for each new process.
-            bool has_error = loadBaoYiDll();
-            if (has_error) {
-                // Return FALSE to fail DLL load.
-                DLOG_F(INFO, "Return FALSE to fail DLL load.");
-                return FALSE;
-            }
         }
         break;
 
