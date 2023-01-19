@@ -200,7 +200,7 @@ error_status_t __stdcall testIfRunning_impl()
 {
     if (nullptr == dllHandle)
     {
-        DLOG_F(INFO, "nullptr == dllHandle: trying to loadBaoYiDll()...");
+        DLOG_F(INFO, "[testIfRunning_impl] nullptr == dllHandle: trying to loadBaoYiDll()...");
         bool has_error = loadBaoYiDll();
         if (has_error) {
             DLOG_F(INFO, "[testIfRunning_impl] loadBaoYiDll() load error!");
@@ -208,7 +208,7 @@ error_status_t __stdcall testIfRunning_impl()
         }
     }
 
-    DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%x", dllHandle);
+    DLOG_F(INFO, "[testIfRunning_impl] loadBaoYiDll() load finished. dllHandle=%x", dllHandle);
     assert(nullptr != dllHandle);
     return RPC_S_OK;
 }
