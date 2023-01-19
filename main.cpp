@@ -220,7 +220,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
     return convertBoyCtrlError(err);
 }
 
-error_status_t __stdcall nvdaController_cancelSpeech()
+error_status_t __stdcall cancelSpeech_impl()
 {
     if (nullptr == boyCtrlStopSpeaking)
     {

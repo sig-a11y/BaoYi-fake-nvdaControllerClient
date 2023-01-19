@@ -31,7 +31,7 @@ NVDA_API error_status_t __stdcall speakText_impl(const wchar_t* text);
  * @brief 静音当前输出
  * @return 错误码
 */
-NVDA_API error_status_t __stdcall nvdaController_cancelSpeech();
+NVDA_API error_status_t __stdcall cancelSpeech_impl();
 
 /**
  * @brief 【暂不支持】输出盲文
