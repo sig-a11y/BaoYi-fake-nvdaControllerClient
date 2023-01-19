@@ -78,17 +78,18 @@ void loadIni()
 {
     DLOG_F(INFO, "[loadIni] begin to load ini...");
 
-    int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, INI_NAME);
+    // ==== 读取 ini 配置
+    int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
     SPEAK_WITH_SLAVE = 0 != slave;
-    DLOG_F(INFO, "[loadIni]     SPEAK_WITH_SLAVE=%d", SPEAK_WITH_SLAVE);
+    DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", slave, SPEAK_WITH_SLAVE);
 
-    int append = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_APPEND, 1, INI_NAME);
+    int append = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_APPEND, 1, iniPath);
     SPEAK_APPEND = 0 != append;
-    DLOG_F(INFO, "[loadIni]     SPEAK_APPEND=%d", SPEAK_APPEND);
+    DLOG_F(INFO, "[loadIni]     append=%d; SPEAK_APPEND=%d", append, SPEAK_APPEND);
 
-    int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, INI_NAME);
+    int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, iniPath);
     SPEAK_ALLOW_BREAK = 0 != allowBreak;
-    DLOG_F(INFO, "[loadIni]     SPEAK_ALLOW_BREAK=%d", SPEAK_ALLOW_BREAK);
+    DLOG_F(INFO, "[loadIni]     allowBreak=%d; SPEAK_ALLOW_BREAK=%d", allowBreak, SPEAK_ALLOW_BREAK);
 
     DLOG_F(INFO, "[loadIni] load ini finished.");
 }
