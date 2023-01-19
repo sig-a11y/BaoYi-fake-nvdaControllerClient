@@ -90,7 +90,7 @@ FARPROC loadFunctionPtr(_In_ LPCSTR lpProcName)
         return nullptr;
     }
 
-    DLOG_F(INFO, "[loadFunctionPtr] ret: funcHandle=%x", dllHandle);
+    DLOG_F(INFO, "[loadFunctionPtr] ret: funcHandle=%x", funcHandle);
     return funcHandle;
 }
 
