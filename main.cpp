@@ -194,12 +194,12 @@ error_status_t __stdcall testIfRunning_impl()
         if (has_error) {
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
+
         DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%d", dllHandle);
     }
-    else
-    {
-        return RPC_S_OK;
-    }
+
+    assert(nullptr != dllHandle);
+    return RPC_S_OK;
 }
 
 error_status_t __stdcall speakText_impl(const wchar_t* text)
