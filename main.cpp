@@ -77,7 +77,32 @@ bool SPEAK_ALLOW_BREAK = true;
 void loadIni()
 {
     DLOG_F(INFO, "[loadIni] begin to load ini...");
+    /// 输出消息长度
+    size_t i;
+    /// log 消息
+    char errMsg[PATH_NO_LIMIT_SIZE];
+    /// ini 路径
+    //TCHAR iniPath[PATH_NO_LIMIT_SIZE] = L"E:\\game\\ShadowRine_FullVoice\\朗读配置.ini";
+    TCHAR iniPath[PATH_NO_LIMIT_SIZE];
 
+    // ==== 拼接 ini 完整路径，尝试加载
+    // TODO: 显式构造长路径 "\\?\"
+    PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
+    wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
+    DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
+    bool exist = PathFileExists(iniPath);
+    DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);
+
+    // 拼接的路径不存在，尝试直接读取 ini
+    if (!exist)
+    {
+        PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
+        wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
+        DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
+        exist = PathFileExists(iniPath);
+        DLOG_F(INFO, "[loadIni] INI_NAME Exists=%d", exist);
+    }
+    
     // ==== 读取 ini 配置
     int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
     SPEAK_WITH_SLAVE = 0 != slave;
