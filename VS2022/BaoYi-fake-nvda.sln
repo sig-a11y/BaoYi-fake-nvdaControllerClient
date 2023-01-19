@@ -7,6 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaoYi-fake-nvda", "BaoYi-fa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BoyCtrlTest", "BoyCtrlTest\BoyCtrlTest.vcxproj", "{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NvdaTest", "NvdaTest\NvdaTest.vcxproj", "{DB34779A-3225-4D69-9799-370A1719788B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52} = {0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +36,14 @@ Global
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Release|x64.Build.0 = Release|x64
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Release|x86.ActiveCfg = Release|Win32
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Release|x86.Build.0 = Release|Win32
+		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x64.ActiveCfg = Debug|x64
+		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x64.Build.0 = Debug|x64
+		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x86.ActiveCfg = Debug|Win32
+		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x86.Build.0 = Debug|Win32
+		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x64.ActiveCfg = Release|x64
+		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x64.Build.0 = Release|x64
+		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x86.ActiveCfg = Release|Win32
+		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
