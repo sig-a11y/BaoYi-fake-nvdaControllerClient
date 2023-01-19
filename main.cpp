@@ -47,7 +47,7 @@ const bool SPEAK_ALLOW_BREAK = true;
 /// 释放 DLL
 void freeDll()
 {
-    DLOG_F(INFO, "[freeDll] trying to free DLL: dllHandle=%d", dllHandle);
+    DLOG_F(INFO, "[freeDll] trying to free DLL: dllHandle=%x", dllHandle);
 
     if (nullptr != dllHandle)
     {
@@ -55,7 +55,7 @@ void freeDll()
         DLOG_F(INFO, "[freeDll] FreeLibrary ret=%d", freeRet);
     }
 
-    DLOG_F(INFO, "[freeDll] ret: dllHandle=%d", dllHandle);
+    DLOG_F(INFO, "[freeDll] ret: dllHandle=%x", dllHandle);
 }
 
 /// 加载函数指针
@@ -75,7 +75,7 @@ FARPROC loadFunctionPtr(_In_ LPCSTR lpProcName)
     }
 
     DLOG_F(INFO, 
-        "[loadFunctionPtr] GetProcAddress(dllHandle=%d, lpProcName=%s)", 
+        "[loadFunctionPtr] GetProcAddress(dllHandle=%x, lpProcName=%s)", 
         dllHandle, lpProcName);
     auto funcHandle = GetProcAddress(dllHandle, lpProcName);
     if (!funcHandle)
@@ -90,7 +90,7 @@ FARPROC loadFunctionPtr(_In_ LPCSTR lpProcName)
         return nullptr;
     }
 
-    DLOG_F(INFO, "[loadFunctionPtr] ret: funcHandle=%d", dllHandle);
+    DLOG_F(INFO, "[loadFunctionPtr] ret: funcHandle=%x", dllHandle);
     return funcHandle;
 }
 
@@ -205,7 +205,7 @@ error_status_t __stdcall testIfRunning_impl()
         }
     }
 
-    DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%d", dllHandle);
+    DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%x", dllHandle);
     assert(nullptr != dllHandle);
     return RPC_S_OK;
 }
