@@ -101,7 +101,10 @@ bool loadBaoYiDll()
     std::stringstream eout;
 
     // -- 加载 DLL
-    dllHandle = LoadLibrary(DLL_NAME);
+    if (nullptr == dllHandle)
+    {
+        dllHandle = LoadLibrary(DLL_NAME);
+    }
     if (!dllHandle)
     {
         // TODO: 打印错误详细信息。打印实际的 dll 名，处理 wstring => string
