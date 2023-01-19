@@ -29,10 +29,14 @@ const LPCWSTR DLL_LOG_NAME = nullptr;
 
 /// 保益 DLL 配置 ini 文件名
 const LPCWSTR INI_NAME = L"朗读配置.ini";
-const LPCWSTR INI_APP_NAME = L"朗读";
-const LPCWSTR INI_KEY_USE_SLAVE = L"独立通道";
-const LPCWSTR INI_KEY_USE_APPEND = L"排队朗读";
-const LPCWSTR INI_KEY_ALLOW_BREAK = L"按键打断朗读";
+//const LPCWSTR INI_APP_NAME = L"朗读";
+const LPCWSTR INI_APP_NAME = L"APP";
+//const LPCWSTR INI_KEY_USE_SLAVE = L"独立通道";
+const LPCWSTR INI_KEY_USE_SLAVE = L"USE_SLAVE";
+//const LPCWSTR INI_KEY_USE_APPEND = L"排队朗读";
+const LPCWSTR INI_KEY_USE_APPEND = L"USE_APPEND";
+//const LPCWSTR INI_KEY_ALLOW_BREAK = L"按键打断朗读";
+const LPCWSTR INI_KEY_ALLOW_BREAK = L"ALLOW_BREAK";
 
 
 /// DLL 句柄
