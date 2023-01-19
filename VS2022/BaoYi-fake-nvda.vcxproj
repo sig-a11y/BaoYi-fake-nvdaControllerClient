@@ -108,7 +108,8 @@
       <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"</Command>
+      <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"
+Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>复制依赖 DLL</Message>
@@ -132,7 +133,8 @@
       <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"</Command>
+      <Command>Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"
+Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>复制依赖 DLL</Message>
