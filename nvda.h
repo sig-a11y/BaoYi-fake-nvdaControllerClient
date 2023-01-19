@@ -38,7 +38,7 @@ NVDA_API error_status_t __stdcall cancelSpeech_impl();
  * @param message 待输出的文本
  * @return 错误码
 */
-NVDA_API error_status_t __stdcall nvdaController_brailleMessage(const wchar_t* message);
+NVDA_API error_status_t __stdcall brailleMessage_impl(const wchar_t* message);
 
 #ifdef __cplusplus
 }

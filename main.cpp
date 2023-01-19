@@ -234,7 +234,7 @@ error_status_t __stdcall cancelSpeech_impl()
     return convertBoyCtrlError(err);
 }
 
-error_status_t __stdcall nvdaController_brailleMessage(const wchar_t* message)
+error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
 {
     return RPC_S_CANNOT_SUPPORT;
 }
