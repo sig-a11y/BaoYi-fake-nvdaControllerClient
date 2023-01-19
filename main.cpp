@@ -50,8 +50,10 @@ void freeDll()
     if (nullptr != dllHandle)
     {
         bool freeRet = FreeLibrary(dllHandle);
-        DLOG_F(INFO, "FreeLibrary ret=%d", freeRet);
+        DLOG_F(INFO, "[freeDll] FreeLibrary ret=%d", freeRet);
     }
+
+    DLOG_F(INFO, "[freeDll] ret: dllHandle=%d", dllHandle);
 }
 
 /// 加载函数指针
@@ -192,12 +194,12 @@ error_status_t __stdcall testIfRunning_impl()
         DLOG_F(INFO, "nullptr == dllHandle: trying to loadBaoYiDll()...");
         bool has_error = loadBaoYiDll();
         if (has_error) {
+            DLOG_F(INFO, "loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
-
-        DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%d", dllHandle);
     }
 
+    DLOG_F(INFO, "loadBaoYiDll() load finished. dllHandle=%d", dllHandle);
     assert(nullptr != dllHandle);
     return RPC_S_OK;
 }
