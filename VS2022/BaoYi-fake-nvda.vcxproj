@@ -25,7 +25,7 @@
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
     <ClInclude Include="..\loguru.hpp" />
-    <ClInclude Include="..\nvda.h" />
+    <ClInclude Include="..\boy_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dll.def" />
