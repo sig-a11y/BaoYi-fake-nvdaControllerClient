@@ -194,10 +194,10 @@ error_status_t __stdcall testIfRunning_impl()
     }
 }
 
-error_status_t __stdcall nvdaController_speakText(const wchar_t* text)
+error_status_t __stdcall speakText_impl(const wchar_t* text)
 {
 #ifdef _DEBUG
-    std::wcout << "[nvdaController_speakText] "
+    std::wcout << "[speakText_impl] "
         << "text=" << text
         << std::endl;
 #endif // def _DEBUG
@@ -212,7 +212,7 @@ error_status_t __stdcall nvdaController_speakText(const wchar_t* text)
     auto err = boyCtrlSpeak(text, SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK, speakCompleteCallback);
 
 #ifdef _DEBUG
-    std::wcout << "[nvdaController_speakText] "
+    std::wcout << "[speakText_impl] "
         << "ret err=" << err
         << std::endl;
 #endif // def _DEBUG

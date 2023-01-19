@@ -25,7 +25,7 @@ NVDA_API error_status_t __stdcall testIfRunning_impl();
  * @param text 待输出的文本
  * @return 错误码
 */
-NVDA_API error_status_t __stdcall nvdaController_speakText(const wchar_t* text);
+NVDA_API error_status_t __stdcall speakText_impl(const wchar_t* text);
 
 /**
  * @brief 静音当前输出
