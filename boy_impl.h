@@ -1,11 +1,10 @@
 ﻿#pragma once
 #include <winerror.h>
 
-#define BOY_IMPL_EXPORTS
-#ifdef BOY_IMPL_EXPORTS
-#define BOY_IMPL_API __declspec(dllexport)
-#else
+#ifdef BOY_IMPL_IMPORTS
 #define BOY_IMPL_API __declspec(dllimport)
+#else
+#define BOY_IMPL_API 
 #endif
 typedef unsigned long error_status_t;
 
