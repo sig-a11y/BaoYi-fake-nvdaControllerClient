@@ -27,6 +27,14 @@ const LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
 const LPCWSTR DLL_LOG_NAME = nullptr;
 #endif // def _DEBUG
 
+/// 保益 DLL 配置 ini 文件名
+const LPCWSTR INI_NAME = L"朗读配置.ini";
+const LPCWSTR INI_APP_NAME = L"朗读";
+const LPCWSTR INI_KEY_USE_SLAVE = L"独立通道";
+const LPCWSTR INI_KEY_USE_APPEND = L"排队朗读";
+const LPCWSTR INI_KEY_ALLOW_BREAK = L"按键打断朗读";
+
+
 /// DLL 句柄
 static HMODULE dllHandle;
 static BoyCtrlInitializeFunc boyCtrlInitialize;
@@ -39,15 +47,33 @@ static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
 /// false=使用读屏通道，true=使用独立通道
 bool SPEAK_WITH_SLAVE = true;
 /// 是否排队朗读
-bool SPEAK_APPEND = false;
+bool SPEAK_APPEND = true;
 /// 是否允许用户打断.使用读屏通道时该参数被忽略
 bool SPEAK_ALLOW_BREAK = true;
 #pragma region
 
 
 #pragma region ini 配置文件加载
+/// 加载配置文件
+/// 非0值作为 true
+void loadIni()
+{
+    DLOG_F(INFO, "[loadIni] begin to load ini...");
 
+    int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, INI_NAME);
+    SPEAK_WITH_SLAVE = 0 != slave;
+    DLOG_F(INFO, "[loadIni]     SPEAK_WITH_SLAVE=%d", SPEAK_WITH_SLAVE);
 
+    int append = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_APPEND, 1, INI_NAME);
+    SPEAK_APPEND = 0 != append;
+    DLOG_F(INFO, "[loadIni]     SPEAK_APPEND=%d", SPEAK_APPEND);
+
+    int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, INI_NAME);
+    SPEAK_ALLOW_BREAK = 0 != allowBreak;
+    DLOG_F(INFO, "[loadIni]     SPEAK_ALLOW_BREAK=%d", SPEAK_ALLOW_BREAK);
+
+    DLOG_F(INFO, "[loadIni] load ini finished.");
+}
 #pragma region
 
 
@@ -125,6 +151,9 @@ bool loadBaoYiDll()
         DLOG_F(INFO, eout.str().c_str());
         return EXIT_FAILURE;
     }
+
+    // 加载配置文件
+    loadIni();
 
     // -- 加载函数
     boyCtrlInitialize = (BoyCtrlInitializeFunc) loadFunctionPtr("BoyCtrlInitialize");
