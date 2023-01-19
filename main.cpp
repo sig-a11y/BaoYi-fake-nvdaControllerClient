@@ -9,6 +9,7 @@
 #pragma region 加载保益 DLL
 /// 保益 DLL 版本
 const LPCSTR BOY_DLL_VERSION = "v1.5.2";
+
 #ifdef _WIN64
 /// 保益 DLL 文件名
 const LPCWSTR DLL_NAME = L"BoyCtrl-x64.dll";
@@ -16,8 +17,14 @@ const LPCWSTR DLL_NAME = L"BoyCtrl-x64.dll";
 /// 保益 DLL 文件名
 const LPCWSTR DLL_NAME = L"BoyCtrl.dll";
 #endif // def _WIN64
+
+#ifdef _DEBUG
 /// 输出日志名称
-const LPCWSTR DLL_LOG_NAME = L"boyCtrl.log";
+const LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
+#else // release mode
+/// 置空，不输出日志
+const LPCWSTR DLL_LOG_NAME = nullptr;
+#endif // def _DEBUG
 
 /// DLL 句柄
 static HMODULE dllHandle;
@@ -260,7 +267,9 @@ BOOL WINAPI DllMain(
     case DLL_PROCESS_ATTACH:
         {
             // Initialize once for each new process.
-            loguru::add_file("nvda.log", loguru::Append, loguru::Verbosity_INFO);
+#ifdef _DEBUG
+            loguru::add_file("fakeNvda-debug.log", loguru::Append, loguru::Verbosity_INFO);
+#endif // def _DEBUG
             DLOG_F(INFO, "loguru init.");
             DLOG_F(INFO, "BaoYi Dll API Version: %s", BOY_DLL_VERSION);
             DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
