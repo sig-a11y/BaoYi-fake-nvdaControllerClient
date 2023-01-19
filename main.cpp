@@ -7,7 +7,7 @@
 #include <cassert>
 
 
-#pragma region 加载保益 DLL
+#pragma region 常量及全局变量定义
 /// 保益 DLL 版本
 const LPCSTR BOY_DLL_VERSION = "v1.5.2";
 
@@ -37,13 +37,21 @@ static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
 
 // -- 参数常量
 /// false=使用读屏通道，true=使用独立通道
-const bool SPEAK_WITH_SLAVE = true;
+bool SPEAK_WITH_SLAVE = true;
 /// 是否排队朗读
-const bool SPEAK_APPEND = false;
+bool SPEAK_APPEND = false;
 /// 是否允许用户打断.使用读屏通道时该参数被忽略
-const bool SPEAK_ALLOW_BREAK = true;
+bool SPEAK_ALLOW_BREAK = true;
+#pragma region
 
 
+#pragma region ini 配置文件加载
+
+
+#pragma region
+
+
+#pragma region 加载保益 DLL
 /// 释放 DLL
 void freeDll()
 {
