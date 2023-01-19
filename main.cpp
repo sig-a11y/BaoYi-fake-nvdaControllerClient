@@ -1,7 +1,8 @@
 ﻿#include "nvda.h"
-#include <iostream>
 #include "BoyCtrl.h"
+#include <iostream>
 #include <Windows.h>
+#include "loguru.hpp"
 
 
 #pragma region 加载保益 DLL
@@ -72,6 +73,7 @@ bool loadBaoYiDll()
             << "尝试加载 " << DLL_NAME << " 失败。"
             << "错误原因为：" << GetLastError()
             << std::endl;
+        DLOG_F(INFO, "GetLastError() = %d", GetLastError());
         return EXIT_FAILURE;
     }
 
@@ -206,10 +208,15 @@ BOOL WINAPI DllMain(
     {
     case DLL_PROCESS_ATTACH:
         {
+            loguru::add_file("nvda.log", loguru::Append, loguru::Verbosity_INFO);
+            DLOG_F(INFO, "loguru init.");
+            DLOG_F(INFO, "BaoYi Dll API Version: %s", BOY_DLL_VERSION);
+            DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
             // Initialize once for each new process.
             bool has_error = loadBaoYiDll();
             if (has_error) {
                 // Return FALSE to fail DLL load.
+                DLOG_F(INFO, "Return FALSE to fail DLL load.");
                 return FALSE;
             }
         }
@@ -231,6 +238,7 @@ BOOL WINAPI DllMain(
                 break; 
             }
 
+            DLOG_F(INFO, "Perform any necessary cleanup.");
             // Perform any necessary cleanup.
             FreeLibrary(dllHandle);
         }

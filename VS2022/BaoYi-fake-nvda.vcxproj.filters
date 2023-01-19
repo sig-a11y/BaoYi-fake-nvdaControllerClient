@@ -18,12 +18,18 @@
     <ClCompile Include="..\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\loguru.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\nvda.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\loguru.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\loguru.cpp" />
     <ClCompile Include="..\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
+    <ClInclude Include="..\loguru.hpp" />
     <ClInclude Include="..\nvda.h" />
   </ItemGroup>
   <ItemGroup>
