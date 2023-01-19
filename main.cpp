@@ -225,6 +225,8 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
             DLOG_F(INFO, "[speakText_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
+
+        DLOG_F(INFO, "[speakText_impl] loadBaoYiDll() load finished. boyCtrlSpeak=%x", boyCtrlSpeak);
         assert(nullptr != boyCtrlSpeak);
     }
 
@@ -248,6 +250,8 @@ error_status_t __stdcall cancelSpeech_impl()
             DLOG_F(INFO, "[cancelSpeech_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
+
+        DLOG_F(INFO, "[cancelSpeech_impl] loadBaoYiDll() load finished. boyCtrlStopSpeaking=%x", boyCtrlSpeak);
         assert(nullptr != boyCtrlStopSpeaking);
     }
 
