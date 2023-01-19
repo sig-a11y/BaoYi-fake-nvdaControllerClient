@@ -47,6 +47,8 @@ const bool SPEAK_ALLOW_BREAK = true;
 /// 释放 DLL
 void freeDll()
 {
+    DLOG_F(INFO, "[freeDll] trying to free DLL: dllHandle=%d", dllHandle);
+
     if (nullptr != dllHandle)
     {
         bool freeRet = FreeLibrary(dllHandle);
@@ -72,6 +74,9 @@ FARPROC loadFunctionPtr(_In_ LPCSTR lpProcName)
         return nullptr;
     }
 
+    DLOG_F(INFO, 
+        "[loadFunctionPtr] GetProcAddress(dllHandle=%d, lpProcName=%s)", 
+        dllHandle, lpProcName);
     auto funcHandle = GetProcAddress(dllHandle, lpProcName);
     if (!funcHandle)
     {
@@ -85,6 +90,7 @@ FARPROC loadFunctionPtr(_In_ LPCSTR lpProcName)
         return nullptr;
     }
 
+    DLOG_F(INFO, "[loadFunctionPtr] ret: funcHandle=%d", dllHandle);
     return funcHandle;
 }
 
@@ -194,7 +200,7 @@ error_status_t __stdcall testIfRunning_impl()
         DLOG_F(INFO, "nullptr == dllHandle: trying to loadBaoYiDll()...");
         bool has_error = loadBaoYiDll();
         if (has_error) {
-            DLOG_F(INFO, "loadBaoYiDll() load error!");
+            DLOG_F(INFO, "[testIfRunning_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
     }
@@ -216,6 +222,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
     {
         bool has_error = loadBaoYiDll();
         if (has_error) {
+            DLOG_F(INFO, "[speakText_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
         assert(nullptr != boyCtrlSpeak);
@@ -238,6 +245,7 @@ error_status_t __stdcall cancelSpeech_impl()
     {
         bool has_error = loadBaoYiDll();
         if (has_error) {
+            DLOG_F(INFO, "[cancelSpeech_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
         assert(nullptr != boyCtrlStopSpeaking);
