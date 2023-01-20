@@ -72,4 +72,4 @@ typedef void(__stdcall *BoyCtrlUninitializeFunc)();
 
 // 读屏是否正在运行，必须成功初始化才能使用此接口
 bool __stdcall BoyCtrlIsReaderRunning();
-
+typedef void(__stdcall* BoyCtrlIsReaderRunningFunc)();
