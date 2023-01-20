@@ -91,10 +91,6 @@ void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring)
 void loadIni()
 {
     DLOG_F(INFO, "[loadIni] begin to load ini...");
-    /// 输出消息长度
-    size_t i;
-    /// log 消息
-    char errMsg[PATH_NO_LIMIT_SIZE];
     /// ini 路径
     //TCHAR iniPath[PATH_NO_LIMIT_SIZE] = L"E:\\game\\ShadowRine_FullVoice\\朗读配置.ini";
     TCHAR iniPath[PATH_NO_LIMIT_SIZE];
@@ -102,8 +98,6 @@ void loadIni()
     // ==== 拼接 ini 完整路径，尝试加载
     // TODO: 显式构造长路径 "\\?\"
     PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
-    // wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
-    // DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
     logWString("loadIni", "iniPath", iniPath);
     bool exist = PathFileExists(iniPath);
     DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);
@@ -126,8 +120,6 @@ void loadIni()
     if (!exist)
     {
         PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
-        // wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
-        // DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
         logWString("loadIni", "iniPath", iniPath);
         exist = PathFileExists(iniPath);
         DLOG_F(INFO, "[loadIni] INI_NAME Exists=%d", exist);
@@ -400,10 +392,6 @@ void saveDllDirPath(HINSTANCE hinstDLL)
     GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
     // -- 打印完整路径
-    size_t i;
-    char errMsg[PATH_NO_LIMIT_SIZE];
-    // wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, DLL_PATH, (size_t)MAX_PATH - 1);
-    // DLOG_F(INFO, "DLL_PATH[]: %s", errMsg);
     logWString("saveDllDirPath", "DLL_PATH", DLL_PATH);
 
     // -- 拆分路径
@@ -423,10 +411,7 @@ void saveDllDirPath(HINSTANCE hinstDLL)
 
     // 拼接文件夹路径
     _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
-    // -- 打印文件夹路径
-    char errMsg2[PATH_NO_LIMIT_SIZE];
-    // wcstombs_s(&i, errMsg2, (size_t)PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, (size_t)MAX_PATH - 1);
-    // DLOG_F(INFO, "DLL_DIR_PATH[]: %s", errMsg2);
+    // 打印文件夹路径
     logWString("saveDllDirPath", "DLL_DIR_PATH", DLL_DIR_PATH);
 
     // -- 拼接保益 DLL 完整路径
