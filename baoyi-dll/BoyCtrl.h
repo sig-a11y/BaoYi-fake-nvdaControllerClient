@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // 朗读完成回调
 // reason: 回调原因，1=朗读完成，2=被新的朗读打断，3=被停止调用打断
@@ -69,3 +69,7 @@ typedef BoyCtrlError(__stdcall *BoyCtrlPauseScreenReaderFunc)(int ms);
 // 退出清理
 void __stdcall BoyCtrlUninitialize();
 typedef void(__stdcall *BoyCtrlUninitializeFunc)();
+
+// 读屏是否正在运行，必须成功初始化才能使用此接口
+bool __stdcall BoyCtrlIsReaderRunning();
+
