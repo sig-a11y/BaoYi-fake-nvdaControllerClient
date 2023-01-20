@@ -21,11 +21,11 @@
     <ClCompile Include="..\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\loguru.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c">
       <Filter>源文件\simpleini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\loguru\loguru.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,13 +35,13 @@
     <ClInclude Include="..\boy_impl.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\loguru.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
       <Filter>源文件\simpleini</Filter>
     </ClInclude>
     <ClInclude Include="..\deps\simpleini\SimpleIni.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\loguru\loguru.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

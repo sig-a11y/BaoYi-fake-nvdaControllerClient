@@ -19,15 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\deps\loguru\loguru.cpp" />
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c" />
-    <ClCompile Include="..\loguru.cpp" />
     <ClCompile Include="..\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
+    <ClInclude Include="..\deps\loguru\loguru.hpp" />
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />
     <ClInclude Include="..\deps\simpleini\SimpleIni.h" />
-    <ClInclude Include="..\loguru.hpp" />
     <ClInclude Include="..\boy_impl.h" />
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,7 +128,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,7 +152,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,7 +175,7 @@ Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(Targe
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
