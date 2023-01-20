@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\simpleini">
+      <UniqueIdentifier>{f654f1e7-86e2-4a14-ab77-290e1ad5d802}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp">
@@ -20,6 +23,9 @@
     </ClCompile>
     <ClCompile Include="..\loguru.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\simpleini\ConvertUTF.c">
+      <Filter>源文件\simpleini</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,10 +38,19 @@
     <ClInclude Include="..\loguru.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
+      <Filter>源文件\simpleini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\simpleini\SimpleIni.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dll.def">
-      <Filter>源文件</Filter>
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\朗读配置.ini">
+      <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
 </Project>
