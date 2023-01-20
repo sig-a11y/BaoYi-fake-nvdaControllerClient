@@ -26,10 +26,10 @@ const LPCSTR BOY_DLL_VERSION = "v1.5.2";
 
 #ifdef _WIN64
 /// 保益 DLL 文件名
-const LPCWSTR DLL_NAME = L"BoyCtrl-x64.dll";
+const LPCWSTR BOY_DLL_NAME = L"BoyCtrl-x64.dll";
 #else
 /// 保益 DLL 文件名
-const LPCWSTR DLL_NAME = L"BoyCtrl.dll";
+const LPCWSTR BOY_DLL_NAME = L"BoyCtrl.dll";
 #endif // def _WIN64
 
 #ifdef _DEBUG
@@ -196,7 +196,7 @@ bool loadBaoYiDll()
     // -- 加载 DLL
     if (nullptr == dllHandle)
     {
-        dllHandle = LoadLibrary(DLL_NAME);
+        dllHandle = LoadLibrary(BOY_DLL_NAME);
     }
     if (!dllHandle)
     {
