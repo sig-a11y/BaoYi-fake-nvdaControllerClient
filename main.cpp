@@ -1,5 +1,6 @@
 ﻿#include "boy_impl.h"
 #include "BoyCtrl.h"
+#include "SimpleIni.h"
 #include <iostream>
 #include <sstream>
 #include <Windows.h>
@@ -41,6 +42,8 @@ const LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
 const LPCWSTR DLL_LOG_NAME = nullptr;
 #endif // def _DEBUG
 
+/// 配置文件对象
+static CSimpleIniW ini;
 /// 保益 DLL 配置 ini 文件名
 const LPCWSTR INI_NAME = L"朗读配置.ini";
 //const LPCWSTR INI_APP_NAME = L"朗读";
@@ -92,6 +95,20 @@ void loadIni()
     DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
     bool exist = PathFileExists(iniPath);
     DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);
+    SI_Error rc = ini.LoadFile(iniPath);
+    if (rc < 0) 
+    {
+        DLOG_F(INFO, "[loadIni] ini.LoadFile rc=%x", rc);
+    }
+    else 
+    {
+        LPCWSTR pv;
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"1");
+        DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", pv, pv != 0);
+
+        pv = ini.GetValue(L"朗读", L"独立通道", L"1");
+        DLOG_F(INFO, "[loadIni]     朗读.独立通道=%d;", pv);
+    }
 
     // 拼接的路径不存在，尝试直接读取 ini
     if (!exist)
