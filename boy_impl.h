@@ -3,14 +3,24 @@
 
 #ifdef BOY_IMPL_IMPORTS
 #define BOY_IMPL_API __declspec(dllimport)
-#else
-#define BOY_IMPL_API 
-#endif
+#else // 导出函数
+#ifdef _DEBUG
+/// 调试模式时，导出实现 impl 函数
+#define BOY_IMPL_API __declspec(dllexport)
+#else // REL mode
+/// 发布模式时，不导出
+#define BOY_IMPL_API
+#endif // def _DEBUG
+#endif // def BOY_IMPL_IMPORTS
 
 /// 标准的错误返回值
 typedef unsigned long error_status_t;
 #define WIN_RPC_RET error_status_t __stdcall
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif 
 
 /**
  * @brief 检查读屏器是否在运行
@@ -37,3 +47,7 @@ BOY_IMPL_API WIN_RPC_RET cancelSpeech_impl();
  * @return 错误码
 */
 BOY_IMPL_API WIN_RPC_RET brailleMessage_impl(const wchar_t* message);
+
+#ifdef __cplusplus
+}
+#endif
