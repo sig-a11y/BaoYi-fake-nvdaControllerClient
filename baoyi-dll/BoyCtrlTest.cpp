@@ -6,6 +6,8 @@
 #include "BoyCtrl.h"
 
 using namespace std;
+/// 当前支持的保益 API 版本号
+const string BOY_API_VERSION = "v1.5.3";
 
 
 /**
@@ -58,7 +60,7 @@ int main()
         return 1;
     }
     // 初始化接口，并输出日志
-    auto err = initFunc(L"D:\\boyCtrl.log");
+    auto err = initFunc(L"boyCtrl.log");
     if (err != e_bcerr_success)
     {
         cerr << "init failed error = " << err << endl;
@@ -67,7 +69,7 @@ int main()
     }
     cout << "ready" << endl;
 
-    /// 朗读文本
+    /// 朗读文本(UTF-16le)
     auto speakFunc = (decltype(BoyCtrlSpeak) *)GetProcAddress(dllHandle, "BoyCtrlSpeak");
     if (!speakFunc)
     {
@@ -76,6 +78,16 @@ int main()
         FreeLibrary(dllHandle);
         return 1;
     }
+    /// 朗读文本(ANSI)
+    auto speakAnsiFunc = (decltype(BoyCtrlSpeakAnsi) *)GetProcAddress(dllHandle, "BoyCtrlSpeakAnsi");
+    if (!speakAnsiFunc)
+    {
+        cerr << "Failed to get BoyCtrlSpeakAnsi" << endl;
+        uninitFunc();
+        FreeLibrary(dllHandle);
+        return 1;
+    }
+    /// 朗读文本(UTF-8)
     auto speakU8Func = (decltype(BoyCtrlSpeakU8) *)GetProcAddress(dllHandle, "BoyCtrlSpeakU8");
     if (!speakU8Func)
     {
@@ -93,10 +105,28 @@ int main()
         FreeLibrary(dllHandle);
         return 1;
     }
+    /// 暂停指定时间的读屏朗读
+    auto pauseFunc = (decltype(BoyCtrlPauseScreenReader)*)GetProcAddress(dllHandle, "BoyCtrlPauseScreenReader");
+    if (!pauseFunc)
+    {
+        cerr << "Failed to get BoyCtrlPauseScreenReader" << endl;
+        uninitFunc();
+        FreeLibrary(dllHandle);
+        return 1;
+    }
+    /// 读屏是否正在运行
+    auto isReaderRunningFunc = (decltype(BoyCtrlIsReaderRunning)*)GetProcAddress(dllHandle, "BoyCtrlIsReaderRunning");
+    if (!isReaderRunningFunc)
+    {
+        cerr << "Failed to get BoyCtrlIsReaderRunning" << endl;
+        uninitFunc();
+        FreeLibrary(dllHandle);
+        return 1;
+    }
     // 函数加载完毕。
     
 
-    // 开始测试接口
+    // 开始测试接口...
     for (int i = 1; i <= 4; ++i)
     {
         cout << i << " Press <Enter> to speak" << endl;
