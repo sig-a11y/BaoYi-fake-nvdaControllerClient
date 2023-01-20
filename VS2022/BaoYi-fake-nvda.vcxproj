@@ -31,8 +31,8 @@
     <ClInclude Include="..\boy_impl.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\dll.def" />
     <None Include="..\朗读配置.ini" />
-    <None Include="dll.def" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -109,7 +109,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
@@ -135,7 +135,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
@@ -157,7 +157,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
@@ -182,7 +182,7 @@ Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(Targe
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>dll.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
