@@ -12,7 +12,7 @@
 #pragma comment(lib, "shlwapi.lib")
 #include <vector>
 #include <stdio.h>
-#include <stdio.h>
+#include <strsafe.h>  // StringCchPrintfA
 
 
 #pragma region 常量及全局变量定义
@@ -31,6 +31,8 @@ const LPCWSTR BOY_DLL_NAME = L"BoyCtrl-x64.dll";
 /// 保益 DLL 文件名
 const LPCWSTR BOY_DLL_NAME = L"BoyCtrl.dll";
 #endif // def _WIN64
+/// 保益 DLL 完整路径
+TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
 #ifdef _DEBUG
 /// 输出日志名称
@@ -404,6 +406,9 @@ void saveDllDirPath(HINSTANCE hinstDLL)
     char errMsg2[PATH_NO_LIMIT_SIZE];
     wcstombs_s(&i, errMsg2, (size_t)PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, (size_t)MAX_PATH - 1);
     DLOG_F(INFO, "DLL_DIR_PATH[]: %s", errMsg2);
+
+    // -- 拼接保益 DLL 完整路径
+    StringCchPrintfW(BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, BOY_DLL_NAME);
 }
 
 /**
