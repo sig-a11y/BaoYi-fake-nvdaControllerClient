@@ -18,8 +18,6 @@
 #pragma region 常量及全局变量定义
 /// 允许的长路径长度
 const int PATH_NO_LIMIT_SIZE = 1024;
-/// DLL 路径
-TCHAR DLL_PATH[MAX_PATH];
 /// DLL 所在文件夹路径
 TCHAR DLL_DIR_PATH[MAX_PATH];
 
@@ -374,6 +372,8 @@ error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
 */
 void saveDllDirPath(HINSTANCE hinstDLL)
 {
+    /// DLL 路径
+    TCHAR DLL_PATH[MAX_PATH];
     // 获取 DLL 完整路径
     GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
