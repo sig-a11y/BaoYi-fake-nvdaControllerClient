@@ -210,7 +210,7 @@ bool loadBaoYiDll()
     // -- 加载 DLL
     if (nullptr == dllHandle)
     {
-        dllHandle = LoadLibrary(BOY_DLL_NAME);
+        dllHandle = LoadLibrary(BOY_DLL_FULLPATH);
     }
     if (!dllHandle)
     {
