@@ -102,8 +102,9 @@ void loadIni()
     // ==== 拼接 ini 完整路径，尝试加载
     // TODO: 显式构造长路径 "\\?\"
     PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
-    wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
-    DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
+    // wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
+    // DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
+    logWString("loadIni", "iniPath", iniPath);
     bool exist = PathFileExists(iniPath);
     DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);
     SI_Error rc = ini.LoadFile(iniPath);
@@ -125,8 +126,9 @@ void loadIni()
     if (!exist)
     {
         PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
-        wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
-        DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
+        // wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, iniPath, (size_t)PATH_NO_LIMIT_SIZE - 1);
+        // DLOG_F(INFO, "[loadIni] iniPath=%s", errMsg);
+        logWString("loadIni", "iniPath", iniPath);
         exist = PathFileExists(iniPath);
         DLOG_F(INFO, "[loadIni] INI_NAME Exists=%d", exist);
     }
@@ -400,8 +402,9 @@ void saveDllDirPath(HINSTANCE hinstDLL)
     // -- 打印完整路径
     size_t i;
     char errMsg[PATH_NO_LIMIT_SIZE];
-    wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, DLL_PATH, (size_t)MAX_PATH - 1);
-    DLOG_F(INFO, "DLL_PATH[]: %s", errMsg);
+    // wcstombs_s(&i, errMsg, (size_t)PATH_NO_LIMIT_SIZE, DLL_PATH, (size_t)MAX_PATH - 1);
+    // DLOG_F(INFO, "DLL_PATH[]: %s", errMsg);
+    logWString("saveDllDirPath", "DLL_PATH", DLL_PATH);
 
     // -- 拆分路径
     std::wstring filename;
@@ -422,8 +425,9 @@ void saveDllDirPath(HINSTANCE hinstDLL)
     _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
     // -- 打印文件夹路径
     char errMsg2[PATH_NO_LIMIT_SIZE];
-    wcstombs_s(&i, errMsg2, (size_t)PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, (size_t)MAX_PATH - 1);
-    DLOG_F(INFO, "DLL_DIR_PATH[]: %s", errMsg2);
+    // wcstombs_s(&i, errMsg2, (size_t)PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, (size_t)MAX_PATH - 1);
+    // DLOG_F(INFO, "DLL_DIR_PATH[]: %s", errMsg2);
+    logWString("saveDllDirPath", "DLL_DIR_PATH", DLL_DIR_PATH);
 
     // -- 拼接保益 DLL 完整路径
     StringCchPrintfW(BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, BOY_DLL_NAME);
