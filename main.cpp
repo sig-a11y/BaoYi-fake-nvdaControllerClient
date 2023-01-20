@@ -75,16 +75,15 @@ bool SPEAK_ALLOW_BREAK = true;
 
 
 /// 通过日志输出 WString 类型的变量
-void logWString(LPCSTR varName, LPCWSTR inWstring)
+void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring)
 {
     /// 输出字符串的长度，包括结尾的 null
     size_t outStringLen;
     /// 转化后的字符串，待输出
     char outString[PATH_NO_LIMIT_SIZE];
     wcstombs_s(&outStringLen, outString, (size_t)PATH_NO_LIMIT_SIZE, inWstring, (size_t)MAX_PATH - 1);
-    DLOG_F(INFO, "%s[]: %s", varName, outString);
+    DLOG_F(INFO, "[%s] %s[]: %s", prefix, varName, outString);
 }
-
 
 #pragma region ini 配置文件加载
 /// 加载配置文件
@@ -428,7 +427,7 @@ void saveDllDirPath(HINSTANCE hinstDLL)
 
     // -- 拼接保益 DLL 完整路径
     StringCchPrintfW(BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, BOY_DLL_NAME);
-    logWString("BOY_DLL_FULLPATH", BOY_DLL_FULLPATH);
+    logWString("saveDllDirPath", "BOY_DLL_FULLPATH", BOY_DLL_FULLPATH);
 }
 
 /**
