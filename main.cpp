@@ -208,10 +208,17 @@ bool loadBaoYiDll()
     std::stringstream eout;
 
     // -- 加载 DLL
+    // 使用完整路径加载：保益 DLL 和 nvda 放在一起
     if (nullptr == dllHandle)
     {
         dllHandle = LoadLibrary(BOY_DLL_FULLPATH);
     }
+    // 仅使用 DLL 名加载：保益 DLL 和主程序 exe 放在一起
+    if (nullptr == dllHandle)
+    {
+        dllHandle = LoadLibrary(BOY_DLL_NAME);
+    }
+    // 检查 DLL 是否成功加载
     if (!dllHandle)
     {
         // TODO: 打印错误详细信息。打印实际的 dll 名，处理 wstring => string
