@@ -2,15 +2,13 @@
 #include "ini.hpp"
 #include <iostream>
 #include <sstream>
-#include <Windows.h>
 #include "loguru.hpp"
 #include <cassert>
-#include <vector>
 #include <stdio.h>
-#include <strsafe.h>  // StringCchPrintfA
 
 // ---- 私有头文件
 #include "boy_global.hpp"
+#include "dll.hpp"
 using namespace boy;
 
 namespace boy
@@ -288,45 +286,6 @@ error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
 
 #ifndef BUILD_EXE
 /**
- * @brief 获取并保存 DLL 所在文件夹路径.
- * @param hinstDLL DLL 实例句柄
-*/
-void saveDllDirPath(HINSTANCE hinstDLL)
-{
-    /// DLL 路径
-    TCHAR DLL_PATH[MAX_PATH];
-    // 获取 DLL 完整路径
-    GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
-
-    // -- 打印完整路径
-    logWString("saveDllDirPath", "DLL_PATH", DLL_PATH);
-
-    // -- 拆分路径
-    std::wstring filename;
-    /// 盘符
-    std::vector<wchar_t> disk(8);
-    /// 层级路径（不含盘符、最终文件名）
-    std::vector<wchar_t> dirname(1024);
-    filename = DLL_PATH;
-    _wsplitpath_s(
-        filename.c_str(),
-        disk.data(), _MAX_DRIVE,
-        dirname.data(), _MAX_DIR,
-        nullptr, 0,
-        nullptr, 0
-    );
-
-    // 拼接文件夹路径
-    _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
-    // 打印文件夹路径
-    logWString("saveDllDirPath", "DLL_DIR_PATH", DLL_DIR_PATH);
-
-    // -- 拼接保益 DLL 完整路径
-    StringCchPrintfW(BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, BOY_DLL_NAME);
-    logWString("saveDllDirPath", "BOY_DLL_FULLPATH", BOY_DLL_FULLPATH);
-}
-
-/**
  * @brief DLL 主函数
  * @param hinstDLL handle to DLL module
  * @param fdwReason reason for calling function
@@ -351,7 +310,7 @@ BOOL WINAPI DllMain(
             DLOG_F(INFO, "BaoYi Dll API Version: %s", BOY_DLL_VERSION);
             DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
 
-            saveDllDirPath(hinstDLL);
+            dll::saveDllDirPath(hinstDLL);
         }
         break;
 

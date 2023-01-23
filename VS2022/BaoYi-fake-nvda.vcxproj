@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\deps\loguru\loguru.cpp" />
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c" />
+    <ClCompile Include="..\dll.cpp" />
     <ClCompile Include="..\ini.cpp" />
     <ClCompile Include="..\main.cpp" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />
     <ClInclude Include="..\deps\simpleini\SimpleIni.h" />
     <ClInclude Include="..\boy_impl.h" />
+    <ClInclude Include="..\dll.hpp" />
     <ClInclude Include="..\ini.hpp" />
   </ItemGroup>
   <ItemGroup>

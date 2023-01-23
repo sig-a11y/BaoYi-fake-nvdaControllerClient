@@ -2,7 +2,7 @@
 #ifndef __BOY_GLOBAL_H
 #define __BOY_GLOBAL_H
 #include "BoyCtrl.h"
-
+#include <Windows.h>
 
 namespace boy
 {
