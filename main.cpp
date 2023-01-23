@@ -18,14 +18,6 @@ namespace boy
     /// 保益 DLL 完整路径
     TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
-    // -- 参数常量
-    /// false=使用读屏通道，true=使用独立通道
-    bool SPEAK_WITH_SLAVE = true;
-    /// 是否排队朗读
-    bool SPEAK_APPEND = true;
-    /// 是否允许用户打断.使用读屏通道时该参数被忽略
-    bool SPEAK_ALLOW_BREAK = true;
-
     /// 通过日志输出 WString 类型的变量
     void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring)
     {
@@ -248,7 +240,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         assert(nullptr != boyCtrlSpeak);
     }
 
-    auto err = boyCtrlSpeak(text, SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK, speakCompleteCallback);
+    auto err = boyCtrlSpeak(text, ini::SPEAK_WITH_SLAVE, ini::SPEAK_APPEND, ini::SPEAK_ALLOW_BREAK, speakCompleteCallback);
 
 #ifdef _DEBUG
     std::wcout << "[speakText_impl] "
@@ -273,7 +265,7 @@ error_status_t __stdcall cancelSpeech_impl()
         assert(nullptr != boyCtrlStopSpeaking);
     }
 
-    auto err = boyCtrlStopSpeaking(SPEAK_WITH_SLAVE);
+    auto err = boyCtrlStopSpeaking(ini::SPEAK_WITH_SLAVE);
     return convertBoyCtrlError(err);
 }
 

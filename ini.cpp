@@ -29,6 +29,14 @@ namespace ini {
 
     /// 配置文件对象
     static CSimpleIniW ini;
+
+    // ==== 导出变量
+    /// false=使用读屏通道，true=使用独立通道
+    bool SPEAK_WITH_SLAVE = true;
+    /// 是否排队朗读
+    bool SPEAK_APPEND = true;
+    /// 是否允许用户打断.使用读屏通道时该参数被忽略
+    bool SPEAK_ALLOW_BREAK = true;
 #pragma region
 
 
@@ -95,16 +103,16 @@ namespace ini {
 
         // ==== 读取 ini 配置
         int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
-        boy::SPEAK_WITH_SLAVE = 0 != slave;
-        DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", slave, boy::SPEAK_WITH_SLAVE);
+        SPEAK_WITH_SLAVE = 0 != slave;
+        DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", slave, SPEAK_WITH_SLAVE);
 
         int append = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_APPEND, 1, iniPath);
-        boy::SPEAK_APPEND = 0 != append;
-        DLOG_F(INFO, "[loadIni]     append=%d; SPEAK_APPEND=%d", append, boy::SPEAK_APPEND);
+        SPEAK_APPEND = 0 != append;
+        DLOG_F(INFO, "[loadIni]     append=%d; SPEAK_APPEND=%d", append, SPEAK_APPEND);
 
         int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, iniPath);
-        boy::SPEAK_ALLOW_BREAK = 0 != allowBreak;
-        DLOG_F(INFO, "[loadIni]     allowBreak=%d; SPEAK_ALLOW_BREAK=%d", allowBreak, boy::SPEAK_ALLOW_BREAK);
+        SPEAK_ALLOW_BREAK = 0 != allowBreak;
+        DLOG_F(INFO, "[loadIni]     allowBreak=%d; SPEAK_ALLOW_BREAK=%d", allowBreak, SPEAK_ALLOW_BREAK);
 
         DLOG_F(INFO, "[loadIni] load ini finished.");
     }
