@@ -1,7 +1,8 @@
 ﻿#pragma once
-#ifndef __NVDLL_H
-#define __NVDLL_H
+#ifndef __NVDLL_IMPL_H
+#define __NVDLL_IMPL_H
 #include <winerror.h>
+
 
 #ifdef NVDLL_IMPL_IMPORTS
 #define NVDLL_IMPL_API __declspec(dllimport)
@@ -53,4 +54,4 @@ NVDLL_IMPL_API WIN_RPC_RET brailleMessage_impl(const wchar_t* message);
 #ifdef __cplusplus
 }
 #endif // __cplusplus
-#endif // __NVDLL_H
+#endif // __NVDLL_IMPL_H

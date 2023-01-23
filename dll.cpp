@@ -1,4 +1,4 @@
-﻿#include "nvdll.h"
+﻿#include "nvdll_impl.h"
 #include "dll.hpp"
 #include <string> // wstring
 #include <vector> // vector
