@@ -38,18 +38,7 @@ namespace boy
     extern TCHAR DLL_DIR_PATH[MAX_PATH];
     /// 保益 DLL 完整路径
     extern TCHAR BOY_DLL_FULLPATH[MAX_PATH];
-
-    // -- 参数常量
-    /// false=使用读屏通道，true=使用独立通道
-    extern bool SPEAK_WITH_SLAVE;
-    /// 是否排队朗读
-    extern bool SPEAK_APPEND;
-    /// 是否允许用户打断.使用读屏通道时该参数被忽略
-    extern bool SPEAK_ALLOW_BREAK;
 #pragma region
-
-
-    void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring);
 
 }
 #endif // __BOY_GLOBAL_H
