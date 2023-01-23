@@ -149,8 +149,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\boy_impl.h" />
-    <ClInclude Include="..\..\NvdaTest\nvda.h" />
+    <ClInclude Include="..\..\nvda.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
