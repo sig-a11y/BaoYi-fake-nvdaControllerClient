@@ -7,7 +7,6 @@
 #include "SimpleIni.h" // [3rd] ini 实现
 // -- [proj]
 #include "log.hpp" // log
-#include "dll.hpp" // dll::DLL_DIR_PATH
 
 
 namespace ini {
@@ -46,8 +45,9 @@ namespace ini {
     /// 非0值作为 true
     /**
      * @brief 加载配置文件。非0值作为 true
+     * @param pszBaseDirIn 配置文件所在的文件夹
      */
-    void loadIni()
+    void loadIni(PCWSTR pszBaseDirIn)
     {
         DLOG_F(INFO, "[loadIni] begin to load ini...");
         /// ini 路径
@@ -56,7 +56,7 @@ namespace ini {
 
         // ==== 拼接 ini 完整路径，尝试加载
         // TODO: 显式构造长路径 "\\?\"
-        PathCchCombineEx(iniPath, MAX_PATH, dll::DLL_DIR_PATH, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
+        PathCchCombineEx(iniPath, MAX_PATH, pszBaseDirIn, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
         logWString("loadIni", "iniPath", iniPath);
         bool exist = PathFileExists(iniPath);
         DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);

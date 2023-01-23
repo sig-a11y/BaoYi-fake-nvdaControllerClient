@@ -157,7 +157,7 @@ namespace dll {
         }
 
         // 加载配置文件
-        ini::loadIni();
+        ini::loadIni(DLL_DIR_PATH);
 
         // -- 加载函数
         boyCtrlInitialize = (BoyCtrlInitializeFunc)loadFunctionPtr("BoyCtrlInitialize");
