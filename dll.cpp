@@ -9,7 +9,7 @@
 #include <sstream> // stringstream
 #include <cassert> // assert
 #include <iostream> // wcout
-#include "global.hpp"
+#include "log.hpp" // nvdll::log
 #include "ini.hpp"
 
 

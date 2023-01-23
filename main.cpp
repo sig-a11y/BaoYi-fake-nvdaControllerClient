@@ -1,5 +1,5 @@
 ﻿// ---- 私有头文件
-#include "global.hpp"
+#include "log.hpp"
 #include "dll.hpp"  // dll::
 
 

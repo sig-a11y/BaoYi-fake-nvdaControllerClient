@@ -30,7 +30,6 @@
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
     <ClInclude Include="..\nvda.h" />
     <ClInclude Include="..\nvdll_impl.h" />
-    <ClInclude Include="..\global.hpp" />
     <ClInclude Include="..\deps\loguru\loguru.hpp" />
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />
     <ClInclude Include="..\deps\simpleini\SimpleIni.h" />

@@ -1,7 +1,8 @@
 ﻿#pragma once
 #ifndef __BOY_DLL_H
 #define __BOY_DLL_H
-#include "global.hpp"
+#include <wtypes.h>
+#include <minwindef.h> // HINSTANCE
 
 
 namespace dll {
