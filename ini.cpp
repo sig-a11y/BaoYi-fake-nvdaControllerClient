@@ -1,4 +1,5 @@
 ﻿#include "ini.hpp"
+#include "SimpleIni.h"
 #include "loguru.hpp" // 日志记录
 #include "boy_global.hpp"
 #include <pathcch.h> // PathCchCombineEx
