@@ -7,7 +7,7 @@
 namespace nvdll {
 namespace log {
 #pragma region 全局变量定义
-
+    // TODO: 提供初始化函数与指定日志名称、日志级别
 #pragma region
 
 
