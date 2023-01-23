@@ -1,7 +1,18 @@
 ﻿#include "log.hpp"
+#include "dll.hpp"
 
 namespace nvdll {
 namespace log {
+
+    void init()
+    {
+#ifdef _DEBUG
+        loguru::add_file("fakeNvda-debug.log", loguru::Truncate, loguru::Verbosity_INFO);
+#endif // def _DEBUG
+        DLOG_F(INFO, "loguru init.");
+        DLOG_F(INFO, "BaoYi Dll API Version: %s", dll::boy::BOY_DLL_VERSION);
+        DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
+    }
 
     /// 通过日志输出 WString 类型的变量
     void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring)

@@ -12,7 +12,7 @@ namespace log {
     // TODO: 提供初始化函数与指定日志名称、日志级别
 #pragma region
 
-
+    void init();
     void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring);
 
 } // nvdll::log::

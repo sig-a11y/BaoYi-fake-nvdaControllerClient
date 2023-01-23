@@ -21,13 +21,7 @@ BOOL WINAPI DllMain(
     case DLL_PROCESS_ATTACH:
         {
             // Initialize once for each new process.
-#ifdef _DEBUG
-            loguru::add_file("fakeNvda-debug.log", loguru::Append, loguru::Verbosity_INFO);
-#endif // def _DEBUG
-            DLOG_F(INFO, "loguru init.");
-            DLOG_F(INFO, "BaoYi Dll API Version: %s", dll::boy::BOY_DLL_VERSION);
-            DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
-
+            nvdll::log::init();
             dll::saveDllDirPath(hinstDLL);
         }
         break;
