@@ -2,7 +2,6 @@
 #include "ini.hpp"
 #include <iostream>
 #include <sstream>
-#include "loguru.hpp"
 #include <cassert>
 #include <stdio.h>
 
