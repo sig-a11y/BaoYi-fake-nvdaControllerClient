@@ -27,6 +27,9 @@
     <ClCompile Include="..\deps\loguru\loguru.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\ini.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
@@ -42,6 +45,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\deps\loguru\loguru.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ini.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\boy_global.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
