@@ -74,6 +74,9 @@
     <ClInclude Include="..\nvdll_impl.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\nvda.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\朗读配置.ini">
