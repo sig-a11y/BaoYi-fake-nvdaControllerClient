@@ -13,8 +13,10 @@ namespace ini {
     /// 配置文件对象
     static CSimpleIniW ini;
 
-    /// 加载配置文件
     /// 非0值作为 true
+    /**
+     * @brief 加载配置文件。非0值作为 true
+     */
     void loadIni()
     {
         DLOG_F(INFO, "[loadIni] begin to load ini...");

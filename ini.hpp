@@ -1,11 +1,14 @@
 ﻿#pragma once
 #ifndef __BOY_INI_H
 #define __BOY_INI_H
+// TODO: 使用 wstring，设为私有
 #include "SimpleIni.h"
 
 
 namespace ini {
-    /// 保益 DLL 配置 ini 文件名. TODO: 使用枚举
+    // TODO: 使用枚举；使用 wstring
+
+    /// 保益 DLL 配置 ini 文件名. 
     const LPCWSTR INI_NAME = L"nvdaCfg.ini";
     const LPCWSTR INI_NAME_CN = L"朗读配置.ini";
     const LPCWSTR INI_APP_NAME = L"APP";
