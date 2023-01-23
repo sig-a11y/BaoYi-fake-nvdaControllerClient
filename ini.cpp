@@ -1,11 +1,13 @@
 ﻿#include "ini.hpp"
-#include "SimpleIni.h"
-#include "global.hpp"
-#include "dll.hpp"
+// -- [sys] win 
 #include <pathcch.h> // PathCchCombineEx
 #pragma comment(lib, "pathcch.lib")
 #include <Shlwapi.h> // PathFileExists
 #pragma comment(lib, "shlwapi.lib")
+#include "SimpleIni.h" // [3rd] ini 实现
+// -- [proj]
+#include "log.hpp" // log
+#include "dll.hpp" // dll::DLL_DIR_PATH
 
 
 namespace ini {
