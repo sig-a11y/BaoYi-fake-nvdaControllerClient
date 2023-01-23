@@ -8,7 +8,7 @@
 
 
 namespace ini {
-    using namespace boy;
+    using boy::logWString;
 
     /// 加载配置文件
     /// 非0值作为 true
@@ -21,7 +21,7 @@ namespace ini {
 
         // ==== 拼接 ini 完整路径，尝试加载
         // TODO: 显式构造长路径 "\\?\"
-        PathCchCombineEx(iniPath, MAX_PATH, DLL_DIR_PATH, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
+        PathCchCombineEx(iniPath, MAX_PATH, boy::DLL_DIR_PATH, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
         logWString("loadIni", "iniPath", iniPath);
         bool exist = PathFileExists(iniPath);
         DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);
@@ -71,16 +71,16 @@ namespace ini {
 
         // ==== 读取 ini 配置
         int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
-        SPEAK_WITH_SLAVE = 0 != slave;
-        DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", slave, SPEAK_WITH_SLAVE);
+        boy::SPEAK_WITH_SLAVE = 0 != slave;
+        DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", slave, boy::SPEAK_WITH_SLAVE);
 
         int append = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_APPEND, 1, iniPath);
-        SPEAK_APPEND = 0 != append;
-        DLOG_F(INFO, "[loadIni]     append=%d; SPEAK_APPEND=%d", append, SPEAK_APPEND);
+        boy::SPEAK_APPEND = 0 != append;
+        DLOG_F(INFO, "[loadIni]     append=%d; SPEAK_APPEND=%d", append, boy::SPEAK_APPEND);
 
         int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, iniPath);
-        SPEAK_ALLOW_BREAK = 0 != allowBreak;
-        DLOG_F(INFO, "[loadIni]     allowBreak=%d; SPEAK_ALLOW_BREAK=%d", allowBreak, SPEAK_ALLOW_BREAK);
+        boy::SPEAK_ALLOW_BREAK = 0 != allowBreak;
+        DLOG_F(INFO, "[loadIni]     allowBreak=%d; SPEAK_ALLOW_BREAK=%d", allowBreak, boy::SPEAK_ALLOW_BREAK);
 
         DLOG_F(INFO, "[loadIni] load ini finished.");
     }
