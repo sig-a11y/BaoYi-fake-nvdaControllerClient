@@ -5,6 +5,8 @@
 #include <wtypes.h> // LPCSTR; LPCWSTR
 // -- [3rd]
 #include "loguru.hpp" // 日志记录框架
+#define SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#include "spdlog/spdlog.h"
 
 namespace nvdll {
 namespace log {

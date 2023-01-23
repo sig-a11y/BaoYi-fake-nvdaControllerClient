@@ -1,5 +1,6 @@
 ﻿#include "log.hpp"
 #include "dll.hpp"
+#include "spdlog/sinks/basic_file_sink.h"
 
 namespace nvdll {
 namespace log {
@@ -8,6 +9,9 @@ namespace log {
     {
 #ifdef _DEBUG
         loguru::add_file("fakeNvda-debug.log", loguru::Truncate, loguru::Verbosity_INFO);
+        auto log = spdlog::basic_logger_mt("basic_logger", "fakeNvda-debug.txt");
+        log->set_level(spdlog::level::debug);
+        spdlog::flush_every(std::chrono::seconds(1));
 #endif // def _DEBUG
         DLOG_F(INFO, "loguru init.");
         DLOG_F(INFO, "BaoYi Dll API Version: %s", dll::boy::BOY_DLL_VERSION);
