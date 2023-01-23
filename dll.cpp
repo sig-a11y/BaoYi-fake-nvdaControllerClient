@@ -1,10 +1,10 @@
-﻿#include "dll.hpp"
+﻿#include "nvdll.h"
+#include "dll.hpp"
 #include <string> // wstring
 #include <vector> // vector
 #include <strsafe.h> // StringCchPrintf
 #include <stdlib.h> // _wsplitpath_s, _wmakepath_s
 // -- boy
-#include "boy_impl.h"
 #include <sstream> // stringstream
 #include <cassert> // assert
 #include <iostream> // wcout

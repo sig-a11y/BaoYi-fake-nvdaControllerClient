@@ -71,7 +71,7 @@
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
       <Filter>头文件\boy</Filter>
     </ClInclude>
-    <ClInclude Include="..\boy_impl.h">
+    <ClInclude Include="..\nvdll.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
-    <ClInclude Include="..\boy_impl.h" />
+    <ClInclude Include="..\nvdll.h" />
     <ClInclude Include="..\global.hpp" />
     <ClInclude Include="..\deps\loguru\loguru.hpp" />
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />
