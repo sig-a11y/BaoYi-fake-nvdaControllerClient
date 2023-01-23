@@ -16,6 +16,7 @@ namespace dll {
 #pragma region 全局变量定义
     /// DLL 所在文件夹路径
     TCHAR DLL_DIR_PATH[MAX_PATH];
+    HMODULE dllHandle;
 #pragma region
 
 
