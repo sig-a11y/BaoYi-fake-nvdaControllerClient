@@ -3,7 +3,6 @@
 #include "dll.hpp" // dll::
 
 
-#ifndef BUILD_EXE
 /**
  * @brief DLL 主函数
  * @param hinstDLL handle to DLL module
@@ -58,22 +57,3 @@ BOOL WINAPI DllMain(
 
     return TRUE;
 }
-
-#else  // defined( BUILD_EXE )
-/// exe 主函数
-int main()
-{
-    std::cout 
-        << "[DllMain] BaoYi Dll API Version: " << BOY_DLL_VERSION << "\n"
-        << "[DllMain] Compiled at: " << __DATE__ << " " << __TIME__
-        << std::endl;
-
-    bool has_error = loadBaoYiDll();
-    if (has_error) {
-        exit(EXIT_FAILURE);
-    }
-
-    std::cout << "Hello World!\n";
-    return EXIT_SUCCESS;
-}
-#endif // BUILD_EXE
