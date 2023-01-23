@@ -5,9 +5,4 @@
 #include <Windows.h>
 #include "log.hpp"
 
-
-namespace boy
-{
-
-}
 #endif // __BOY_GLOBAL_H

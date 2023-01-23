@@ -1,6 +1,6 @@
 ﻿// ---- 私有头文件
 #include "boy_global.hpp"
-#include "dll.hpp"
+#include "dll.hpp"  // dll::
 
 
 #ifndef BUILD_EXE
