@@ -11,13 +11,18 @@
 #include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
 
 
-namespace dll 
-{
-namespace boy
-{
+using namespace dll;
+using namespace dll::boy;
+
+
 #pragma region 局部变量定义
-    /// 保益 DLL 完整路径
-    TCHAR BOY_DLL_FULLPATH[MAX_PATH];
+namespace dll {
+    namespace boy
+    {
+        /// 保益 DLL 完整路径
+        TCHAR BOY_DLL_FULLPATH[MAX_PATH];
+    } // dll::boy::
+} // dll::
 
     static BoyCtrlInitializeFunc boyCtrlInitialize;
     static BoyCtrlUninitializeFunc boyCtrlUninitialize;
@@ -209,6 +214,3 @@ namespace boy
         return RPC_S_CANNOT_SUPPORT;
     }
 #pragma endregion
-
-} // dll::boy::
-} // dll::
