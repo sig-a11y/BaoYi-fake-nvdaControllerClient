@@ -9,15 +9,9 @@
 #include "boy_global.hpp"
 #include "dll.hpp"
 using namespace boy;
+using namespace dll;
 
-namespace boy
-{
-    /// DLL 所在文件夹路径
-    TCHAR DLL_DIR_PATH[MAX_PATH];
-    /// 保益 DLL 完整路径
-    TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
-}
 
 #pragma region 全局变量定义
 /// DLL 句柄

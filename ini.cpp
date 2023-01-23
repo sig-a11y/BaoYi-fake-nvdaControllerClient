@@ -1,6 +1,7 @@
 ﻿#include "ini.hpp"
 #include "SimpleIni.h"
 #include "boy_global.hpp"
+#include "dll.hpp"
 #include <pathcch.h> // PathCchCombineEx
 #pragma comment(lib, "pathcch.lib")
 #include <Shlwapi.h> // PathFileExists
@@ -52,7 +53,7 @@ namespace ini {
 
         // ==== 拼接 ini 完整路径，尝试加载
         // TODO: 显式构造长路径 "\\?\"
-        PathCchCombineEx(iniPath, MAX_PATH, boy::DLL_DIR_PATH, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
+        PathCchCombineEx(iniPath, MAX_PATH, dll::DLL_DIR_PATH, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
         logWString("loadIni", "iniPath", iniPath);
         bool exist = PathFileExists(iniPath);
         DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);

@@ -9,6 +9,11 @@ namespace dll {
     using nvdll::log::logWString;
 
 #pragma region 全局变量定义
+    /// DLL 所在文件夹路径
+    TCHAR DLL_DIR_PATH[MAX_PATH];
+    /// 保益 DLL 完整路径
+    TCHAR BOY_DLL_FULLPATH[MAX_PATH];
+
     /// DLL 句柄
     static HMODULE dllHandle;
     static BoyCtrlInitializeFunc boyCtrlInitialize;
@@ -49,13 +54,13 @@ namespace dll {
         );
 
         // 拼接文件夹路径
-        _wmakepath_s(boy::DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
+        _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
         // 打印文件夹路径
-        logWString("saveDllDirPath", "DLL_DIR_PATH", boy::DLL_DIR_PATH);
+        logWString("saveDllDirPath", "DLL_DIR_PATH", DLL_DIR_PATH);
 
         // -- 拼接保益 DLL 完整路径
-        StringCchPrintfW(boy::BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", boy::DLL_DIR_PATH, boy::BOY_DLL_NAME);
-        logWString("saveDllDirPath", "BOY_DLL_FULLPATH", boy::BOY_DLL_FULLPATH);
+        StringCchPrintfW(BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, BOY_DLL_NAME);
+        logWString("saveDllDirPath", "BOY_DLL_FULLPATH", BOY_DLL_FULLPATH);
     }
 
 } // dll::
