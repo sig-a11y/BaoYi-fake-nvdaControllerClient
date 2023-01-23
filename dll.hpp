@@ -33,8 +33,10 @@ namespace dll {
     extern TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 #pragma region
 
+#pragma region 导出函数
     void saveDllDirPath(HINSTANCE hinstDLL);
-
+    void freeDll();
+#pragma region
 } // dll::
 
 #endif // __BOY_DLL_H
