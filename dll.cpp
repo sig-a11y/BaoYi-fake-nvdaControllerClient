@@ -1,5 +1,6 @@
 ﻿#include "nvdll_impl.h"
 #include "dll.hpp"
+#include "BoyCtrl.h"
 #include <string> // wstring
 #include <vector> // vector
 #include <strsafe.h> // StringCchPrintf

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #ifndef __NVDLL_GLOBAL_H
 #define __NVDLL_GLOBAL_H
-#include "BoyCtrl.h"
 #include <Windows.h>
 #include "log.hpp"
 
