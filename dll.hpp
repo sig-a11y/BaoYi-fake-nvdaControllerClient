@@ -1,7 +1,8 @@
 ﻿#pragma once
 #ifndef __BOY_DLL_H
 #define __BOY_DLL_H
-#include <wtypes.h>
+// -- [sys] win
+#include <wtypes.h> // LPCSTR; LPCWSTR; TCHAR
 #include <minwindef.h> // HINSTANCE
 
 

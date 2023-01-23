@@ -1,7 +1,8 @@
 ﻿#pragma once
 #ifndef __BOY_INI_H
 #define __BOY_INI_H
-#include <wtypes.h>
+// -- [sys] win
+#include <wtypes.h> // PCWSTR
 
 namespace ini {
     extern bool SPEAK_WITH_SLAVE;

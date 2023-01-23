@@ -1,16 +1,20 @@
-﻿#include "nvdll_impl.h"
-#include "dll.hpp"
-#include "BoyCtrl.h"
+﻿#include "nvdll_impl.h" // API 导出
+#include "dll.hpp" // 项目内导出
+// -- [sys] win 
+#include <stdlib.h> // _wsplitpath_s, _wmakepath_s
+#include <strsafe.h> // StringCchPrintf
 #include <string> // wstring
 #include <vector> // vector
-#include <strsafe.h> // StringCchPrintf
-#include <stdlib.h> // _wsplitpath_s, _wmakepath_s
-// -- boy
+// == boy
+// -- [sys] win 
 #include <sstream> // stringstream
 #include <cassert> // assert
 #include <iostream> // wcout
-#include "log.hpp" // nvdll::log
-#include "ini.hpp"
+// -- [3rd]
+#include "BoyCtrl.h" // 保益 DLL 接口导入
+// -- [proj]
+#include "log.hpp" // nvdll::log::; DLOG_F
+#include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
 
 
 namespace dll {

@@ -1,6 +1,6 @@
-﻿// ---- 私有头文件
-#include "log.hpp"
-#include "dll.hpp"  // dll::
+﻿// -- [proj]
+#include "log.hpp" // loguru::; DLOG_F
+#include "dll.hpp" // dll::
 
 
 #ifndef BUILD_EXE

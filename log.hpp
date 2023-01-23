@@ -1,7 +1,9 @@
 ﻿#pragma once
 #ifndef __NVDLL_LOG_H
 #define __NVDLL_LOG_H
-#include <wtypes.h>
+// -- [sys] win
+#include <wtypes.h> // LPCSTR; LPCWSTR
+// -- [3rd]
 #include "loguru.hpp" // 日志记录框架
 
 namespace nvdll {
