@@ -13,7 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="源文件\simpleini">
+    <Filter Include="头文件\utils">
+      <UniqueIdentifier>{9701cd49-0fdd-431d-b310-5b41930c1f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\boy">
+      <UniqueIdentifier>{0713c039-9125-49cf-8edb-9c8e50d738cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\utils">
+      <UniqueIdentifier>{6c8fda15-b7a5-425c-9024-e40899a9b13b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\utils\simpleini">
       <UniqueIdentifier>{f654f1e7-86e2-4a14-ab77-290e1ad5d802}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -22,39 +31,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c">
-      <Filter>源文件\simpleini</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\loguru\loguru.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ini.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\utils\simpleini</Filter>
     </ClCompile>
     <ClCompile Include="..\dll.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\ini.cpp">
+      <Filter>源文件\utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\log.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\loguru\loguru.cpp">
+      <Filter>源文件\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\boy_impl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
-      <Filter>源文件\simpleini</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\simpleini\SimpleIni.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\loguru\loguru.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ini.hpp">
-      <Filter>头文件</Filter>
+      <Filter>源文件\utils\simpleini</Filter>
     </ClInclude>
     <ClInclude Include="..\boy_global.hpp">
       <Filter>头文件</Filter>
@@ -62,8 +56,23 @@
     <ClInclude Include="..\dll.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\ini.hpp">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
     <ClInclude Include="..\log.hpp">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\loguru\loguru.hpp">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\simpleini\SimpleIni.h">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\boy_impl.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
+      <Filter>头文件\boy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
