@@ -22,36 +22,44 @@ typedef unsigned long error_status_t;
 
 
 #ifdef __cplusplus
-extern "C" {
+namespace dll {
+    extern "C" {
 #endif // __cplusplus
 
-/**
- * @brief 检查读屏器是否在运行
- * @return 错误码
-*/
-NVDLL_IMPL_API WIN_RPC_RET testIfRunning_impl();
+        /**
+         * @brief 检查读屏器是否在运行
+         * @return 错误码
+        */
+        NVDLL_IMPL_API WIN_RPC_RET testIfRunning_impl();
 
-/**
- * @brief 向读屏器输出文本
- * @param text 待输出的文本
- * @return 错误码
-*/
-NVDLL_IMPL_API WIN_RPC_RET speakText_impl(const wchar_t* text);
+        /**
+         * @brief 向读屏器输出文本
+         * @param text 待输出的文本
+         * @return 错误码
+        */
+        NVDLL_IMPL_API WIN_RPC_RET speakText_impl(const wchar_t* text);
 
-/**
- * @brief 静音当前输出
- * @return 错误码
-*/
-NVDLL_IMPL_API WIN_RPC_RET cancelSpeech_impl();
+        /**
+         * @brief 静音当前输出
+         * @return 错误码
+        */
+        NVDLL_IMPL_API WIN_RPC_RET cancelSpeech_impl();
 
-/**
- * @brief 【暂不支持】输出盲文
- * @param message 待输出的文本
- * @return 错误码
-*/
-NVDLL_IMPL_API WIN_RPC_RET brailleMessage_impl(const wchar_t* message);
+        /**
+         * @brief 【暂不支持】输出盲文
+         * @param message 待输出的文本
+         * @return 错误码
+        */
+        NVDLL_IMPL_API WIN_RPC_RET brailleMessage_impl(const wchar_t* message);
 
 #ifdef __cplusplus
+    }
 }
+
+// ---- 导出函数到顶层
+using dll::testIfRunning_impl;
+using dll::speakText_impl;
+using dll::cancelSpeech_impl;
+using dll::brailleMessage_impl;
 #endif // __cplusplus
 #endif // __NVDLL_IMPL_H
