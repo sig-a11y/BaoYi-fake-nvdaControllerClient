@@ -8,7 +8,7 @@
 #include <sstream> // stringstream
 #include <cassert> // assert
 #include <iostream> // wcout
-#include "boy_global.hpp"
+#include "global.hpp"
 #include "ini.hpp"
 
 

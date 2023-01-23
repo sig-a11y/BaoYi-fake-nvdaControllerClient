@@ -1,6 +1,6 @@
 ﻿#include "ini.hpp"
 #include "SimpleIni.h"
-#include "boy_global.hpp"
+#include "global.hpp"
 #include "dll.hpp"
 #include <pathcch.h> // PathCchCombineEx
 #pragma comment(lib, "pathcch.lib")

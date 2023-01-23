@@ -50,7 +50,7 @@
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
       <Filter>源文件\utils\simpleini</Filter>
     </ClInclude>
-    <ClInclude Include="..\boy_global.hpp">
+    <ClInclude Include="..\global.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\dll.hpp">
@@ -68,11 +68,11 @@
     <ClInclude Include="..\deps\simpleini\SimpleIni.h">
       <Filter>头文件\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\boy_impl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
       <Filter>头文件\boy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\boy_impl.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

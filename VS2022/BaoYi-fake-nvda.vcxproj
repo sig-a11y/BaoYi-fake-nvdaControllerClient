@@ -28,11 +28,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
-    <ClInclude Include="..\boy_global.hpp" />
+    <ClInclude Include="..\boy_impl.h" />
+    <ClInclude Include="..\global.hpp" />
     <ClInclude Include="..\deps\loguru\loguru.hpp" />
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />
     <ClInclude Include="..\deps\simpleini\SimpleIni.h" />
-    <ClInclude Include="..\boy_impl.h" />
     <ClInclude Include="..\dll.hpp" />
     <ClInclude Include="..\ini.hpp" />
     <ClInclude Include="..\log.hpp" />
