@@ -109,11 +109,22 @@ void loadIni()
     else 
     {
         LPCWSTR pv;
-        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"1");
-        DLOG_F(INFO, "[loadIni]     slave=%d; SPEAK_WITH_SLAVE=%d", pv, pv != 0);
+        DLOG_F(INFO, "[loadIni] ini.LoadFile rc=%x", rc);
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"-1");
+        logWString("loadIni", "INI_KEY_USE_SLAVE", pv);
+        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_SLAVE_CN, L"-1");
+        logWString("loadIni", "INI_KEY_USE_SLAVE_CN", pv);
 
-        pv = ini.GetValue(L"朗读", L"独立通道", L"1");
-        DLOG_F(INFO, "[loadIni]     朗读.独立通道=%d;", pv);
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_APPEND, L"-1");
+        logWString("loadIni", "INI_KEY_USE_APPEND", pv);
+        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_APPEND_CN, L"-1");
+        logWString("loadIni", "INI_KEY_USE_APPEND_CN", pv);
+
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_ALLOW_BREAK, L"-1");
+        logWString("loadIni", "INI_KEY_ALLOW_BREAK", pv);
+        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_ALLOW_BREAK_CN, L"-1");
+        logWString("loadIni", "INI_KEY_ALLOW_BREAK_CN", pv);
+
     }
 
     // 拼接的路径不存在，尝试直接读取 ini
