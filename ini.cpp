@@ -1,6 +1,5 @@
 ﻿#include "ini.hpp"
 #include "SimpleIni.h"
-#include "loguru.hpp" // 日志记录
 #include "boy_global.hpp"
 #include <pathcch.h> // PathCchCombineEx
 #pragma comment(lib, "pathcch.lib")
@@ -9,7 +8,7 @@
 
 
 namespace ini {
-    using boy::logWString;
+    using nvdll::log::logWString;
 
 #pragma region 常量变量定义
     // TODO: 使用枚举

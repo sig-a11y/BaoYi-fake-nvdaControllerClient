@@ -6,7 +6,7 @@
 
 
 namespace dll {
-    using boy::logWString;
+    using nvdll::log::logWString;
 
 #pragma region 全局变量定义
     /// DLL 句柄

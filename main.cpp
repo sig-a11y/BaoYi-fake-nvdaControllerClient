@@ -18,16 +18,6 @@ namespace boy
     /// 保益 DLL 完整路径
     TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
-    /// 通过日志输出 WString 类型的变量
-    void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring)
-    {
-        /// 输出字符串的长度，包括结尾的 null
-        size_t outStringLen;
-        /// 转化后的字符串，待输出
-        char outString[PATH_NO_LIMIT_SIZE];
-        wcstombs_s(&outStringLen, outString, (size_t)PATH_NO_LIMIT_SIZE, inWstring, (size_t)MAX_PATH - 1);
-        DLOG_F(INFO, "[%s] %s[]: %s", prefix, varName, outString);
-    }
 }
 
 #pragma region 全局变量定义

@@ -23,6 +23,7 @@
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c" />
     <ClCompile Include="..\dll.cpp" />
     <ClCompile Include="..\ini.cpp" />
+    <ClCompile Include="..\log.cpp" />
     <ClCompile Include="..\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +35,7 @@
     <ClInclude Include="..\boy_impl.h" />
     <ClInclude Include="..\dll.hpp" />
     <ClInclude Include="..\ini.hpp" />
+    <ClInclude Include="..\log.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\dll.def" />
