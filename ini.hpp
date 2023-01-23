@@ -17,8 +17,6 @@ namespace ini {
     const LPCWSTR INI_KEY_ALLOW_BREAK = L"ALLOW_BREAK";
     const LPCWSTR INI_KEY_ALLOW_BREAK_CN = L"按键打断朗读";
 
-    /// 配置文件对象
-    static CSimpleIniW ini;
     void loadIni();
 } // ini::
 

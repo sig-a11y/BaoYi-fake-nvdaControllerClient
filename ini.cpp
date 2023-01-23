@@ -10,6 +10,9 @@
 namespace ini {
     using boy::logWString;
 
+    /// 配置文件对象
+    static CSimpleIniW ini;
+
     /// 加载配置文件
     /// 非0值作为 true
     void loadIni()
