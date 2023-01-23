@@ -11,6 +11,15 @@
 namespace ini {
     using nvdll::log::logWString;
 
+#pragma region 全局变量定义
+    /// false=使用读屏通道，true=使用独立通道
+    bool SPEAK_WITH_SLAVE = true;
+    /// 是否排队朗读
+    bool SPEAK_APPEND = true;
+    /// 是否允许用户打断.使用读屏通道时该参数被忽略
+    bool SPEAK_ALLOW_BREAK = true;
+#pragma region
+
 #pragma region 常量变量定义
     // TODO: 使用枚举
 
@@ -29,14 +38,6 @@ namespace ini {
 
     /// 配置文件对象
     static CSimpleIniW ini;
-
-    // ==== 导出变量
-    /// false=使用读屏通道，true=使用独立通道
-    bool SPEAK_WITH_SLAVE = true;
-    /// 是否排队朗读
-    bool SPEAK_APPEND = true;
-    /// 是否允许用户打断.使用读屏通道时该参数被忽略
-    bool SPEAK_ALLOW_BREAK = true;
 #pragma region
 
 
