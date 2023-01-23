@@ -45,6 +45,9 @@
     <ClCompile Include="..\deps\loguru\loguru.cpp">
       <Filter>源文件\utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\dll_boy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
