@@ -45,7 +45,7 @@ const LPCWSTR DLL_LOG_NAME = nullptr;
 /// 配置文件对象
 static CSimpleIniW ini;
 /// 保益 DLL 配置 ini 文件名. TODO: 使用枚举
-const LPCWSTR INI_NAME = L"朗读配置.ini";
+const LPCWSTR INI_NAME = L"nvdaCfg.ini";
 const LPCWSTR INI_NAME_CN = L"朗读配置.ini";
 const LPCWSTR INI_APP_NAME = L"APP";
 const LPCWSTR INI_APP_NAME_CN = L"朗读";
@@ -97,7 +97,7 @@ void loadIni()
 
     // ==== 拼接 ini 完整路径，尝试加载
     // TODO: 显式构造长路径 "\\?\"
-    PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
+    PathCchCombineEx(iniPath, PATH_NO_LIMIT_SIZE, DLL_DIR_PATH, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
     logWString("loadIni", "iniPath", iniPath);
     bool exist = PathFileExists(iniPath);
     DLOG_F(INFO, "[loadIni] PathFileExists=%d", exist);
