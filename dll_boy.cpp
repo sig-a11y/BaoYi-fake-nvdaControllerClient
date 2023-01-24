@@ -87,7 +87,8 @@ namespace boy
 
         if (ini::SPEAK_ALLOW_BREAK)
         {
-            input::runInputListener();
+            // input::runInputListener();
+            input::setInputHook();
         }
 
         SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");

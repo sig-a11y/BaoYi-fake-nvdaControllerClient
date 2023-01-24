@@ -40,7 +40,8 @@ BOOL WINAPI DllMain(
             {
                 // do not do cleanup if process termination scenario
                 spdlog::warn("Process termination scenario, will not do cleanup.");
-                nvdll::input::killListenerThread();
+                // nvdll::input::killListenerThread();
+                nvdll::input::removeInputHook();
                 break; 
             }
 
