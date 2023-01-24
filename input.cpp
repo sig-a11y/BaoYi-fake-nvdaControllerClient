@@ -31,6 +31,9 @@ namespace input
     /// 启动输入监听线程
     void runInputListener()
     {
+        // 避免重复初始化
+        killListenerThread();
+
         SPDLOG_DEBUG("[runInputListener] theard start...");
 
         inputListenerThread = std::thread(keyboardListener);
