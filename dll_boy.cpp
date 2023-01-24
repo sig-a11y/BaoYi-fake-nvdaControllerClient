@@ -9,6 +9,7 @@
 // -- [proj]
 #include "log.hpp" // nvdll::log::; DLOG_F
 #include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
+#include "input.hpp"
 
 
 #pragma region 局部变量定义
@@ -82,6 +83,11 @@ namespace boy
             spdlog::error(L"[loadBaoYiDll]   ret={}", (int)err);
             freeDll();
             return EXIT_FAILURE;
+        }
+
+        if (ini::SPEAK_ALLOW_BREAK)
+        {
+            input::runInputListener();
         }
 
         SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");

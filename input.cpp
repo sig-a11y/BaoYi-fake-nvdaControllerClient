@@ -19,7 +19,7 @@ namespace input
         while (true)
         {
             if (_kbhit()) {
-                spdlog::debug("[keyboardListener] keydown");
+                SPDLOG_DEBUG("[keyboardListener] keydown");
                 cancelSpeech_impl();
             }
 
@@ -31,7 +31,7 @@ namespace input
     /// 启动输入监听线程
     void runInputListener()
     {
-        spdlog::info("[runInputListener] theard start...");
+        SPDLOG_DEBUG("[runInputListener] theard start...");
 
         inputListenerThread = std::thread(keyboardListener);
 
@@ -45,7 +45,9 @@ namespace input
     {
         if (inputListenerThread.joinable())
         {
+            SPDLOG_DEBUG("[killListenerThread] waiting for theard to exit...");
             inputListenerThread.join();
+            spdlog::info("[killListenerThread] theard exited.");
         }
     }
 

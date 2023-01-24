@@ -1,7 +1,7 @@
 ﻿// -- [proj]
 #include "log.hpp" // nvdll::log::
 #include "dll.hpp" // nvdll::
-
+#include "input.hpp"
 
 /**
  * @brief DLL 主函数
@@ -40,6 +40,7 @@ BOOL WINAPI DllMain(
             {
                 // do not do cleanup if process termination scenario
                 spdlog::warn("Process termination scenario, will not do cleanup.");
+                nvdll::input::killListenerThread();
                 break; 
             }
 
