@@ -23,6 +23,7 @@
     <ClCompile Include="..\dll.cpp" />
     <ClCompile Include="..\dll_boy.cpp" />
     <ClCompile Include="..\ini.cpp" />
+    <ClCompile Include="..\input.cpp" />
     <ClCompile Include="..\log.cpp" />
     <ClCompile Include="..\main.cpp" />
   </ItemGroup>
@@ -30,6 +31,7 @@
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
     <ClInclude Include="..\deps\spdlog\include\spdlog\spdlog.h" />
     <ClInclude Include="..\deps\spdlog\include\spdlog\tweakme.h" />
+    <ClInclude Include="..\input.hpp" />
     <ClInclude Include="..\nvda.h" />
     <ClInclude Include="..\nvdll_impl.h" />
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />

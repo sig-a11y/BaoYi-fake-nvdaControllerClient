@@ -45,6 +45,9 @@
     <ClCompile Include="..\dll_boy.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\input.cpp">
+      <Filter>源文件\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
@@ -75,6 +78,9 @@
       <Filter>头文件\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\deps\spdlog\include\spdlog\tweakme.h">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\input.hpp">
       <Filter>头文件\utils</Filter>
     </ClInclude>
   </ItemGroup>
