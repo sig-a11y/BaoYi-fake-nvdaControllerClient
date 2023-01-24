@@ -32,6 +32,7 @@ namespace dll {
         GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
         // -- 打印完整路径
+        spdlog::info("BaoYi Dll API Version: {}", dll::boy::BOY_DLL_VERSION);
         spdlog::info(L"DLL_PATH={}", DLL_PATH);
 
         // -- 拆分路径
