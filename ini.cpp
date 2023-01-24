@@ -76,7 +76,7 @@ namespace ini {
             SPDLOG_DEBUG("[loadIni] print all item in ini...");
             for (CSimpleIniW::Entry s : allSec)
             {
-                SPDLOG_DEBUG("[loadIni] s.pItem[{}]={}", s.nOrder, s.pItem);
+                // SPDLOG_DEBUG("[loadIni] s.pItem[{}]={}", s.nOrder, s.pItem);
                 // TODO: 输出所有选项
             }
 #endif // def _DEBUG
