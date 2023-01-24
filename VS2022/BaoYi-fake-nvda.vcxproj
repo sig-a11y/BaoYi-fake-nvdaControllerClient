@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\deps\loguru\loguru.cpp" />
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c" />
     <ClCompile Include="..\dll.cpp" />
     <ClCompile Include="..\dll_boy.cpp" />
@@ -33,7 +32,6 @@
     <ClInclude Include="..\deps\spdlog\include\spdlog\tweakme.h" />
     <ClInclude Include="..\nvda.h" />
     <ClInclude Include="..\nvdll_impl.h" />
-    <ClInclude Include="..\deps\loguru\loguru.hpp" />
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h" />
     <ClInclude Include="..\deps\simpleini\SimpleIni.h" />
     <ClInclude Include="..\dll.hpp" />

@@ -12,18 +12,6 @@ namespace log {
     constexpr LPCSTR DEBUG_LOG_NAME = "nvdaDll-debug.log";
     constexpr LPCSTR LOG_NAME = "nvdaDll.log";
 
-    /// 初始化 loguru 日志库
-    void loguru_init()
-    {
-#ifdef _DEBUG
-        loguru::add_file("fakeNvda-debug.log", loguru::Truncate, loguru::Verbosity_INFO);
-#endif // def _DEBUG
-
-        DLOG_F(INFO, "loguru init.");
-        DLOG_F(INFO, "BaoYi Dll API Version: %s", dll::boy::BOY_DLL_VERSION);
-        DLOG_F(INFO, "Compiled at: %s %s", __DATE__, __TIME__);
-    }
-
     /// 初始化 spdlog
     void spdlog_init()
     {
@@ -56,8 +44,6 @@ namespace log {
     /// 初始化全局日志
     void init()
     {
-        // TODO: 移除 loguru
-        // loguru_init();
         spdlog_init();
     }
 

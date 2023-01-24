@@ -42,9 +42,6 @@
     <ClCompile Include="..\log.cpp">
       <Filter>源文件\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\deps\loguru\loguru.cpp">
-      <Filter>源文件\utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\dll_boy.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -60,9 +57,6 @@
       <Filter>头文件\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\log.hpp">
-      <Filter>头文件\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\deps\loguru\loguru.hpp">
       <Filter>头文件\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\deps\simpleini\SimpleIni.h">
