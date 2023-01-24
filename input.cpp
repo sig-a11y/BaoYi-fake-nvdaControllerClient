@@ -12,6 +12,8 @@ namespace nvdll
 {
 namespace input
 {
+
+#pragma region 输入监听线程
     std::thread inputListenerThread;
 
     // TODO: 换用输入钩子
@@ -55,6 +57,12 @@ namespace input
             spdlog::info("[killListenerThread] theard exited.");
         }
     }
+#pragma endregion
+
+
+#pragma region 输入监听 hook
+
+#pragma endregion
 
 } // nvdll::input::
 } // nvdll::
