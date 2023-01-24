@@ -25,12 +25,14 @@ namespace log {
 #ifndef _DEBUG
         spdlog::logger logger("release_sink", { console_sink, file_sink });
         logger.set_level(spdlog::level::info);
+        logger.flush_on(spdlog::level::info);
 #else
         // -- debug 模式：日志文件输出 warn+debug
         auto debug_file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(DEBUG_LOG_NAME, true);
         debug_file_sink->set_level(spdlog::level::debug);
         spdlog::logger logger("debug_sink", { console_sink, file_sink, debug_file_sink });
         logger.set_level(spdlog::level::debug);
+        logger.flush_on(spdlog::level::debug);
 #endif // ndef _DEBUG
 
         // 注册为默认日志
