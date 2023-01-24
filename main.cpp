@@ -1,5 +1,5 @@
 ﻿// -- [proj]
-#include "log.hpp" // loguru::; DLOG_F
+#include "log.hpp" // nvdll::log::
 #include "dll.hpp" // nvdll::
 
 

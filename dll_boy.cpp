@@ -11,20 +11,7 @@
 #include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
 
 
-using namespace nvdll;
-using namespace nvdll::boy;
-using namespace nvdll;
-
-
 #pragma region 局部变量定义
-namespace nvdll {
-    namespace boy
-    {
-        /// 保益 DLL 完整路径
-        TCHAR BOY_DLL_FULLPATH[MAX_PATH];
-    } // nvdll::boy::
-} // nvdll::
-
 static BoyCtrlInitializeFunc boyCtrlInitialize;
 static BoyCtrlUninitializeFunc boyCtrlUninitialize;
 static BoyCtrlSpeakFunc boyCtrlSpeak;
@@ -33,73 +20,82 @@ static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
 #pragma region
 
 #pragma region 加载保益 DLL
-/// 加载 DLL 及导入函数
-bool loadBaoYiDll()
+namespace nvdll 
 {
-    std::stringstream eout;
-
-    // -- 加载 DLL
-    // 使用完整路径加载：保益 DLL 和 nvda 放在一起
-    if (nullptr == dllHandle)
-    {
-        SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
-        dllHandle = LoadLibrary(BOY_DLL_FULLPATH);
-        SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
-    }
-    // 仅使用 DLL 名加载：保益 DLL 和主程序 exe 放在一起
-    if (nullptr == dllHandle)
-    {
-        SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
-        dllHandle = LoadLibrary(BOY_DLL_NAME);
-        SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
-    }
-    // 检查 DLL 是否成功加载
-    if (!dllHandle)
-    {
-        spdlog::error(L"[loadBaoYiDll] Failed to load DLL '{}'. 尝试加载 DLL 失败。", BOY_DLL_NAME);
-        spdlog::error(L"[loadBaoYiDll] GetLastError={}", GetLastError());
-        return EXIT_FAILURE;
-    }
-
-    // 加载配置文件
-    nvdll::ini::loadIni(DLL_DIR_PATH);
-
-    // -- 加载函数
-    boyCtrlInitialize = (BoyCtrlInitializeFunc)loadFunctionPtr("BoyCtrlInitialize");
-    if (nullptr == boyCtrlInitialize) return EXIT_FAILURE;
-    boyCtrlUninitialize = (BoyCtrlUninitializeFunc)loadFunctionPtr("BoyCtrlUninitialize");
-    if (nullptr == boyCtrlUninitialize) return EXIT_FAILURE;
-    boyCtrlSpeak = (BoyCtrlSpeakFunc)loadFunctionPtr("BoyCtrlSpeak");
-    if (nullptr == boyCtrlSpeak) return EXIT_FAILURE;
-    boyCtrlStopSpeaking = (BoyCtrlStopSpeakingFunc)loadFunctionPtr("BoyCtrlStopSpeaking");
-    if (nullptr == boyCtrlStopSpeaking) return EXIT_FAILURE;
-    boyCtrlPauseScreenReader = (BoyCtrlPauseScreenReaderFunc)loadFunctionPtr("BoyCtrlPauseScreenReader");
-    if (nullptr == boyCtrlPauseScreenReader) return EXIT_FAILURE;
-
-    // -- 初始化 DLL
-    // 日志放在当前工作目录
-    auto err = boyCtrlInitialize(DLL_LOG_NAME);
-    if (err != e_bcerr_success)
-    {
-        spdlog::error(L"[loadBaoYiDll] Initialize failed. 初始化失败。");
-        spdlog::error(L"[loadBaoYiDll]   ret={}", (int)err);
-        freeDll();
-        return EXIT_FAILURE;
-    }
-
-    SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");
-    return EXIT_SUCCESS;
-}
-
-/**
-    * @brief 回调函数
-    * @param reason 回调原因（调用是否成功）
-    * @return void
-*/
-void __stdcall speakCompleteCallback(int reason)
+namespace boy
 {
-    return;
-}
+    /// 保益 DLL 完整路径
+    TCHAR BOY_DLL_FULLPATH[MAX_PATH];
+
+    /// 加载 DLL 及导入函数
+    bool loadBaoYiDll()
+    {
+        std::stringstream eout;
+
+        // -- 加载 DLL
+        // 使用完整路径加载：保益 DLL 和 nvda 放在一起
+        if (nullptr == dllHandle)
+        {
+            SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
+            dllHandle = LoadLibrary(BOY_DLL_FULLPATH);
+            SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
+        }
+        // 仅使用 DLL 名加载：保益 DLL 和主程序 exe 放在一起
+        if (nullptr == dllHandle)
+        {
+            SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
+            dllHandle = LoadLibrary(BOY_DLL_NAME);
+            SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
+        }
+        // 检查 DLL 是否成功加载
+        if (!dllHandle)
+        {
+            spdlog::error(L"[loadBaoYiDll] Failed to load DLL '{}'. 尝试加载 DLL 失败。", BOY_DLL_NAME);
+            spdlog::error(L"[loadBaoYiDll] GetLastError={}", GetLastError());
+            return EXIT_FAILURE;
+        }
+
+        // 加载配置文件
+        nvdll::ini::loadIni(DLL_DIR_PATH);
+
+        // -- 加载函数
+        boyCtrlInitialize = (BoyCtrlInitializeFunc)loadFunctionPtr("BoyCtrlInitialize");
+        if (nullptr == boyCtrlInitialize) return EXIT_FAILURE;
+        boyCtrlUninitialize = (BoyCtrlUninitializeFunc)loadFunctionPtr("BoyCtrlUninitialize");
+        if (nullptr == boyCtrlUninitialize) return EXIT_FAILURE;
+        boyCtrlSpeak = (BoyCtrlSpeakFunc)loadFunctionPtr("BoyCtrlSpeak");
+        if (nullptr == boyCtrlSpeak) return EXIT_FAILURE;
+        boyCtrlStopSpeaking = (BoyCtrlStopSpeakingFunc)loadFunctionPtr("BoyCtrlStopSpeaking");
+        if (nullptr == boyCtrlStopSpeaking) return EXIT_FAILURE;
+        boyCtrlPauseScreenReader = (BoyCtrlPauseScreenReaderFunc)loadFunctionPtr("BoyCtrlPauseScreenReader");
+        if (nullptr == boyCtrlPauseScreenReader) return EXIT_FAILURE;
+
+        // -- 初始化 DLL
+        // 日志放在当前工作目录
+        auto err = boyCtrlInitialize(DLL_LOG_NAME);
+        if (err != e_bcerr_success)
+        {
+            spdlog::error(L"[loadBaoYiDll] Initialize failed. 初始化失败。");
+            spdlog::error(L"[loadBaoYiDll]   ret={}", (int)err);
+            freeDll();
+            return EXIT_FAILURE;
+        }
+
+        SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");
+        return EXIT_SUCCESS;
+    }
+
+    /**
+     * @brief 回调函数
+     * @param reason 回调原因（调用是否成功）
+     * @return void
+     */
+    void __stdcall speakCompleteCallback(int reason)
+    {
+        return;
+    }
+} // nvdll::boy::
+} // nvdll::
 #pragma endregion
 
 
@@ -126,26 +122,26 @@ error_status_t convertBoyCtrlError(BoyCtrlError err)
 /// 单例模式。尝试在第一次使用时加载 DLL
 void initDllIfNull()
 {
-    if (nullptr == dllHandle)
+    if (nullptr == nvdll::dllHandle)
     {
         spdlog::info("nullptr==dllHandle: trying to load dll...");
-        loadBaoYiDll();
+        nvdll::boy::loadBaoYiDll();
     }
 }
 
 error_status_t __stdcall testIfRunning_impl()
 {
-    if (nullptr == dllHandle)
+    if (nullptr == nvdll::dllHandle)
     {
-        bool has_error = loadBaoYiDll();
+        bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
             spdlog::error("[testIfRunning_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
     }
 
-    SPDLOG_DEBUG("[testIfRunning_impl] loadBaoYiDll() load finished. dllHandle={}", (void*)dllHandle);
-    assert(nullptr != dllHandle);
+    SPDLOG_DEBUG("[testIfRunning_impl] loadBaoYiDll() load finished. dllHandle={}", (void*)nvdll::dllHandle);
+    assert(nullptr != nvdll::dllHandle);
     return RPC_S_OK;
 }
 
@@ -155,7 +151,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
 
     if (nullptr == boyCtrlSpeak)
     {
-        bool has_error = loadBaoYiDll();
+        bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
             spdlog::error("[speakText_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
@@ -165,7 +161,11 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         assert(nullptr != boyCtrlSpeak);
     }
 
-    auto err = boyCtrlSpeak(text, nvdll::ini::SPEAK_WITH_SLAVE, nvdll::ini::SPEAK_APPEND, nvdll::ini::SPEAK_ALLOW_BREAK, speakCompleteCallback);
+    auto err = boyCtrlSpeak(text, 
+        nvdll::ini::SPEAK_WITH_SLAVE, 
+        nvdll::ini::SPEAK_APPEND, 
+        nvdll::ini::SPEAK_ALLOW_BREAK, 
+        nvdll::boy::speakCompleteCallback);
     SPDLOG_DEBUG("[speakText_impl] ret={}", (int)err);
 
     return convertBoyCtrlError(err);
@@ -175,7 +175,7 @@ error_status_t __stdcall cancelSpeech_impl()
 {
     if (nullptr == boyCtrlStopSpeaking)
     {
-        bool has_error = loadBaoYiDll();
+        bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
             spdlog::error("[cancelSpeech_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
