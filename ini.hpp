@@ -4,6 +4,7 @@
 // -- [sys] win
 #include <wtypes.h> // PCWSTR
 
+namespace nvdll {
 namespace ini {
     extern bool SPEAK_WITH_SLAVE;
     extern bool SPEAK_APPEND;
@@ -11,6 +12,6 @@ namespace ini {
 
     void loadIni(PCWSTR pszBaseDirIn);
 
-} // ini::
-
+} // nvdll::ini::
+} // nvdll::
 #endif // __BOY_INI_H

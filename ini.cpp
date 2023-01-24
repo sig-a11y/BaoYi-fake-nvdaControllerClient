@@ -8,7 +8,7 @@
 // -- [proj]
 #include "log.hpp" // log
 
-
+namespace nvdll {
 namespace ini {
 
 #pragma region 全局变量定义
@@ -124,4 +124,5 @@ namespace ini {
         spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
     }
 
-} // ini::
+} // nvdll::ini::
+} // nvdll::

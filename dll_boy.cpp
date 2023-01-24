@@ -13,6 +13,7 @@
 
 using namespace dll;
 using namespace dll::boy;
+using namespace nvdll;
 
 
 #pragma region 局部变量定义
@@ -61,7 +62,7 @@ bool loadBaoYiDll()
     }
 
     // 加载配置文件
-    ini::loadIni(DLL_DIR_PATH);
+    nvdll::ini::loadIni(DLL_DIR_PATH);
 
     // -- 加载函数
     boyCtrlInitialize = (BoyCtrlInitializeFunc)loadFunctionPtr("BoyCtrlInitialize");
@@ -164,7 +165,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         assert(nullptr != boyCtrlSpeak);
     }
 
-    auto err = boyCtrlSpeak(text, ini::SPEAK_WITH_SLAVE, ini::SPEAK_APPEND, ini::SPEAK_ALLOW_BREAK, speakCompleteCallback);
+    auto err = boyCtrlSpeak(text, nvdll::ini::SPEAK_WITH_SLAVE, nvdll::ini::SPEAK_APPEND, nvdll::ini::SPEAK_ALLOW_BREAK, speakCompleteCallback);
     SPDLOG_DEBUG("[speakText_impl] ret={}", (int)err);
 
     return convertBoyCtrlError(err);
@@ -184,7 +185,7 @@ error_status_t __stdcall cancelSpeech_impl()
         assert(nullptr != boyCtrlStopSpeaking);
     }
 
-    auto err = boyCtrlStopSpeaking(ini::SPEAK_WITH_SLAVE);
+    auto err = boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
     SPDLOG_DEBUG("[cancelSpeech_impl] ret={}", (int)err);
     return convertBoyCtrlError(err);
 }
