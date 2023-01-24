@@ -80,6 +80,9 @@
     <ClInclude Include="..\deps\spdlog\include\spdlog\spdlog.h">
       <Filter>头文件\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\deps\spdlog\include\spdlog\tweakme.h">
+      <Filter>头文件\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\朗读配置.ini">

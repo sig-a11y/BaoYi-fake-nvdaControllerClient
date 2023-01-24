@@ -5,7 +5,7 @@
 #include <wtypes.h> // LPCSTR; LPCWSTR
 // -- [3rd]
 #include "loguru.hpp" // 日志记录框架
-#define SPDLOG_WCHAR_TO_UTF8_SUPPORT
+// NOTE: 日志库配置在 "tweakme.h" 文件中
 #include "spdlog/spdlog.h"
 
 namespace nvdll {
