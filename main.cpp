@@ -39,11 +39,12 @@ BOOL WINAPI DllMain(
             if (__lpvReserved != nullptr)
             {
                 // do not do cleanup if process termination scenario
+                spdlog::warn("Process termination scenario, will not do cleanup.");
                 break; 
             }
 
             // Perform any necessary cleanup.
-            DLOG_F(INFO, "Perform any necessary cleanup.");
+            spdlog::info("Perform any necessary cleanup.");
             dll::freeDll();
         }
         break;

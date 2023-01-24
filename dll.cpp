@@ -32,7 +32,6 @@ namespace dll {
         GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
         // -- 打印完整路径
-        logWString("saveDllDirPath", "DLL_PATH", DLL_PATH);
         spdlog::info(L"DLL_PATH={}", DLL_PATH);
 
         // -- 拆分路径
@@ -53,61 +52,55 @@ namespace dll {
         // 拼接文件夹路径
         _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
         // 打印文件夹路径
-        logWString("saveDllDirPath", "DLL_DIR_PATH", DLL_DIR_PATH);
+        spdlog::info(L"DLL_DIR_PATH={}", DLL_DIR_PATH);
 
         // -- 拼接保益 DLL 完整路径
         StringCchPrintfW(boy::BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, boy::BOY_DLL_NAME);
-        logWString("saveDllDirPath", "BOY_DLL_FULLPATH", boy::BOY_DLL_FULLPATH);
+        spdlog::info(L"BOY_DLL_FULLPATH={}", boy::BOY_DLL_FULLPATH);
     }
 
     /// 加载函数指针
     FARPROC loadFunctionPtr(LPCSTR lpProcName)
     {
-        std::stringstream eout;
-
         if (nullptr == dllHandle)
         {
-            eout.clear();
-            eout << "[loadFunctionPtr] "
-                << "DLL dllHandle==nullptr. "
-                << "DLL 句柄为空。"
-                << std::endl;
-            DLOG_F(INFO, eout.str().c_str());
+            spdlog::error("[loadFunctionPtr] nullptr == dllHandle, ret.");
             return nullptr;
         }
 
-        DLOG_F(INFO,
-            "[loadFunctionPtr] GetProcAddress(dllHandle=%x, lpProcName=%s)",
-            dllHandle, lpProcName);
+        SPDLOG_DEBUG("[loadFunctionPtr] GetProcAddress(dllHandle={}, lpProcName={})",
+            (void*)dllHandle, lpProcName);
         auto funcHandle = GetProcAddress(dllHandle, lpProcName);
         if (!funcHandle)
         {
-            eout.clear();
-            eout << "[loadFunctionPtr] "
-                << "Failed to get '" << lpProcName << "'. "
-                << "获取函数指针失败：'" << lpProcName << "'"
-                << std::endl;
-            DLOG_F(INFO, eout.str().c_str());
+            spdlog::error("[loadFunctionPtr] Failed to get '{}'", lpProcName);
             freeDll();
             return nullptr;
         }
 
-        DLOG_F(INFO, "[loadFunctionPtr] ret: funcHandle=%x", funcHandle);
+        spdlog::info("[loadFunctionPtr] load {} @ {}", lpProcName, (void*)funcHandle);
         return funcHandle;
     }
 
     /// 释放 DLL
     void freeDll()
     {
-        DLOG_F(INFO, "[freeDll] trying to free DLL: dllHandle=%x", dllHandle);
+        spdlog::info("[freeDll] trying to free DLL: dllHandle={}", (void*)dllHandle);
 
         if (nullptr != dllHandle)
         {
             bool freeRet = FreeLibrary(dllHandle);
-            DLOG_F(INFO, "[freeDll] FreeLibrary ret=%d", freeRet);
+            // 成功，则返回值为非零值。
+            if (!freeRet) {
+                spdlog::error("[freeDll] FreeLibrary ret={}", (void*)dllHandle);
+            }
+            else 
+            {
+                SPDLOG_DEBUG("[freeDll] FreeLibrary ret={}", (void*)dllHandle);
+            }
         }
 
-        DLOG_F(INFO, "[freeDll] ret: dllHandle=%x", dllHandle);
+        spdlog::info("[freeDll] After FreeLibrary: dllHandle={}", (void*)dllHandle);
     }
 
 } // dll::
