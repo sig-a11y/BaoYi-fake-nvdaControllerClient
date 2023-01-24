@@ -156,13 +156,16 @@ namespace input
             // 挂钩成功
             spdlog::info("[setInputHook] Input hook ready.");
             // 消息循环初始化（没有会导致窗口卡死）
-            MSG Msg{};
-            while (GetMessage(&Msg, NULL, 0, 0) > 0)
-            {
-                TranslateMessage(&Msg);
-                DispatchMessage(&Msg);
-            }
-            SPDLOG_DEBUG("[removeInputHook] init finished.");
+            // NOTE: 全局挂钩用
+
+            //MSG Msg{};
+            //while (GetMessage(&Msg, NULL, 0, 0) > 0)
+            //{
+            //    TranslateMessage(&Msg);
+            //    DispatchMessage(&Msg);
+            //}
+
+            SPDLOG_DEBUG("[setInputHook] init finished.");
             return true;
         }
 
