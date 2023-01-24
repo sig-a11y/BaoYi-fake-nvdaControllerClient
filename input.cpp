@@ -23,8 +23,8 @@ namespace input
                 cancelSpeech_impl();
             }
 
-            // 每 100ms 检查一次
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            // 每 XXms 检查一次
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
     }
 
