@@ -17,6 +17,7 @@ static BoyCtrlUninitializeFunc boyCtrlUninitialize;
 static BoyCtrlSpeakFunc boyCtrlSpeak;
 static BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
 static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
+static BoyCtrlIsReaderRunningFunc boyCtrlIsReaderRunning;
 #pragma region
 
 #pragma region 加载保益 DLL
@@ -69,6 +70,8 @@ namespace boy
         if (nullptr == boyCtrlStopSpeaking) return EXIT_FAILURE;
         boyCtrlPauseScreenReader = (BoyCtrlPauseScreenReaderFunc)loadFunctionPtr("BoyCtrlPauseScreenReader");
         if (nullptr == boyCtrlPauseScreenReader) return EXIT_FAILURE;
+        boyCtrlIsReaderRunning = (BoyCtrlIsReaderRunningFunc)loadFunctionPtr("BoyCtrlIsReaderRunning");
+        if (nullptr == boyCtrlIsReaderRunning) return EXIT_FAILURE;
 
         // -- 初始化 DLL
         // 日志放在当前工作目录
