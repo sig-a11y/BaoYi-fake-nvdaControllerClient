@@ -134,8 +134,8 @@ namespace input
         if (keyDown)
         {
             SPDLOG_DEBUG("[kbHookFunc] VK={} x {}", wParam, repeatCount);
-            // cancelSpeech_impl();
-            SPDLOG_DEBUG("[kbHookFunc]    call cancelSpeech_impl()");
+            cancelSpeech_impl();
+            // SPDLOG_DEBUG("[kbHookFunc]    call cancelSpeech_impl()");
         }
         
         //  hook procedure must pass the message *Always*
