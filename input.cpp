@@ -127,8 +127,13 @@ namespace input
         // repeat count, > 0 if several keydown messages was combined into one message
         WORD repeatCount = LOWORD(lParam);                            
 
-        SPDLOG_DEBUG("[hookFunc] VK={} x {}", wParam, repeatCount);
-        cancelSpeech_impl();
+        // -- 仅在按下时静音，忽略弹起。
+        BOOL keyDown = !upFlag;
+        if (keyDown)
+        {
+            SPDLOG_DEBUG("[hookFunc] VK={} x {}", wParam, repeatCount);
+            cancelSpeech_impl();
+        }
         
         //  hook procedure must pass the message *Always*
         return CallNextHookEx(NULL, nCode, wParam, lParam);
