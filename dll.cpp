@@ -11,7 +11,6 @@
 
 
 namespace dll {
-    using nvdll::log::logWString;
 
 #pragma region 全局变量定义
     /// DLL 所在文件夹路径

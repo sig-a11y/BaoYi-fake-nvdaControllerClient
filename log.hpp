@@ -4,7 +4,6 @@
 // -- [sys] win
 #include <wtypes.h> // LPCSTR; LPCWSTR
 // -- [3rd]
-#include "loguru.hpp" // 日志记录框架
 // NOTE: 日志库配置在 "tweakme.h" 文件中
 #include "spdlog/spdlog.h"
 
@@ -15,7 +14,6 @@ namespace log {
 #pragma region
 
     void init();
-    void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring);
 
 } // nvdll::log::
 } // nvdll::

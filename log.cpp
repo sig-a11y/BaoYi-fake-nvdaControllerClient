@@ -1,7 +1,10 @@
 ﻿#include "log.hpp"
-#include "dll.hpp"
+// -- [3rd]
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "loguru.hpp" // 日志记录框架
+// -- [proj]
+#include "dll.hpp"
 
 namespace nvdll {
 namespace log {
@@ -54,19 +57,8 @@ namespace log {
     void init()
     {
         // TODO: 移除 loguru
-        loguru_init();
+        // loguru_init();
         spdlog_init();
-    }
-
-    /// 通过日志输出 WString 类型的变量
-    void logWString(LPCSTR prefix, LPCSTR varName, LPCWSTR inWstring)
-    {
-        /// 输出字符串的长度，包括结尾的 null
-        size_t outStringLen;
-        /// 转化后的字符串，待输出
-        char outString[MAX_PATH];
-        wcstombs_s(&outStringLen, outString, (size_t)MAX_PATH, inWstring, (size_t)MAX_PATH - 1);
-        DLOG_F(INFO, "[%s] %s[]: %s", prefix, varName, outString);
     }
 
 } // nvdll::log::
