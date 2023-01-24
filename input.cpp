@@ -102,34 +102,34 @@ namespace input
     /// [WH_KEYBOARD] hook 回调函数
     LRESULT CALLBACK kbHookFunc(int nCode, WPARAM wParam, LPARAM lParam)
     {
-        if (
-            HC_ACTION != nCode
-            || (WM_KEYDOWN != wParam && WM_SYSKEYDOWN != wParam)
-            )
+        if (HC_ACTION != nCode || wParam <= 0)
         {
             return CallNextHookEx(NULL, nCode, wParam, lParam);
         }
         assert(HC_ACTION == nCode);
-        assert(WM_KEYDOWN == wParam || WM_SYSKEYDOWN == wParam);
+        assert(wParam > 0);
 
-        // NOTE： WH_KEYBOARD_LL uses the LowLevelKeyboardProc Call Back
-        //  https://msdn.microsoft.com/en-us/library/windows/desktop/ms644985(v=vs.85).aspx
-        // LowLevelKeyboardProc Structure 
-        KBDLLHOOKSTRUCT* p = (KBDLLHOOKSTRUCT*)lParam;
+        // ==== 按键状态
+        // virtual-key code
+        WORD vkCode = LOWORD(wParam);
 
-        // 返回前台窗口，获得当前窗口
-        HWND currentWindow = GetForegroundWindow();
-        if (nullptr != currentWindow)
-        {
-            // TODO: 仅处理当前窗口
-        }
-        // 如果有按键
-        if (p->vkCode)
-        {
-            SPDLOG_DEBUG("[hookFunc] press code={}", p->vkCode);
-            cancelSpeech_impl();
-        }
+        WORD keyFlags = HIWORD(lParam);
+        WORD scanCode = LOBYTE(keyFlags);                             
+        // extended-key flag, 1 if scancode has 0xE0 prefix
+        BOOL isExtendedKey = (keyFlags & KF_EXTENDED) == KF_EXTENDED; 
+        if (isExtendedKey)
+            scanCode = MAKEWORD(scanCode, 0xE0);
+        // transition-state flag, 1 on keyup
+        BOOL upFlag = (keyFlags & KF_UP) == KF_UP;  
 
+        // previous key-state flag, 1 on autorepeat
+        BOOL repeatFlag = (keyFlags & KF_REPEAT) == KF_REPEAT;        
+        // repeat count, > 0 if several keydown messages was combined into one message
+        WORD repeatCount = LOWORD(lParam);                            
+
+        SPDLOG_DEBUG("[hookFunc] VK={} x {}", wParam, repeatCount);
+        cancelSpeech_impl();
+        
         //  hook procedure must pass the message *Always*
         return CallNextHookEx(NULL, nCode, wParam, lParam);
     }
@@ -139,16 +139,16 @@ namespace input
     {
         // 尝试挂钩
         kKeyboardHook = SetWindowsHookEx(
-            // low-level keyboard input events
-            // TODO: 改用线程的 WH_KEYBOARD
-            WH_KEYBOARD_LL,
+            // (low-level) keyboard input events
+            // NOTE: WH_KEYBOARD 可以当前线程或全局挂钩；WH_KEYBOARD_LL 只能全局挂钩
+            WH_KEYBOARD,
             // 回调函数地址
             kbHookFunc,
-            // A handle to the DLL containing the hook procedure 
-            GetModuleHandle(NULL), 
+            // A handle to the DLL containing the hook procedure: GetModuleHandle(NULL)
+            // 设置 dwThreadId 时置空
+            NULL,
             // 待挂钩的线程ID；为 NULL 则全局挂钩
-            // TODO: GetCurrentThreadId()
-            NULL 
+            GetCurrentThreadId()
         );
 
         if (nullptr != kKeyboardHook)
