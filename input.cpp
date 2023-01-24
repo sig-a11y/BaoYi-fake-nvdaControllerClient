@@ -25,7 +25,8 @@ namespace input
             // NOTE: 在 release 中反应较慢、debug 中正常
             if (_kbhit()) {
                 SPDLOG_DEBUG("[keyboardListener] keydown");
-                cancelSpeech_impl();
+                // cancelSpeech_impl();
+                SPDLOG_DEBUG("[keyboardListener]    call cancelSpeech_impl()");
             }
 
             // 每 100ms 检查一次
@@ -91,8 +92,9 @@ namespace input
         // 如果有按键
         if (p->vkCode)
         {
-            SPDLOG_DEBUG("[hookFunc] press code={}", p->vkCode);
-            cancelSpeech_impl();
+            SPDLOG_DEBUG("[lowLevelKbHookFunc] press code={}", p->vkCode);
+            // cancelSpeech_impl();
+            SPDLOG_DEBUG("[lowLevelKbHookFunc]    call cancelSpeech_impl()");
         }
 
         //  hook procedure must pass the message *Always*
@@ -131,8 +133,9 @@ namespace input
         BOOL keyDown = !upFlag;
         if (keyDown)
         {
-            SPDLOG_DEBUG("[hookFunc] VK={} x {}", wParam, repeatCount);
-            cancelSpeech_impl();
+            SPDLOG_DEBUG("[kbHookFunc] VK={} x {}", wParam, repeatCount);
+            // cancelSpeech_impl();
+            SPDLOG_DEBUG("[kbHookFunc]    call cancelSpeech_impl()");
         }
         
         //  hook procedure must pass the message *Always*
