@@ -92,6 +92,26 @@ namespace boy
      */
     void __stdcall speakCompleteCallback(int reason)
     {
+
+#ifdef _DEBUG
+        // 仅调试
+        switch (reason) {
+        case 1:
+            SPDLOG_DEBUG(L"[Callback] reason=朗读完成");
+            break;
+        case 2:
+            SPDLOG_DEBUG(L"[Callback] reason=新朗读打断");
+            break;
+        case 3:
+            SPDLOG_DEBUG(L"[Callback] reason=停止调用打断");
+            break;
+            
+        default:
+            SPDLOG_DEBUG(L"[Callback] reason=未知的原因({})", reason);
+            break;
+        }
+#endif // def _DEBUG
+
         return;
     }
 } // nvdll::boy::
