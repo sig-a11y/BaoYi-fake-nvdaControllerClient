@@ -8,8 +8,8 @@ namespace nvdll
     namespace input 
     {
 
-        void runInputListener();
-        void killListenerThread();
+        extern void runInputListener();
+        extern void killListenerThread();
 
     } // nvdll::input::
 } // nvdll::
