@@ -108,17 +108,20 @@ namespace ini {
         // ==== 读取 ini 配置
         int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
         SPEAK_WITH_SLAVE = 0 != slave;
-        SPDLOG_INFO("[loadIni]     slave={}; SPEAK_WITH_SLAVE={}", slave, SPEAK_WITH_SLAVE);
+        SPDLOG_DEBUG("[loadIni]     slave={}; SPEAK_WITH_SLAVE={}", slave, SPEAK_WITH_SLAVE);
 
         int append = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_APPEND, 1, iniPath);
         SPEAK_APPEND = 0 != append;
-        SPDLOG_INFO("[loadIni]     append={}; SPEAK_APPEND={}", append, SPEAK_APPEND);
+        SPDLOG_DEBUG("[loadIni]     append={}; SPEAK_APPEND={}", append, SPEAK_APPEND);
 
         int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, iniPath);
         SPEAK_ALLOW_BREAK = 0 != allowBreak;
-        SPDLOG_INFO("[loadIni]     allowBreak={}; SPEAK_ALLOW_BREAK={}", allowBreak, SPEAK_ALLOW_BREAK);
+        SPDLOG_DEBUG("[loadIni]     allowBreak={}; SPEAK_ALLOW_BREAK={}", allowBreak, SPEAK_ALLOW_BREAK);
 
         SPDLOG_DEBUG("[loadIni] load ini finished.");
+        spdlog::info("[loadIni] SPEAK_WITH_SLAVE={}", SPEAK_WITH_SLAVE);
+        spdlog::info("[loadIni] SPEAK_APPEND={}", SPEAK_APPEND);
+        spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
     }
 
 } // ini::

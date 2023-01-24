@@ -78,14 +78,14 @@ namespace dll {
             return nullptr;
         }
 
-        spdlog::info("[loadFunctionPtr] load {} @ {}", lpProcName, (void*)funcHandle);
+        SPDLOG_DEBUG("[loadFunctionPtr] load {} @ {}", lpProcName, (void*)funcHandle);
         return funcHandle;
     }
 
     /// 释放 DLL
     void freeDll()
     {
-        spdlog::info("[freeDll] trying to free DLL: dllHandle={}", (void*)dllHandle);
+        SPDLOG_DEBUG("[freeDll] trying to free DLL: dllHandle={}", (void*)dllHandle);
 
         if (nullptr != dllHandle)
         {
@@ -100,7 +100,7 @@ namespace dll {
             }
         }
 
-        spdlog::info("[freeDll] After FreeLibrary: dllHandle={}", (void*)dllHandle);
+        SPDLOG_DEBUG("[freeDll] After FreeLibrary: dllHandle={}", (void*)dllHandle);
     }
 
 } // dll::

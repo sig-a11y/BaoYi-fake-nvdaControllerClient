@@ -49,7 +49,7 @@ namespace log {
         spdlog::set_default_logger(std::make_shared<spdlog::logger>(logger));
 
         // ==== 初始化完毕
-        spdlog::info("spdlog init finished.");
+        SPDLOG_DEBUG("spdlog init finished.");
         SPDLOG_INFO("Compiled at: {} {}", __DATE__, __TIME__);
     }
 
