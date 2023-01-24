@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿#include <conio.h>
+#include <ctype.h>
+#include <iostream>
 #include <chrono>
 #include <thread>
 #include "nvda.h"
@@ -40,6 +42,34 @@ int main(int argc, char* argv[])
 	nvdaController_speakText(L"当前时间：");
 	nvdaController_speakText(currentDateTime().c_str());
 	speakPause();
+
+	// ---- 循环输出测试
+	int ch;
+	_cputs("Press 'E' to exit.\n");
+	do
+	{
+		ch = _getch();
+		ch = toupper(ch);
+
+		switch (ch)
+		{
+		case '1':
+			nvdaController_speakText(L"中文输出测试.");
+			break;
+
+		case '2':
+			nvdaController_speakText(L"当前时间：");
+			nvdaController_speakText(currentDateTime().c_str());
+			break;
+
+		default:
+			_cputs("Press 'E' to exit.\n");
+			break;
+		}
+
+	} while (ch != 'E');
+	_putch('\r');    // Carriage return
+	_putch('\n');    // Line feed
 
 	nvdaController_speakText(L"Test completed!");
 	return 0;
