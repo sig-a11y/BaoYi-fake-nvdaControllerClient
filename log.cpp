@@ -10,7 +10,7 @@ namespace nvdll {
 namespace log {
 
     constexpr LPCSTR DEBUG_LOG_NAME = "nvdaDll-debug.log";
-    constexpr LPCSTR WARN_LOG_NAME = "nvdaDll.log";
+    constexpr LPCSTR LOG_NAME = "nvdaDll.log";
 
     /// 初始化 loguru 日志库
     void loguru_init()
@@ -32,11 +32,11 @@ namespace log {
         console_sink->set_level(spdlog::level::info);
 
         // -- release 模式：日志文件仅输出 warn
-        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(WARN_LOG_NAME, true);
-        file_sink->set_level(spdlog::level::warn);
+        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(LOG_NAME, true);
+        file_sink->set_level(spdlog::level::info);
 #ifndef _DEBUG
         spdlog::logger logger("release_sink", { console_sink, file_sink });
-        logger.set_level(spdlog::level::warn);
+        logger.set_level(spdlog::level::info);
 #else
         // -- debug 模式：日志文件输出 warn+debug
         auto debug_file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(DEBUG_LOG_NAME, true);
