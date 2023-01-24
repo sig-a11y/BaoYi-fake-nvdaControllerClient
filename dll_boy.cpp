@@ -150,7 +150,7 @@ error_status_t __stdcall testIfRunning_impl()
 
 error_status_t __stdcall speakText_impl(const wchar_t* text)
 {
-    // SPDLOG_DEBUG("[speakText_impl] text={}", text);
+    SPDLOG_DEBUG(L"[speakText_impl] text={}", text);
 
     if (nullptr == boyCtrlSpeak)
     {
