@@ -85,35 +85,6 @@ namespace boy
         return EXIT_SUCCESS;
     }
 
-    /**
-     * @brief 回调函数
-     * @param reason 回调原因（调用是否成功）
-     * @return void
-     */
-    void __stdcall speakCompleteCallback(int reason)
-    {
-
-#ifdef _DEBUG
-        // 仅调试
-        switch (reason) {
-        case 1:
-            SPDLOG_DEBUG(L"[Callback] reason=朗读完成");
-            break;
-        case 2:
-            SPDLOG_DEBUG(L"[Callback] reason=新朗读打断");
-            break;
-        case 3:
-            SPDLOG_DEBUG(L"[Callback] reason=停止调用打断");
-            break;
-            
-        default:
-            SPDLOG_DEBUG(L"[Callback] reason=未知的原因({})", reason);
-            break;
-        }
-#endif // def _DEBUG
-
-        return;
-    }
 } // nvdll::boy::
 } // nvdll::
 #pragma endregion
@@ -165,6 +136,40 @@ error_status_t __stdcall testIfRunning_impl()
     return RPC_S_OK;
 }
 
+/**
+ * @brief 回调函数
+ * @param reason 回调原因（调用是否成功）
+ * @return void
+ */
+void __stdcall speakCompleteCallback(int reason)
+{
+
+#ifdef _DEBUG
+    // 仅调试
+    switch (reason) {
+    case 1:
+        //SPDLOG_DEBUG(L"[Callback] reason=朗读完成");
+        std::cerr << "[Callback] reason=finished" << std::endl;
+        break;
+    case 2:
+        //SPDLOG_DEBUG(L"[Callback] reason=新朗读打断");
+        std::cerr << "[Callback] reason=new_speak_breeak" << std::endl;
+        break;
+    case 3:
+        //SPDLOG_DEBUG(L"[Callback] reason=停止调用打断");
+        std::cerr << "[Callback] reason=stop_break" << std::endl;
+        break;
+
+    default:
+        //SPDLOG_DEBUG(L"[Callback] reason=未知的原因({})", reason);
+        std::cerr << "[Callback] reason=unknown-" << reason << std::endl;
+        break;
+    }
+#endif // def _DEBUG
+
+    return;
+}
+
 error_status_t __stdcall speakText_impl(const wchar_t* text)
 {
     SPDLOG_DEBUG(L"[speakText_impl] text={}", text);
@@ -185,7 +190,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         nvdll::ini::SPEAK_WITH_SLAVE, 
         nvdll::ini::SPEAK_APPEND, 
         nvdll::ini::SPEAK_ALLOW_BREAK, 
-        nvdll::boy::speakCompleteCallback);
+        speakCompleteCallback);
     SPDLOG_DEBUG("[speakText_impl] ret={}", (int)err);
 
     return convertBoyCtrlError(err);
