@@ -64,25 +64,57 @@ namespace input
     HHOOK kKeyboardHook;
 
     /// hook 回调函数
-    LRESULT CALLBACK HookProcedure(int nCode, WPARAM wParam, LPARAM lParam)
+    LRESULT CALLBACK hookFunc(int nCode, WPARAM wParam, LPARAM lParam)
     {
+
         return CallNextHookEx(NULL, nCode, wParam, lParam);
     }
 
     /// 设置输入 hook
     bool setInputHook()
     {
-        bool ret = false;
+        // 尝试挂钩
+        kKeyboardHook = SetWindowsHookEx(
+            // low-level keyboard input events
+            WH_KEYBOARD_LL,
+            // 回调函数地址
+            hookFunc, 
+            // A handle to the DLL containing the hook procedure 
+            GetModuleHandle(NULL), 
+            // 待挂钩的线程ID；为 NULL 则全局挂钩
+            NULL 
+        );
 
-        return true;
+        if (nullptr != kKeyboardHook)
+        {
+            // 挂钩成功
+            spdlog::info("[setInputHook] Input hook ready.");
+            // 统一初始化
+            MSG Msg{};  
+            while (GetMessage(&Msg, NULL, 0, 0) > 0)
+            {
+                TranslateMessage(&Msg);
+                DispatchMessage(&Msg);
+            }
+            SPDLOG_DEBUG("[removeInputHook] init finished.");
+            return true;
+        }
+
+        // 挂钩失败
+        spdlog::warn("[setInputHook] Failed to get handle from SetWindowsHookEx().");
+        return false;
     }
 
     /// 移除输入 hook
     void removeInputHook()
     {
-
+        if (nullptr != kKeyboardHook)
+        {
+            SPDLOG_DEBUG("[removeInputHook] trying to remove hook {}", (void*)kKeyboardHook);
+            bool ret = UnhookWindowsHookEx(kKeyboardHook);
+            spdlog::info("[removeInputHook] remove hook ret={}.", ret);
+        }
     }
-
 #pragma endregion
 
 } // nvdll::input::
