@@ -19,6 +19,7 @@ const string BOY_API_VERSION = "v1.5.3";
  */
 void __stdcall speakCompleteCallback(int reason)
 {
+    cerr << "Callback=" << reason << endl;
     MessageBeep(0xffffffff);
 }
 
