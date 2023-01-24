@@ -14,10 +14,12 @@ namespace input
 {
     std::thread inputListenerThread;
 
+    // TODO: 换用输入钩子
     void keyboardListener()
     {
         while (true)
         {
+            // NOTE: 在 release 中反应较慢、debug 中正常
             if (_kbhit()) {
                 SPDLOG_DEBUG("[keyboardListener] keydown");
                 cancelSpeech_impl();
