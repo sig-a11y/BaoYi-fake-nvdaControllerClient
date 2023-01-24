@@ -64,8 +64,43 @@ namespace input
 #pragma region 输入监听 hook
     HHOOK kKeyboardHook;
 
-    /// hook 回调函数
-    LRESULT CALLBACK hookFunc(int nCode, WPARAM wParam, LPARAM lParam)
+    /// [WH_KEYBOARD_LL] hook 回调函数
+    LRESULT CALLBACK lowLevelKbHookFunc(int nCode, WPARAM wParam, LPARAM lParam)
+    {
+        if (
+            HC_ACTION != nCode
+            || (WM_KEYDOWN != wParam && WM_SYSKEYDOWN != wParam)
+            )
+        {
+            return CallNextHookEx(NULL, nCode, wParam, lParam);
+        }
+        assert(HC_ACTION == nCode);
+        assert(WM_KEYDOWN == wParam || WM_SYSKEYDOWN == wParam);
+
+        // NOTE： WH_KEYBOARD_LL uses the LowLevelKeyboardProc Call Back
+        //  https://msdn.microsoft.com/en-us/library/windows/desktop/ms644985(v=vs.85).aspx
+        // LowLevelKeyboardProc Structure 
+        KBDLLHOOKSTRUCT* p = (KBDLLHOOKSTRUCT*)lParam;
+
+        // 返回前台窗口，获得当前窗口
+        HWND currentWindow = GetForegroundWindow();
+        if (nullptr != currentWindow)
+        {
+            // TODO: 仅处理当前窗口
+        }
+        // 如果有按键
+        if (p->vkCode)
+        {
+            SPDLOG_DEBUG("[hookFunc] press code={}", p->vkCode);
+            cancelSpeech_impl();
+        }
+
+        //  hook procedure must pass the message *Always*
+        return CallNextHookEx(NULL, nCode, wParam, lParam);
+    }
+
+    /// [WH_KEYBOARD] hook 回调函数
+    LRESULT CALLBACK kbHookFunc(int nCode, WPARAM wParam, LPARAM lParam)
     {
         if (
             HC_ACTION != nCode
@@ -108,7 +143,7 @@ namespace input
             // TODO: 改用线程的 WH_KEYBOARD
             WH_KEYBOARD_LL,
             // 回调函数地址
-            hookFunc, 
+            kbHookFunc,
             // A handle to the DLL containing the hook procedure 
             GetModuleHandle(NULL), 
             // 待挂钩的线程ID；为 NULL 则全局挂钩
