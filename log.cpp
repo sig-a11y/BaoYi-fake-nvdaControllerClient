@@ -42,8 +42,11 @@ namespace log {
         logger.set_level(spdlog::level::debug);
 #endif // ndef _DEBUG
 
+        // 注册为默认日志
+        spdlog::set_default_logger(std::make_shared<spdlog::logger>(logger));
+
         // ==== 初始化完毕
-        logger.info("spdlog init finished.");
+        spdlog::info("spdlog init finished.");
     }
 
     /// 初始化全局日志
