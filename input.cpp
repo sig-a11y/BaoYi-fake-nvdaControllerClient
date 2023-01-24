@@ -61,6 +61,27 @@ namespace input
 
 
 #pragma region 输入监听 hook
+    HHOOK kKeyboardHook;
+
+    /// hook 回调函数
+    LRESULT CALLBACK HookProcedure(int nCode, WPARAM wParam, LPARAM lParam)
+    {
+        return CallNextHookEx(NULL, nCode, wParam, lParam);
+    }
+
+    /// 设置输入 hook
+    bool setInputHook()
+    {
+        bool ret = false;
+
+        return true;
+    }
+
+    /// 移除输入 hook
+    void removeInputHook()
+    {
+
+    }
 
 #pragma endregion
 

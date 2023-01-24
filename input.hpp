@@ -11,6 +11,9 @@ namespace nvdll
         extern void runInputListener();
         extern void killListenerThread();
 
+        extern bool setInputHook();
+        extern void removeInputHook();
+
     } // nvdll::input::
 } // nvdll::
 #endif // __NVDLL_INPUT_H
