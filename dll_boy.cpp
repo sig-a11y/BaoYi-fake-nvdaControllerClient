@@ -41,24 +41,22 @@ bool loadBaoYiDll()
     // 使用完整路径加载：保益 DLL 和 nvda 放在一起
     if (nullptr == dllHandle)
     {
+        SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
         dllHandle = LoadLibrary(BOY_DLL_FULLPATH);
+        SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
     }
     // 仅使用 DLL 名加载：保益 DLL 和主程序 exe 放在一起
     if (nullptr == dllHandle)
     {
+        SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
         dllHandle = LoadLibrary(BOY_DLL_NAME);
+        SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
     }
     // 检查 DLL 是否成功加载
     if (!dllHandle)
     {
-        // TODO: 打印错误详细信息。打印实际的 dll 名，处理 wstring => string
-        eout.clear();
-        eout
-            << "[loadBaoYiDll] Failed to load DLL. "
-            << "尝试加载 DLL 失败。"
-            << "错误原因为：" << GetLastError()
-            << std::endl;
-        DLOG_F(INFO, eout.str().c_str());
+        spdlog::error(L"[loadBaoYiDll] Failed to load DLL '{}'. 尝试加载 DLL 失败。", BOY_DLL_NAME);
+        spdlog::error(L"[loadBaoYiDll] GetLastError={}", GetLastError());
         return EXIT_FAILURE;
     }
 
@@ -82,22 +80,13 @@ bool loadBaoYiDll()
     auto err = boyCtrlInitialize(DLL_LOG_NAME);
     if (err != e_bcerr_success)
     {
-        eout.clear();
-        eout << "[loadBaoYiDll] "
-            << "Initialize failed. "
-            << "初始化失败，调用返回值为：" << err
-            << std::endl;
-        DLOG_F(INFO, eout.str().c_str());
+        spdlog::error(L"[loadBaoYiDll] Initialize failed. 初始化失败。");
+        spdlog::error(L"[loadBaoYiDll]   ret={}", (int)err);
         freeDll();
         return EXIT_FAILURE;
     }
 
-    eout.clear();
-    eout << "[loadBaoYiDll] "
-        << "API Ready! "
-        << "DLL API 初始化成功。"
-        << std::endl;
-    DLOG_F(INFO, eout.str().c_str());
+    SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");
     return EXIT_SUCCESS;
 }
 
@@ -138,7 +127,7 @@ void initDllIfNull()
 {
     if (nullptr == dllHandle)
     {
-        DLOG_F(INFO, "nullptr == dllHandle: start to loadBaoYiDll()...");
+        spdlog::info("nullptr==dllHandle: trying to load dll...");
         loadBaoYiDll();
     }
 }
@@ -147,46 +136,36 @@ error_status_t __stdcall testIfRunning_impl()
 {
     if (nullptr == dllHandle)
     {
-        DLOG_F(INFO, "[testIfRunning_impl] nullptr == dllHandle: trying to loadBaoYiDll()...");
         bool has_error = loadBaoYiDll();
         if (has_error) {
-            DLOG_F(INFO, "[testIfRunning_impl] loadBaoYiDll() load error!");
+            spdlog::error("[testIfRunning_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
     }
 
-    DLOG_F(INFO, "[testIfRunning_impl] loadBaoYiDll() load finished. dllHandle=%x", dllHandle);
+    SPDLOG_DEBUG("[testIfRunning_impl] loadBaoYiDll() load finished. dllHandle={}", (void*)dllHandle);
     assert(nullptr != dllHandle);
     return RPC_S_OK;
 }
 
 error_status_t __stdcall speakText_impl(const wchar_t* text)
 {
-#ifdef _DEBUG
-    std::wcout << "[speakText_impl] "
-        << "text=" << text
-        << std::endl;
-#endif // def _DEBUG
+    SPDLOG_DEBUG("[speakText_impl] text={}", text);
 
     if (nullptr == boyCtrlSpeak)
     {
         bool has_error = loadBaoYiDll();
         if (has_error) {
-            DLOG_F(INFO, "[speakText_impl] loadBaoYiDll() load error!");
+            spdlog::error("[speakText_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
 
-        DLOG_F(INFO, "[speakText_impl] loadBaoYiDll() load finished. boyCtrlSpeak=%x", boyCtrlSpeak);
+        SPDLOG_DEBUG("[speakText_impl] loadBaoYiDll() load finished. boyCtrlSpeak={}", (void*)boyCtrlSpeak);
         assert(nullptr != boyCtrlSpeak);
     }
 
     auto err = boyCtrlSpeak(text, ini::SPEAK_WITH_SLAVE, ini::SPEAK_APPEND, ini::SPEAK_ALLOW_BREAK, speakCompleteCallback);
-
-#ifdef _DEBUG
-    std::wcout << "[speakText_impl] "
-        << "ret err=" << err
-        << std::endl;
-#endif // def _DEBUG
+    SPDLOG_DEBUG("[speakText_impl] ret={}", (int)err);
 
     return convertBoyCtrlError(err);
 }
@@ -197,15 +176,16 @@ error_status_t __stdcall cancelSpeech_impl()
     {
         bool has_error = loadBaoYiDll();
         if (has_error) {
-            DLOG_F(INFO, "[cancelSpeech_impl] loadBaoYiDll() load error!");
+            spdlog::error("[cancelSpeech_impl] loadBaoYiDll() load error!");
             return RPC_X_SS_CONTEXT_MISMATCH;
         }
 
-        DLOG_F(INFO, "[cancelSpeech_impl] loadBaoYiDll() load finished. boyCtrlStopSpeaking=%x", boyCtrlSpeak);
+        SPDLOG_DEBUG("[cancelSpeech_impl] loadBaoYiDll() load finished. boyCtrlStopSpeaking={}", (void*)boyCtrlStopSpeaking);
         assert(nullptr != boyCtrlStopSpeaking);
     }
 
     auto err = boyCtrlStopSpeaking(ini::SPEAK_WITH_SLAVE);
+    SPDLOG_DEBUG("[cancelSpeech_impl] ret={}", (int)err);
     return convertBoyCtrlError(err);
 }
 
