@@ -33,6 +33,7 @@ namespace dll {
 
         // -- 打印完整路径
         logWString("saveDllDirPath", "DLL_PATH", DLL_PATH);
+        spdlog::info(L"DLL_PATH={}", DLL_PATH);
 
         // -- 拆分路径
         std::wstring filename;
