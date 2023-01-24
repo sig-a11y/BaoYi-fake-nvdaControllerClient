@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <thread>
+#include <cassert>
 #include <conio.h> // _kbhit
 // -- [proj]
 #include "log.hpp" // spdlog::
@@ -66,7 +67,35 @@ namespace input
     /// hook 回调函数
     LRESULT CALLBACK hookFunc(int nCode, WPARAM wParam, LPARAM lParam)
     {
+        if (
+            HC_ACTION != nCode
+            || (WM_KEYDOWN != wParam && WM_SYSKEYDOWN != wParam)
+            )
+        {
+            return CallNextHookEx(NULL, nCode, wParam, lParam);
+        }
+        assert(HC_ACTION == nCode);
+        assert(WM_KEYDOWN == wParam || WM_SYSKEYDOWN == wParam);
 
+        // NOTE： WH_KEYBOARD_LL uses the LowLevelKeyboardProc Call Back
+        //  https://msdn.microsoft.com/en-us/library/windows/desktop/ms644985(v=vs.85).aspx
+        // LowLevelKeyboardProc Structure 
+        KBDLLHOOKSTRUCT* p = (KBDLLHOOKSTRUCT*)lParam;
+
+        // 返回前台窗口，获得当前窗口
+        HWND currentWindow = GetForegroundWindow();
+        if (nullptr != currentWindow)
+        {
+            // TODO: 仅处理当前窗口
+        }
+        // 如果有按键
+        if (p->vkCode)
+        {
+            SPDLOG_DEBUG("[hookFunc] press code={}", p->vkCode);
+            cancelSpeech_impl();
+        }
+
+        //  hook procedure must pass the message *Always*
         return CallNextHookEx(NULL, nCode, wParam, lParam);
     }
 
@@ -76,12 +105,14 @@ namespace input
         // 尝试挂钩
         kKeyboardHook = SetWindowsHookEx(
             // low-level keyboard input events
+            // TODO: 改用线程的 WH_KEYBOARD
             WH_KEYBOARD_LL,
             // 回调函数地址
             hookFunc, 
             // A handle to the DLL containing the hook procedure 
             GetModuleHandle(NULL), 
             // 待挂钩的线程ID；为 NULL 则全局挂钩
+            // TODO: GetCurrentThreadId()
             NULL 
         );
 
@@ -89,8 +120,8 @@ namespace input
         {
             // 挂钩成功
             spdlog::info("[setInputHook] Input hook ready.");
-            // 统一初始化
-            MSG Msg{};  
+            // 消息循环初始化（没有会导致窗口卡死）
+            MSG Msg{};
             while (GetMessage(&Msg, NULL, 0, 0) > 0)
             {
                 TranslateMessage(&Msg);
