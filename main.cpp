@@ -1,6 +1,6 @@
 ﻿// -- [proj]
 #include "log.hpp" // loguru::; DLOG_F
-#include "dll.hpp" // dll::
+#include "dll.hpp" // nvdll::
 
 
 /**
@@ -22,7 +22,7 @@ BOOL WINAPI DllMain(
         {
             // Initialize once for each new process.
             nvdll::log::init();
-            dll::saveDllDirPath(hinstDLL);
+            nvdll::saveDllDirPath(hinstDLL);
         }
         break;
 
@@ -45,7 +45,7 @@ BOOL WINAPI DllMain(
 
             // Perform any necessary cleanup.
             spdlog::info("Perform any necessary cleanup.");
-            dll::freeDll();
+            nvdll::freeDll();
         }
         break;
     }

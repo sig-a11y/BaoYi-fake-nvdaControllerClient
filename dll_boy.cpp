@@ -11,19 +11,19 @@
 #include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
 
 
-using namespace dll;
-using namespace dll::boy;
+using namespace nvdll;
+using namespace nvdll::boy;
 using namespace nvdll;
 
 
 #pragma region 局部变量定义
-namespace dll {
+namespace nvdll {
     namespace boy
     {
         /// 保益 DLL 完整路径
         TCHAR BOY_DLL_FULLPATH[MAX_PATH];
-    } // dll::boy::
-} // dll::
+    } // nvdll::boy::
+} // nvdll::
 
 static BoyCtrlInitializeFunc boyCtrlInitialize;
 static BoyCtrlUninitializeFunc boyCtrlUninitialize;

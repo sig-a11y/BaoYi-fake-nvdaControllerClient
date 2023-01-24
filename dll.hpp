@@ -6,7 +6,7 @@
 #include <minwindef.h> // HINSTANCE
 
 
-namespace dll {
+namespace nvdll {
 #pragma region 常量定义
     namespace boy
     {
@@ -23,7 +23,7 @@ namespace dll {
         /// 保益 DLL 文件名
         constexpr LPCWSTR BOY_DLL_NAME = L"BoyCtrl.dll";
 #endif // def _WIN64
-    } // dll::boy::
+    } // nvdll::boy::
 
 #ifdef _DEBUG
     /// 输出日志名称
@@ -45,6 +45,6 @@ namespace dll {
     FARPROC loadFunctionPtr(LPCSTR lpProcName);
     void freeDll();
 #pragma region
-} // dll::
+} // nvdll::
 
 #endif // __BOY_DLL_H

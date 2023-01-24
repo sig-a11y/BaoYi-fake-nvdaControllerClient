@@ -10,7 +10,7 @@
 #include "log.hpp" // nvdll::log::; DLOG_F
 
 
-namespace dll {
+namespace nvdll {
 
 #pragma region 全局变量定义
     /// DLL 所在文件夹路径
@@ -31,7 +31,7 @@ namespace dll {
         GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
         // -- 打印完整路径
-        spdlog::info("BaoYi Dll API Version: {}", dll::boy::BOY_DLL_VERSION);
+        spdlog::info("BaoYi Dll API Version: {}", nvdll::boy::BOY_DLL_VERSION);
         spdlog::info(L"DLL_PATH={}", DLL_PATH);
 
         // -- 拆分路径
@@ -103,4 +103,4 @@ namespace dll {
         SPDLOG_DEBUG("[freeDll] After FreeLibrary: dllHandle={}", (void*)dllHandle);
     }
 
-} // dll::
+} // nvdll::
