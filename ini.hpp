@@ -9,6 +9,7 @@ namespace ini {
     extern bool SPEAK_WITH_SLAVE;
     extern bool SPEAK_APPEND;
     extern bool SPEAK_ALLOW_BREAK;
+    extern bool SPEAK_ALL_KEY_BREAK;
 
     void loadIni(PCWSTR pszBaseDirIn);
 

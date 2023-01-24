@@ -85,7 +85,8 @@ namespace boy
             return EXIT_FAILURE;
         }
 
-        if (ini::SPEAK_ALLOW_BREAK)
+        // 开启按任意键打断
+        if (ini::SPEAK_ALL_KEY_BREAK)
         {
             // input::runInputListener();
             input::setInputHook();

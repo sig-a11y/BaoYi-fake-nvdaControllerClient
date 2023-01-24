@@ -18,6 +18,8 @@ namespace ini {
     bool SPEAK_APPEND = true;
     /// 是否允许用户打断.使用读屏通道时该参数被忽略
     bool SPEAK_ALLOW_BREAK = true;
+    /// 是否任意按键打断（NVDLL 新增）
+    bool SPEAK_ALL_KEY_BREAK = true;
 #pragma region
 
 #pragma region 常量变量定义
@@ -116,12 +118,15 @@ namespace ini {
 
         int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, iniPath);
         SPEAK_ALLOW_BREAK = 0 != allowBreak;
-        SPDLOG_DEBUG("[loadIni]     allowBreak={}; SPEAK_ALLOW_BREAK={}", allowBreak, SPEAK_ALLOW_BREAK);
+        SPEAK_ALL_KEY_BREAK = 2 == allowBreak;
+        SPDLOG_DEBUG("[loadIni]     allowBreak={}; ALLOW_BREAK={}; ALL_KEY_BREAK={}", 
+            allowBreak, SPEAK_ALLOW_BREAK, SPEAK_ALL_KEY_BREAK);
 
         SPDLOG_DEBUG("[loadIni] load ini finished.");
         spdlog::info("[loadIni] SPEAK_WITH_SLAVE={}", SPEAK_WITH_SLAVE);
         spdlog::info("[loadIni] SPEAK_APPEND={}", SPEAK_APPEND);
         spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
+        spdlog::info("[loadIni] SPEAK_ALL_KEY_BREAK={}", SPEAK_ALL_KEY_BREAK);
     }
 
 } // nvdll::ini::
