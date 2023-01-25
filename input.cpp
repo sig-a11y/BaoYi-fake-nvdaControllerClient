@@ -7,7 +7,7 @@
 #include <conio.h> // _kbhit
 // -- [proj]
 #include "log.hpp" // spdlog::
-#include "nvdll_impl.h" // cancelSpeech_impl
+#include "dll.hpp" // nvdll::
 
 namespace nvdll
 {
@@ -25,8 +25,8 @@ namespace input
             // NOTE: 在 release 中反应较慢、debug 中正常
             if (_kbhit()) {
                 SPDLOG_DEBUG("[keyboardListener] keydown");
-                // cancelSpeech_impl();
-                SPDLOG_DEBUG("[keyboardListener]    call cancelSpeech_impl()");
+                // nvdll::StopSpeaking();
+                SPDLOG_DEBUG("[keyboardListener]    call StopSpeaking()");
             }
 
             // 每 100ms 检查一次
@@ -93,8 +93,8 @@ namespace input
         if (p->vkCode)
         {
             SPDLOG_DEBUG("[lowLevelKbHookFunc] press code={}", p->vkCode);
-            // cancelSpeech_impl();
-            SPDLOG_DEBUG("[lowLevelKbHookFunc]    call cancelSpeech_impl()");
+            // nvdll::StopSpeaking();
+            SPDLOG_DEBUG("[lowLevelKbHookFunc]    call StopSpeaking()");
         }
 
         //  hook procedure must pass the message *Always*
@@ -134,9 +134,10 @@ namespace input
         if (keyDown)
         {
             // 发布版本输出. TODO: 打断测试完成后，还原为 SPDLOG_DEBUG 宏
-            spdlog::debug("[kbHookFunc] VK={} x {}; cancelSpeech_impl()", wParam, repeatCount);
-            cancelSpeech_impl();
-            // SPDLOG_DEBUG("[kbHookFunc]    call cancelSpeech_impl()");
+            spdlog::debug("[kbHookFunc] VK={} x {}; StopSpeaking()", wParam, repeatCount);
+            // NOTE: 调用内部函数，与外部调用区分开来
+            auto err = nvdll::StopSpeaking();
+            spdlog::debug("[kbHookFunc] StopSpeaking.ret={}", (int)err);  // 发布版本输出
         }
         
         //  hook procedure must pass the message *Always*
