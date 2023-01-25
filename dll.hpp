@@ -25,13 +25,8 @@ namespace nvdll {
 #endif // def _WIN64
     } // nvdll::boy::
 
-#ifdef _DEBUG
-    /// 输出日志名称
+    /// 保益 DLL 输出日志名称。日志放在当前工作目录
     constexpr LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
-#else // release mode
-    /// 置空，不输出日志
-    constexpr LPCWSTR DLL_LOG_NAME = nullptr;
-#endif // def _DEBUG
 #pragma region
 
 #pragma region 全局变量定义

@@ -75,8 +75,9 @@ namespace boy
         if (nullptr == boyCtrlIsReaderRunning) return EXIT_FAILURE;
 
         // -- 初始化 DLL
-        // 日志放在当前工作目录
-        auto err = boyCtrlInitialize(DLL_LOG_NAME);
+        // 开启调试日志(DEBUG_LOG=1)：生成保益的日志
+        auto logName = ini::GEN_DEBUG_LOG ? DLL_LOG_NAME : nullptr;
+        auto err = boyCtrlInitialize(logName);
         if (err != e_bcerr_success)
         {
             spdlog::error(L"[loadBaoYiDll] Initialize failed. 初始化失败。");
