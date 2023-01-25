@@ -36,12 +36,14 @@ BOOL WINAPI DllMain(
 
     case DLL_PROCESS_DETACH:
         {
+            spdlog::info("[DLL_PROCESS_DETACH]");
+            // nvdll::input::killListenerThread();
+            nvdll::input::removeInputHook();
+
             if (__lpvReserved != nullptr)
             {
                 // do not do cleanup if process termination scenario
                 spdlog::warn("Process termination scenario, will not do cleanup.");
-                // nvdll::input::killListenerThread();
-                nvdll::input::removeInputHook();
                 break; 
             }
 
