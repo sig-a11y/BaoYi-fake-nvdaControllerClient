@@ -129,12 +129,13 @@ namespace ini {
         
         int debug_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_DEBUG_LOG_EN, 0, iniPath);
         GEN_DEBUG_LOG = 0 != debug_log;
-        SPDLOG_DEBUG("[loadIni]     debug_log={}; GEN_DEBUG_LOG={}", slave, GEN_DEBUG_LOG);
+        SPDLOG_DEBUG("[loadIni]     debug_log={}; GEN_DEBUG_LOG={}", debug_log, GEN_DEBUG_LOG);
         // NOTE: 动态设置 log 级别
         if (GEN_DEBUG_LOG)
         {
             spdlog::set_level(spdlog::level::debug);
             spdlog::flush_on(spdlog::level::debug);
+            spdlog::debug("[loadIni] set dyn log level to ::debug");
         }
 
         SPDLOG_DEBUG("[loadIni] load ini finished.");
