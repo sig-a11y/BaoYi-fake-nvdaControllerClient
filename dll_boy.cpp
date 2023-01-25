@@ -101,14 +101,26 @@ namespace boy
 } // nvdll::boy::
 
 #pragma region nvdll:: 导出
+    /** 【DLL 内部函数】
+     * @brief 获取读屏器状态
+     * @param -
+     * @return 返回读屏是否在运行
+     */
     bool IsScreenReaderRunning()
     {
+        // NOTE: 调用者确保 DLL 已经初始化
         assert(nullptr != boyCtrlIsReaderRunning);
-        boyCtrlIsReaderRunning();
+        return boyCtrlIsReaderRunning();
     }
 
+    /** 【DLL 内部函数】
+     * @brief 打断并终止读屏输出
+     * @param [全局变量] nvdll::ini::SPEAK_WITH_SLAVE 
+     * @return 调用状态码
+     */
     error_status_t StopSpeaking()
     {
+        // NOTE: 调用者确保 DLL 已经初始化
         assert(nullptr != boyCtrlStopSpeaking);
         return boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
     }
