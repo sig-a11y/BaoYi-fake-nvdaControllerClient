@@ -19,13 +19,12 @@ namespace log {
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
         console_sink->set_level(spdlog::level::info);
 
-        // -- release 模式：日志文件仅输出 warn
+        // -- release 模式：日志默认输出 debug 以上，在输入端过滤
         auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(LOG_NAME, true);
         file_sink->set_level(spdlog::level::debug);
 #ifndef _DEBUG
         spdlog::logger logger("release_sink", { console_sink, file_sink });
-        // TODO: 允许动态修改日志级别?
-        logger.set_level(spdlog::level::debug);
+        logger.set_level(spdlog::level::info);
         logger.flush_on(spdlog::level::info);
 #else
         // -- debug 模式：日志文件输出 warn+debug
