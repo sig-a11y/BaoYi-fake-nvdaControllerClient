@@ -21,11 +21,12 @@ static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
 static BoyCtrlIsReaderRunningFunc boyCtrlIsReaderRunning;
 #pragma region
 
-#pragma region 加载保益 DLL
+
 namespace nvdll 
 {
 namespace boy
 {
+#pragma region 加载保益 DLL
     /// 保益 DLL 完整路径
     TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
@@ -96,10 +97,23 @@ namespace boy
         SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");
         return EXIT_SUCCESS;
     }
-
-} // nvdll::boy::
-} // nvdll::
 #pragma endregion
+} // nvdll::boy::
+
+#pragma region nvdll:: 导出
+    bool IsScreenReaderRunning()
+    {
+        assert(nullptr != boyCtrlIsReaderRunning);
+        boyCtrlIsReaderRunning();
+    }
+
+    error_status_t StopSpeaking()
+    {
+        assert(nullptr != boyCtrlStopSpeaking);
+        return boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
+    }
+#pragma endregion
+} // nvdll::
 
 
 #pragma region DLL 导出函数实现

@@ -39,6 +39,9 @@ namespace nvdll {
     void saveDllDirPath(HINSTANCE hinstDLL);
     FARPROC loadFunctionPtr(LPCSTR lpProcName);
     void freeDll();
+
+    bool IsScreenReaderRunning();
+    error_status_t StopSpeaking();
 #pragma region
 } // nvdll::
 
