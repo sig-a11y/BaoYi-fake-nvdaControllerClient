@@ -133,7 +133,8 @@ namespace input
         BOOL keyDown = !upFlag;
         if (keyDown)
         {
-            SPDLOG_DEBUG("[kbHookFunc] VK={} x {}", wParam, repeatCount);
+            // 发布版本输出. TODO: 打断测试完成后，还原为 SPDLOG_DEBUG 宏
+            spdlog::debug("[kbHookFunc] VK={} x {}; cancelSpeech_impl()", wParam, repeatCount);
             cancelSpeech_impl();
             // SPDLOG_DEBUG("[kbHookFunc]    call cancelSpeech_impl()");
         }
