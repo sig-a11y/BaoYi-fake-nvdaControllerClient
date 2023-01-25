@@ -202,7 +202,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         nvdll::ini::SPEAK_APPEND, 
         nvdll::ini::SPEAK_ALLOW_BREAK, 
         speakCompleteCallback);
-    SPDLOG_DEBUG("[speakText_impl] ret={}", (int)err);
+    spdlog::debug("[speakText_impl] ret={}; text={}", (int)err, text);  // 发布版本输出
 
     return convertBoyCtrlError(err);
 }
@@ -222,7 +222,7 @@ error_status_t __stdcall cancelSpeech_impl()
     }
 
     auto err = boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
-    SPDLOG_DEBUG("[cancelSpeech_impl] ret={}", (int)err);
+    spdlog::debug("[cancelSpeech_impl] ret={}", (int)err);  // 发布版本输出
     return convertBoyCtrlError(err);
 }
 
