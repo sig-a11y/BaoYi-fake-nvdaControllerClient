@@ -21,10 +21,11 @@ namespace log {
 
         // -- release 模式：日志文件仅输出 warn
         auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(LOG_NAME, true);
-        file_sink->set_level(spdlog::level::info);
+        file_sink->set_level(spdlog::level::debug);
 #ifndef _DEBUG
         spdlog::logger logger("release_sink", { console_sink, file_sink });
-        logger.set_level(spdlog::level::info);
+        // TODO: 允许动态修改日志级别?
+        logger.set_level(spdlog::level::debug);
         logger.flush_on(spdlog::level::info);
 #else
         // -- debug 模式：日志文件输出 warn+debug
