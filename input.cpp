@@ -26,7 +26,7 @@ namespace input
             if (_kbhit()) {
                 SPDLOG_DEBUG("[keyboardListener] keydown");
                 // nvdll::StopSpeaking();
-                SPDLOG_DEBUG("[keyboardListener]    call StopSpeaking()");
+                SPDLOG_DEBUG("[keyboardListener]     call StopSpeaking()");
             }
 
             // 每 100ms 检查一次
@@ -94,7 +94,7 @@ namespace input
         {
             SPDLOG_DEBUG("[lowLevelKbHookFunc] press code={}", p->vkCode);
             // nvdll::StopSpeaking();
-            SPDLOG_DEBUG("[lowLevelKbHookFunc]    call StopSpeaking()");
+            SPDLOG_DEBUG("[lowLevelKbHookFunc]     call StopSpeaking()");
         }
 
         //  hook procedure must pass the message *Always*
@@ -137,7 +137,7 @@ namespace input
             spdlog::debug("[kbHookFunc] VK={} x {}; StopSpeaking()", wParam, repeatCount);
             // NOTE: 调用内部函数，与外部调用区分开来
             auto err = nvdll::StopSpeaking();
-            spdlog::debug("[kbHookFunc] StopSpeaking.ret={}", (int)err);  // 发布版本输出
+            spdlog::debug("[kbHookFunc]     StopSpeaking.ret={}", (int)err);  // 发布版本输出
         }
         
         //  hook procedure must pass the message *Always*
