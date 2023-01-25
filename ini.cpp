@@ -20,6 +20,9 @@ namespace ini {
     bool SPEAK_ALLOW_BREAK = true;
     /// 是否任意按键打断（NVDLL 新增）
     bool SPEAK_ALL_KEY_BREAK = true;
+
+    /// 是否生成调试日志。包括本 DLL 和保益的 DLL
+    bool GEN_DEBUG_LOG = false;
 #pragma region
 
 #pragma region 常量变量定义
@@ -37,6 +40,8 @@ namespace ini {
     LPCWSTR INI_KEY_USE_APPEND_CN = L"排队朗读";
     LPCWSTR INI_KEY_ALLOW_BREAK = L"ALLOW_BREAK";
     LPCWSTR INI_KEY_ALLOW_BREAK_CN = L"按键打断朗读";
+    LPCWSTR INI_KEY_GEN_DEBUG_LOG_EN = L"DEBUG_LOG";
+    LPCWSTR INI_KEY_GEN_DEBUG_LOG_CN = L"调试模式";
 
     /// 配置文件对象
     static CSimpleIniW ini;
@@ -121,12 +126,17 @@ namespace ini {
         SPEAK_ALL_KEY_BREAK = 2 == allowBreak;
         SPDLOG_DEBUG("[loadIni]     allowBreak={}; ALLOW_BREAK={}; ALL_KEY_BREAK={}", 
             allowBreak, SPEAK_ALLOW_BREAK, SPEAK_ALL_KEY_BREAK);
+        
+        int debug_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_DEBUG_LOG_EN, 0, iniPath);
+        GEN_DEBUG_LOG = 0 != debug_log;
+        SPDLOG_DEBUG("[loadIni]     debug_log={}; GEN_DEBUG_LOG={}", slave, GEN_DEBUG_LOG);
 
         SPDLOG_DEBUG("[loadIni] load ini finished.");
         spdlog::info("[loadIni] SPEAK_WITH_SLAVE={}", SPEAK_WITH_SLAVE);
         spdlog::info("[loadIni] SPEAK_APPEND={}", SPEAK_APPEND);
         spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
         spdlog::info("[loadIni] SPEAK_ALL_KEY_BREAK={}", SPEAK_ALL_KEY_BREAK);
+        spdlog::info("[loadIni] GEN_DEBUG_LOG={}", GEN_DEBUG_LOG);
     }
 
 } // nvdll::ini::
