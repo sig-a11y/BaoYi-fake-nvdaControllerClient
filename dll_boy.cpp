@@ -210,7 +210,7 @@ void __stdcall speakCompleteCallback(int reason)
 
 error_status_t __stdcall speakText_impl(const wchar_t* text)
 {
-    SPDLOG_DEBUG(L"[speakText_impl] text={}", text);
+    spdlog::debug(L"[speakText_impl] text={}", text);  // 发布版本输出
 
     if (nullptr == boyCtrlSpeak)
     {
@@ -229,7 +229,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         nvdll::ini::SPEAK_APPEND, 
         nvdll::ini::SPEAK_ALLOW_BREAK, 
         speakCompleteCallback);
-    spdlog::debug(L"[speakText_impl] ret={}; text={}", (int)err, text);  // 发布版本输出
+    spdlog::debug(L"[speakText_impl]     ret={}", (int)err);  // 发布版本输出
 
     return convertBoyCtrlError(err);
 }
