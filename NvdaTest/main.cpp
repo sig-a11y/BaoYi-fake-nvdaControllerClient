@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <Windows.h>
 #include "nvda.h"
 
 void speakPause()
@@ -25,7 +26,35 @@ const std::wstring currentDateTime() {
 
 int main(int argc, char* argv[])
 {
-	error_status_t ret = nvdaController_testIfRunning();
+	// 显式加载
+	auto dllHandle = LoadLibrary(L"nvdaControllerClient.dll");
+	if (!dllHandle)
+	{
+		std::cerr << "Failed to LoadLibrary nvdaControllerClient.dll" << std::endl;
+		return 1;
+	}
+
+	auto testIfRunning = (decltype(nvdaController_testIfRunning)*)GetProcAddress(dllHandle, "nvdaController_testIfRunning");
+	if (!testIfRunning)
+	{
+		std::cerr << "Failed to get nvdaController_testIfRunning" << std::endl;
+		return 1;
+	}
+	auto speakText = (decltype(nvdaController_speakText)*)GetProcAddress(dllHandle, "nvdaController_speakText");
+	if (!speakText)
+	{
+		std::cerr << "Failed to get nvdaController_speakText" << std::endl;
+		return 1;
+	}
+	auto cancelSpeech = (decltype(nvdaController_cancelSpeech)*)GetProcAddress(dllHandle, "nvdaController_cancelSpeech");
+	if (!cancelSpeech)
+	{
+		std::cerr << "Failed to get nvdaController_cancelSpeech" << std::endl;
+		return 1;
+	}
+
+
+	error_status_t ret = testIfRunning();
 	if (ret != 0) {
 		std::cout 
 			<< "Error communicating with NVDA. "
@@ -34,13 +63,13 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	nvdaController_speakText(L"This is a test speech message");
+	speakText(L"This is a test speech message");
 	speakPause();
 
-	nvdaController_speakText(L"中文输出测试.");
+	speakText(L"中文输出测试.");
 	speakPause();
-	nvdaController_speakText(L"当前时间：");
-	nvdaController_speakText(currentDateTime().c_str());
+	speakText(L"当前时间：");
+	speakText(currentDateTime().c_str());
 	speakPause();
 
 	// ---- 循环输出测试
@@ -54,12 +83,12 @@ int main(int argc, char* argv[])
 		switch (ch)
 		{
 		case '1':
-			nvdaController_speakText(L"中文输出测试.");
+			speakText(L"中文输出测试.");
 			break;
 
 		case '2':
-			nvdaController_speakText(L"当前时间：");
-			nvdaController_speakText(currentDateTime().c_str());
+			speakText(L"当前时间：");
+			speakText(currentDateTime().c_str());
 			break;
 
 		default:
@@ -71,6 +100,6 @@ int main(int argc, char* argv[])
 	_putch('\r');    // Carriage return
 	_putch('\n');    // Line feed
 
-	nvdaController_speakText(L"Test completed!");
+	speakText(L"Test completed!");
 	return 0;
 }
