@@ -10,4 +10,12 @@
 #define nvdaController_cancelSpeech     cancelSpeech_impl
 #define nvdaController_brailleMessage   brailleMessage_impl
 
+
+// ---- 导出函数类型定义
+
+typedef error_status_t(__stdcall *TestIfRunningFunc)();
+typedef error_status_t(__stdcall *SpeakTextFunc)(const wchar_t* text);
+typedef error_status_t(__stdcall *CancelSpeechFunc)();
+typedef error_status_t(__stdcall *BrailleMessageFunc)(const wchar_t* message);
+
 #endif // __NVDA_H
