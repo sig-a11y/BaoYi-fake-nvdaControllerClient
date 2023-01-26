@@ -13,6 +13,8 @@ HWND hConsole;
 HINSTANCE hInst;                                // 当前实例
 WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
+/// 待执行的命令
+WCHAR szCommandLine[MAX_LOADSTRING];
 
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -21,7 +23,7 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 void CreateConsole();
-
+void RunProcess();
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -35,6 +37,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 初始化全局字符串
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDS_RUN_CMD, szCommandLine, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_NVDAGUITEST, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
@@ -46,6 +49,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // ==== 其他初始化操作
     CreateConsole();
+    RunProcess();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_NVDAGUITEST));
     MSG msg;
@@ -238,4 +242,29 @@ void CreateConsole()
         return;
     }
 
+}
+
+/// 运行指定的命令
+void RunProcess()
+{
+    STARTUPINFO si = { sizeof(si) };
+    PROCESS_INFORMATION pi;
+
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = TRUE;
+
+    BOOL bRet = CreateProcess(NULL, szCommandLine, NULL, NULL, FALSE, NULL, NULL, NULL, &si, &pi);
+    if (bRet)
+    {
+        // TODO: 保存子进程 pid：pi.hProcess
+    }
+    else
+    {
+        wprintf(L"Run Cmd \"%s\" failed!\n", szCommandLine);
+        ExitProcess(0);
+    }
+
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    return;
 }
