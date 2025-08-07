@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 // 朗读完成回调
 // reason: 回调原因，1=朗读完成，2=被新的朗读打断，3=被停止调用打断
@@ -73,3 +73,9 @@ typedef void(__stdcall *BoyCtrlUninitializeFunc)();
 // 读屏是否正在运行，必须成功初始化才能使用此接口
 bool __stdcall BoyCtrlIsReaderRunning();
 typedef bool(__stdcall* BoyCtrlIsReaderRunningFunc)();
+
+// 验证
+bool __stdcall BoyCtrlVerify(const char* key);
+
+// 设置任意键打断，必须成功初始化后才能使用此接口
+bool __stdcall BoyCtrlSetAnyKeyStopSpeaking(bool withSlave);
