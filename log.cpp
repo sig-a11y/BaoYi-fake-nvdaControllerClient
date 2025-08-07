@@ -2,7 +2,6 @@
 // -- [3rd]
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
-#include "loguru.hpp" // 日志记录框架
 // -- [proj]
 #include "dll.hpp"
 
