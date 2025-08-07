@@ -25,14 +25,14 @@ VERSION		2.0
 EXPORTS
 ;;;	V1.0
 ;;;
-	nvdaController_testIfRunning	= testIfRunning_impl	@1
-	nvdaController_speakText		= speakText_impl		@2
-	nvdaController_cancelSpeech		= cancelSpeech_impl		@3
-	nvdaController_brailleMessage	= brailleMessage_impl	@4
+	nvdaController_testIfRunning	= testIfRunning_impl	@7
+	nvdaController_speakText		= speakText_impl		@6
+	nvdaController_cancelSpeech		= cancelSpeech_impl		@2
+	nvdaController_brailleMessage	= brailleMessage_impl	@1
 ;;; V2.0
 ;	Added in NVDA 2024.1
 ;	https://github.com/nvaccess/nvda/pull/15734/
 ;;;
-	nvdaController_getProcessId		= getProcessId_impl		@5
-	nvdaController_speakSsml		= speakSsml_impl		@6
-	nvdaController_setOnSsmlMarkReachedCallback	= setOnSsmlMarkReachedCallback_impl	@7
+	nvdaController_getProcessId		= getProcessId_impl		@3
+	nvdaController_speakSsml		= speakSsml_impl		@5
+	nvdaController_setOnSsmlMarkReachedCallback	= setOnSsmlMarkReachedCallback_impl	@4
