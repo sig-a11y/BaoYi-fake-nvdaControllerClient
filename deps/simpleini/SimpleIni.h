@@ -5,7 +5,7 @@
         <tr><th>File        <td>SimpleIni.h
         <tr><th>Author      <td>Brodie Thiesfield
         <tr><th>Source      <td>https://github.com/brofield/simpleini
-        <tr><th>Version     <td>4.19
+        <tr><th>Version     <td>4.22
     </table>
 
     Jump to the @link CSimpleIniTempl CSimpleIni @endlink interface documentation.
@@ -15,7 +15,6 @@
     This component allows an INI-style configuration file to be used on both
     Windows and Linux/Unix. It is fast, simple and source code using this
     component will compile unchanged on either OS.
-
 
     @section features FEATURES
 
@@ -38,13 +37,14 @@
     - support for non-standard character types or file encodings
       via user-written converter classes
     - support for adding/modifying values programmatically
-    - compiles cleanly in the following compilers:
+    - should compile cleanly without warning usually at the strictest warning level
+    - it has been tested with the following compilers:
         - Windows/VC6 (warning level 3)
         - Windows/VC.NET 2003 (warning level 4)
         - Windows/VC 2005 (warning level 4)
         - Windows/VC 2019 (warning level 4)
         - Linux/gcc (-Wall)
-
+        - Mac OS/c++ (-Wall)
 
     @section usage USAGE SUMMARY
 
@@ -53,7 +53,7 @@
     -#  If you will only be using straight utf8 files and access the data via the 
         char interface, then you do not need any conversion library and could define 
         SI_NO_CONVERSION. Note that no conversion also means no validation of the data.
-        If no converter is specified then the default converter is SI_CONVERT_GENERIC 
+        If no converter is specified then the default converter is SI_NO_CONVERSION
         on Mac/Linux and SI_CONVERT_WIN32 on Windows. If you need widechar support on 
         Mac/Linux then use either SI_CONVERT_GENERIC or SI_CONVERT_ICU. These are also
         supported on all platforms.
@@ -86,6 +86,8 @@
         #1  On Windows you are better to use CSimpleIniA with SI_CONVERT_WIN32.<br>
         #2  Only affects Windows. On Windows this uses MBCS functions and
             so may fold case incorrectly leading to uncertain results.
+    -# Set all the options that you require, see all the Set*() options below. 
+        The SetUnicode() option is very common and can be specified in the constructor.
     -# Call LoadData() or LoadFile() to load and parse the INI configuration file
     -# Access and modify the data of the file using the following functions
         <table>
@@ -175,15 +177,18 @@
     - Not thread-safe so manage your own locking
 
     @section contrib CONTRIBUTIONS
+
+    Many thanks to the following contributors:
     
     - 2010/05/03: Tobias Gehrig: added GetDoubleValue()
+    - See list of many contributors in github
 
     @section licence MIT LICENCE
 
     The licence text below is the boilerplate "MIT Licence" used from:
     http://www.opensource.org/licenses/mit-license.php
 
-    Copyright (c) 2006-2012, Brodie Thiesfield
+    Copyright (c) 2006-2024, Brodie Thiesfield
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -885,14 +890,14 @@ public:
         ) const;
 
     /** Test if a section exists. Convenience function */
-    inline const bool SectionExists(
+    inline bool SectionExists(
         const SI_CHAR * a_pSection
     ) const {
         return GetSection(a_pSection) != NULL;
     }
 
     /** Test if the key exists in a section. Convenience function. */
-    inline const bool KeyExists(
+    inline bool KeyExists(
         const SI_CHAR * a_pSection,
         const SI_CHAR * a_pKey
     ) const {
@@ -2214,7 +2219,7 @@ CSimpleIniTempl<SI_CHAR,SI_STRLESS,SI_CONVERTER>::SetLongValue(
 #if __STDC_WANT_SECURE_LIB__ && !_WIN32_WCE
     sprintf_s(szInput, a_bUseHex ? "0x%lx" : "%ld", a_nValue);
 #else // !__STDC_WANT_SECURE_LIB__
-    sprintf(szInput, a_bUseHex ? "0x%lx" : "%ld", a_nValue);
+    snprintf(szInput, sizeof(szInput), a_bUseHex ? "0x%lx" : "%ld", a_nValue);
 #endif // __STDC_WANT_SECURE_LIB__
 
     // convert to output text
@@ -2276,7 +2281,7 @@ CSimpleIniTempl<SI_CHAR,SI_STRLESS,SI_CONVERTER>::SetDoubleValue(
 #if __STDC_WANT_SECURE_LIB__ && !_WIN32_WCE
     sprintf_s(szInput, "%f", a_nValue);
 #else // !__STDC_WANT_SECURE_LIB__
-    sprintf(szInput, "%f", a_nValue);
+    snprintf(szInput, sizeof(szInput), "%f", a_nValue);
 #endif // __STDC_WANT_SECURE_LIB__
 
     // convert to output text
@@ -2829,17 +2834,19 @@ CSimpleIniTempl<SI_CHAR,SI_STRLESS,SI_CONVERTER>::DeleteString(
 //
 //  SI_NO_CONVERSION        Do not make the "W" wide character version of the 
 //                          library available. Only CSimpleIniA etc is defined.
+//                          Default on Linux/MacOS/etc.
+//  SI_CONVERT_WIN32        Use the Win32 API functions for conversion.
+//                          Default on Windows.
 //  SI_CONVERT_GENERIC      Use the Unicode reference conversion library in
 //                          the accompanying files ConvertUTF.h/c
 //  SI_CONVERT_ICU          Use the IBM ICU conversion library. Requires
 //                          ICU headers on include path and icuuc.lib
-//  SI_CONVERT_WIN32        Use the Win32 API functions for conversion.
 
 #if !defined(SI_NO_CONVERSION) && !defined(SI_CONVERT_GENERIC) && !defined(SI_CONVERT_WIN32) && !defined(SI_CONVERT_ICU)
 # ifdef _WIN32
 #  define SI_CONVERT_WIN32
 # else
-#  define SI_CONVERT_GENERIC
+#  define SI_NO_CONVERSION
 # endif
 #endif
 
@@ -3058,14 +3065,18 @@ public:
             return a_uInputDataLen;
         }
 
-#if defined(SI_NO_MBSTOWCS_NULL) || (!defined(_MSC_VER) && !defined(_linux))
+        // get the required buffer size
+#if defined(_MSC_VER)
+        size_t uBufSiz;
+        errno_t e = mbstowcs_s(&uBufSiz, NULL, 0, a_pInputData, a_uInputDataLen);
+        return (e == 0) ? uBufSiz : (size_t) -1;
+#elif !defined(SI_NO_MBSTOWCS_NULL)
+        return mbstowcs(NULL, a_pInputData, a_uInputDataLen);
+#else
         // fall back processing for platforms that don't support a NULL dest to mbstowcs
         // worst case scenario is 1:1, this will be a sufficient buffer size
         (void)a_pInputData;
         return a_uInputDataLen;
-#else
-        // get the actual required buffer size
-        return mbstowcs(NULL, a_pInputData, a_uInputDataLen);
 #endif
     }
 
@@ -3092,7 +3103,7 @@ public:
             // This uses the Unicode reference implementation to do the
             // conversion from UTF-8 to wchar_t. The required files are
             // ConvertUTF.h and ConvertUTF.c which should be included in
-            // the distribution but are publically available from unicode.org
+            // the distribution but are publicly available from unicode.org
             // at http://www.unicode.org/Public/PROGRAMS/CVTUTF/
             ConversionResult retval;
             const UTF8 * pUtf8 = (const UTF8 *) a_pInputData;
@@ -3114,9 +3125,18 @@ public:
         }
 
         // convert to wchar_t
+#if defined(_MSC_VER)
+        size_t uBufSiz;
+        errno_t e = mbstowcs_s(&uBufSiz,
+            a_pOutputData, a_uOutputDataSize,
+            a_pInputData, a_uInputDataLen);
+        (void)uBufSiz;
+        return (e == 0);
+#else
         size_t retval = mbstowcs(a_pOutputData,
             a_pInputData, a_uOutputDataSize);
         return retval != (size_t)(-1);
+#endif
     }
 
     /** Calculate the number of char required by the storage format of this
@@ -3179,7 +3199,7 @@ public:
             // This uses the Unicode reference implementation to do the
             // conversion from wchar_t to UTF-8. The required files are
             // ConvertUTF.h and ConvertUTF.c which should be included in
-            // the distribution but are publically available from unicode.org
+            // the distribution but are publicly available from unicode.org
             // at http://www.unicode.org/Public/PROGRAMS/CVTUTF/
             ConversionResult retval;
             UTF8 * pUtf8 = (UTF8 *) a_pOutputData;
