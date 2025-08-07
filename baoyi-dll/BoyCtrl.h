@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // 朗读完成回调
 // reason: 回调原因，1=朗读完成，2=被新的朗读打断，3=被停止调用打断
