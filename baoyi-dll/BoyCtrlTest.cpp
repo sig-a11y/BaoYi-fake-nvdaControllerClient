@@ -6,8 +6,9 @@
 #include "BoyCtrl.h"
 
 using namespace std;
+#ifdef _WIN64
 #define BOYCTRLTEST_X64
-
+#endif // _WIN64
 
 void __stdcall speakCompleteCallback(int reason)
 {
@@ -19,7 +20,7 @@ int main()
 #ifndef BOYCTRLTEST_X64
 	auto dllHandle = LoadLibrary(L"BoyCtrl.dll");
 #else
-	auto dllHandle = LoadLibrary(L"x64/BoyCtrl-x64.dll");
+	auto dllHandle = LoadLibrary(L"BoyCtrl-x64.dll");
 #endif
 	if (!dllHandle)
 	{
