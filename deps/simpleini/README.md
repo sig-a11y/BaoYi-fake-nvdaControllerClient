@@ -1,15 +1,16 @@
 simpleini
 =========
 
-![Test Results Linux](https://github.com/brofield/simpleini/actions/workflows/test.yml/badge.svg)
-![Test Results Windows](https://ci.appveyor.com/api/projects/status/github/brofield/simpleini?svg=true)
-
+![Latest Test Results](https://github.com/brofield/simpleini/actions/workflows/build-and-test.yml/badge.svg)
+ 
 A cross-platform library that provides a simple API to read and write INI-style configuration files. It supports data files in ASCII, MBCS and Unicode. It is designed explicitly to be portable to any platform and has been tested on Windows, WinCE and Linux. Released as open-source and free using the MIT licence.
+
+[Full documentation](https://brofield.github.io/simpleini/)
 
 # Feature Summary
 
 - MIT Licence allows free use in all software (including GPL and commercial)
-- multi-platform (Windows 95 to Windows 10, Windows CE, Linux, Unix)
+- multi-platform: Windows (from 95 to 11, CE), Linux, MacOS
 - loading and saving of INI-style configuration files
 - configuration files can have any newline format on all platforms
 - liberal acceptance of file format
@@ -22,6 +23,7 @@ A cross-platform library that provides a simple API to read and write INI-style 
 - preserves comments on the file, section and keys where possible
 - supports both char or wchar_t programming interfaces
 - supports both MBCS (system locale) and UTF-8 file encodings
+- supports ICU as conversion library on all platforms
 - system locale does not need to be UTF-8 on Linux/Unix to load UTF-8 file
 - support for non-ASCII characters in section, keys, values and comments
 - support for non-standard character types or file encodings via user-written converter classes
@@ -30,7 +32,7 @@ A cross-platform library that provides a simple API to read and write INI-style 
 
 # Documentation
 
-Full documentation of the interface is available in doxygen format.
+Full documentation of the interface is available in doxygen format. See [latest documentation here](https://brofield.github.io/simpleini/).
 
 # Examples
 

@@ -14,7 +14,7 @@ namespace nvdll {
         extern TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
         /// 保益 DLL 版本
-        constexpr LPCSTR BOY_DLL_VERSION = "v1.5.2";
+        constexpr LPCSTR BOY_DLL_VERSION = "v1.7";
 
 #ifdef _WIN64
         /// 保益 DLL 文件名

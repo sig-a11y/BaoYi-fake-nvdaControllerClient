@@ -27,7 +27,11 @@ const std::wstring currentDateTime() {
 int main(int argc, char* argv[])
 {
 	// 显式加载
-	auto dllHandle = LoadLibrary(L"nvdaControllerClient.dll");
+#ifdef _WIN64
+	auto dllHandle = LoadLibrary(L"nvdaControllerClient64.dll");
+#else
+	auto dllHandle = LoadLibrary(L"nvdaControllerClient32.dll");
+#endif
 	if (!dllHandle)
 	{
 		std::cerr << "Failed to LoadLibrary nvdaControllerClient.dll" << std::endl;

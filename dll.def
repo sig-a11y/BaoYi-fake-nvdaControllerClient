@@ -1,6 +1,38 @@
-LIBRARY
+;;; .Def file
+;
+;	Doc: https://learn.microsoft.com/en-us/cpp/build/reference/module-definition-dot-def-files?view=msvc-170
+;;;
+
+;;; 
+;	LIBRARY [library][BASE=address]
+;;;
+; LIBRARY		nvdaControllerClient64
+; LIBRARY		nvdaControllerClient32
+
+;;;
+;	VERSION major[.minor]
+;;;
+VERSION		2.0
+
+;;;
+;	EXPORTS
+;		definition
+;
+;;	The syntax for an export definition is:
+;
+;	entryname[=internal_name|other_module.exported_name] [@ordinal [NONAME] ] [ [PRIVATE] | [DATA] ]
+;;;
 EXPORTS
-	nvdaController_brailleMessage	= brailleMessage_impl	@1
+;;;	V1.0
+;;;
+	nvdaController_testIfRunning	= testIfRunning_impl	@7
+	nvdaController_speakText		= speakText_impl		@6
 	nvdaController_cancelSpeech		= cancelSpeech_impl		@2
-	nvdaController_speakText		= speakText_impl		@3
-	nvdaController_testIfRunning	= testIfRunning_impl	@4
+	nvdaController_brailleMessage	= brailleMessage_impl	@1
+;;; V2.0
+;	Added in NVDA 2024.1
+;	https://github.com/nvaccess/nvda/pull/15734/
+;;;
+	nvdaController_getProcessId		= getProcessId_impl		@3
+	nvdaController_speakSsml		= speakSsml_impl		@5
+	nvdaController_setOnSsmlMarkReachedCallback	= setOnSsmlMarkReachedCallback_impl	@4

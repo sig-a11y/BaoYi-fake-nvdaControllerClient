@@ -263,4 +263,37 @@ error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
 {
     return RPC_S_CANNOT_SUPPORT;
 }
+
+
+/* V2.0 functions */
+
+error_status_t __stdcall getProcessId_impl(unsigned long* pid)
+{
+    if (nullptr != pid)
+    {
+        spdlog::debug("[getProcessId_impl] *pid={}", *pid);  // 发布版本输出
+    }
+    spdlog::debug("[getProcessId_impl] pid={}", (void*)pid);  // 发布版本输出
+
+    return RPC_S_CANNOT_SUPPORT;
+}
+
+error_status_t __stdcall speakSsml_impl(
+    const wchar_t* ssml,
+    const enum SYMBOL_LEVEL symbolLevel = SYMBOL_LEVEL_UNCHANGED,
+    const enum SPEECH_PRIORITY priority = SPEECH_PRIORITY_NORMAL,
+    const bool asynchronous = true)
+{
+    spdlog::debug(L"[speakSsml_impl] ssml={}, symbolLevel={}, priority={}, asynchronous={}",
+        ssml, (int)symbolLevel, (int)priority, asynchronous);
+
+    return RPC_S_CANNOT_SUPPORT;
+}
+
+error_status_t __stdcall setOnSsmlMarkReachedCallback_impl(onSsmlMarkReachedFuncType callback)
+{
+    spdlog::debug("[setOnSsmlMarkReachedCallback_impl] callback={}", (void*)callback);
+    return RPC_S_CANNOT_SUPPORT;
+}
+
 #pragma endregion

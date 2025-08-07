@@ -21,6 +21,29 @@
 typedef unsigned long error_status_t;
 #define WIN_RPC_RET error_status_t __stdcall
 
+/**
+ * 语音序列中所需的符号级别.
+ */
+enum SYMBOL_LEVEL {
+    SYMBOL_LEVEL_UNCHANGED = -1,
+    SYMBOL_LEVEL_NONE = 0,
+    SYMBOL_LEVEL_SOME = 100,
+    SYMBOL_LEVEL_MOST = 200,
+    SYMBOL_LEVEL_ALL = 300,
+    SYMBOL_LEVEL_CHAR = 1000,
+};
+
+/**
+ * SSML 输出优先级
+ */
+enum SPEECH_PRIORITY {
+    SPEECH_PRIORITY_NORMAL = 0,
+    SPEECH_PRIORITY_NEXT = 1,
+    SPEECH_PRIORITY_NOW = 2,
+};
+
+typedef error_status_t(__stdcall* onSsmlMarkReachedFuncType)(const wchar_t* mark);
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,6 +74,30 @@ extern "C" {
         * @return 错误码
     */
     NVDLL_IMPL_API WIN_RPC_RET brailleMessage_impl(const wchar_t* message);
+
+    /**
+        * @brief 【暂不支持】获取 NVDA 的进程 PID
+        * @param *pid   输出参数，接收 NVDA 的进程 PID
+        * @return 错误码
+    */
+    NVDLL_IMPL_API WIN_RPC_RET getProcessId_impl(unsigned long* pid);
+
+    /**
+        * @brief 【暂不支持】配置 Speech Synthesis Markup Language (SSML)
+        * @param *ssml          待沟通的 SSML 对象
+        * @param symbolLevel    符号详尽程度
+        * @param priority       输出序列的优先级
+        * @param asynchronous   是否异步疏忽
+        * @return 错误码
+    */
+    NVDLL_IMPL_API WIN_RPC_RET speakSsml_impl(const wchar_t* ssml, const enum SYMBOL_LEVEL symbolLevel, const enum SPEECH_PRIORITY priority, const bool asynchronous);
+
+    /**
+        * @brief 【暂不支持】设置 SsmlMarkReached 的回调函数
+        * @param callback 要设置的回调函数
+        * @return 错误码
+    */
+    NVDLL_IMPL_API WIN_RPC_RET setOnSsmlMarkReachedCallback_impl(onSsmlMarkReachedFuncType callback);
 
 #ifdef __cplusplus
 }
