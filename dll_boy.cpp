@@ -161,7 +161,8 @@ void initDllIfNull()
 
 error_status_t __stdcall testIfRunning_impl()
 {
-    if (nullptr == nvdll::dllHandle)
+    spdlog::debug(L"[testIfRunning_impl]");  // 发布版本输出
+    if (nullptr == boyCtrlIsReaderRunning)
     {
         bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
@@ -169,10 +170,9 @@ error_status_t __stdcall testIfRunning_impl()
             return ERROR_INVALID_HANDLE;
         }
     }
+    assert(nullptr != boyCtrlIsReaderRunning);
 
-    SPDLOG_DEBUG("[testIfRunning_impl] loadBaoYiDll() load finished. dllHandle={}", (void*)nvdll::dllHandle);
-    assert(nullptr != nvdll::dllHandle);
-    return RPC_S_OK;
+    return boyCtrlIsReaderRunning();
 }
 
 /**
