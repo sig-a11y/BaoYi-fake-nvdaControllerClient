@@ -75,10 +75,25 @@ namespace ini {
 
         // ==== 拼接 ini 完整路径，尝试加载
         // TODO: 显式构造长路径 "\\?\"
+        // 从 DLL 旁完整路径读取 ini
         PathCchCombineEx(iniPath, MAX_PATH, pszBaseDirIn, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
         bool exist = PathFileExists(iniPath);
-        spdlog::info(L"[loadIni] FileExists={}; iniPath={}", exist, iniPath);
+        // 拼接的路径不存在，尝试直接读取 ini
+        if (!exist)
+        {
+            spdlog::warn(L"[loadIni] .ini file not exist: iniPath={}", iniPath);
+            PathCchCombineEx(iniPath, MAX_PATH, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
+        }
+        exist = PathFileExists(iniPath);
+        if (!exist)
+        {
+            spdlog::warn(L"[loadIni] .ini file not exist: iniPath={}", iniPath);
+            spdlog::error(L"[loadIni] stop read ini.");
+            return;
+        }
 
+        /* 开始读取 ini */
+        spdlog::info(L"[loadIni] Reading ini file: {}", iniPath);
         SI_Error rc = ini.LoadFile(iniPath);
         if (rc < 0)
         {
@@ -115,14 +130,6 @@ namespace ini {
             SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK={}", pv);
             pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_ALLOW_BREAK_CN, L"-1");
             SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK_CN={}", pv);
-        }
-
-        // 拼接的路径不存在，尝试直接读取 ini
-        if (!exist)
-        {
-            PathCchCombineEx(iniPath, MAX_PATH, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
-            exist = PathFileExists(iniPath);
-            spdlog::warn(L"[loadIni] Reload init: FileExists={}; iniPath={}", exist, iniPath);
         }
 
         // ==== 读取 ini 配置
