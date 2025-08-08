@@ -245,8 +245,6 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
 
 error_status_t __stdcall cancelSpeech_impl()
 {
-// NOTE: 不允许应用程序打断。由 DLL 处理打断逻辑
-#ifdef ALLOW_PROGRAM_BREAK
     if (nullptr == boyCtrlStopSpeaking)
     {
         bool has_error = nvdll::boy::loadBaoYiDll();
@@ -256,16 +254,19 @@ error_status_t __stdcall cancelSpeech_impl()
         }
 
         SPDLOG_DEBUG("[cancelSpeech_impl] loadBaoYiDll() load finished. boyCtrlStopSpeaking={}", (void*)boyCtrlStopSpeaking);
-        assert(nullptr != boyCtrlStopSpeaking);
+    }
+    assert(nullptr != boyCtrlStopSpeaking);
+
+    // 由 DLL 控制 && 并且不允许打断
+    if (nvdll::ini::BREAK_CTRL && !nvdll::ini::ALLOW_SR_INTERRUPT)
+    {
+        return RPC_S_CANNOT_SUPPORT;
     }
 
+    // 正常打断
     auto err = boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
     spdlog::debug("[cancelSpeech_impl] ret={}", (int)err);  // 发布版本输出
     return convertBoyCtrlError(err);
-#endif // def _DEBUG
-
-    spdlog::debug("[cancelSpeech_impl] ignore!");  // 发布版本输出
-    return RPC_S_OK;
 }
 
 error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
