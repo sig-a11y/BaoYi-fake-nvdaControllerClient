@@ -120,6 +120,18 @@ namespace ini {
         }
 
         // ==== 读取 ini 配置
+        /* [DEBUG_LOG] */
+        int debug_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_DEBUG_LOG_EN, 0, iniPath);
+        GEN_DEBUG_LOG = 0 != debug_log;
+        SPDLOG_DEBUG("[loadIni]     debug_log={}; GEN_DEBUG_LOG={}", debug_log, GEN_DEBUG_LOG);
+        // NOTE: 动态设置 log 级别
+        if (GEN_DEBUG_LOG)
+        {
+            spdlog::set_level(spdlog::level::debug);
+            spdlog::flush_on(spdlog::level::debug);
+            spdlog::debug("[loadIni] set dyn log level to ::debug");
+        }
+        /* [BOY_LOG] */
         int boy_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_BOY_LOG_EN, 0, iniPath);
         GEN_BOY_LOG = 0 != boy_log;
         SPDLOG_DEBUG("[loadIni]     boy_log={}; GEN_BOY_LOG={}", boy_log, GEN_BOY_LOG);
@@ -138,23 +150,15 @@ namespace ini {
         SPDLOG_DEBUG("[loadIni]     allowBreak={}; ALLOW_BREAK={}; ALL_KEY_BREAK={}", 
             allowBreak, SPEAK_ALLOW_BREAK, SPEAK_ALL_KEY_BREAK);
         
-        int debug_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_DEBUG_LOG_EN, 0, iniPath);
-        GEN_DEBUG_LOG = 0 != debug_log;
-        SPDLOG_DEBUG("[loadIni]     debug_log={}; GEN_DEBUG_LOG={}", debug_log, GEN_DEBUG_LOG);
-        // NOTE: 动态设置 log 级别
-        if (GEN_DEBUG_LOG)
-        {
-            spdlog::set_level(spdlog::level::debug);
-            spdlog::flush_on(spdlog::level::debug);
-            spdlog::debug("[loadIni] set dyn log level to ::debug");
-        }
-
+        // --------------------------------------------------------------------
         SPDLOG_DEBUG("[loadIni] load ini finished.");
+        spdlog::info("[loadIni] DEBUG_LOG={}", GEN_DEBUG_LOG);
+        spdlog::info("[loadIni] BOY_LOG={}", GEN_BOY_LOG);
+
         spdlog::info("[loadIni] SPEAK_WITH_SLAVE={}", SPEAK_WITH_SLAVE);
         spdlog::info("[loadIni] SPEAK_APPEND={}", SPEAK_APPEND);
         spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
         spdlog::info("[loadIni] SPEAK_ALL_KEY_BREAK={}", SPEAK_ALL_KEY_BREAK);
-        spdlog::info("[loadIni] GEN_DEBUG_LOG={}", GEN_DEBUG_LOG);
     }
 
 } // nvdll::ini::
