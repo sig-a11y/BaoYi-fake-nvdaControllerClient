@@ -9,12 +9,12 @@ namespace ini {
     extern bool GEN_DEBUG_LOG;
     extern bool GEN_BOY_LOG;
 
-    extern bool BREAK_CTRL;
-
     extern bool SPEAK_WITH_SLAVE;
+    extern bool BREAK_CTRL;
     extern bool SPEAK_APPEND;
     extern bool SPEAK_ALLOW_BREAK;
     extern bool SPEAK_ALL_KEY_BREAK;
+    extern bool ALLOW_SR_INTERRUPT;
 
     void loadIni(PCWSTR pszBaseDirIn);
 
