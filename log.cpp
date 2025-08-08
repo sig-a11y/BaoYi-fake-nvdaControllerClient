@@ -16,7 +16,7 @@ namespace log {
     {
         // -- 彩色终端输出
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        console_sink->set_level(spdlog::level::info);
+        console_sink->set_level(spdlog::level::debug);
 
         // -- release 模式：日志默认输出 debug 以上，在输入端过滤
         auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(LOG_NAME, true);
