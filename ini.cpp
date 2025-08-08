@@ -12,6 +12,11 @@ namespace nvdll {
 namespace ini {
 
 #pragma region 全局变量定义
+    /// 是否生成调试日志。默认生成 INFO 级别日志。
+    bool GEN_DEBUG_LOG = false;
+    /// 是否生成【保益】调用日志。
+    bool GEN_BOY_LOG = false;
+
     /// false=使用读屏通道，true=使用独立通道
     bool SPEAK_WITH_SLAVE = true;
     /// 是否排队朗读
@@ -21,8 +26,6 @@ namespace ini {
     /// 是否任意按键打断（NVDLL 新增）
     bool SPEAK_ALL_KEY_BREAK = true;
 
-    /// 是否生成调试日志。包括本 DLL 和保益的 DLL
-    bool GEN_DEBUG_LOG = false;
 #pragma region
 
 #pragma region 常量变量定义
@@ -32,6 +35,12 @@ namespace ini {
     LPCWSTR INI_NAME = L"nvdaCfg.ini";
     LPCWSTR INI_NAME_CN = L"朗读配置.ini";
 
+    /* ini 配置项 */
+    // 记录调试级别日志
+    LPCWSTR INI_KEY_GEN_DEBUG_LOG_EN = L"DEBUG_LOG";
+    // 生成保益日志
+    LPCWSTR INI_KEY_GEN_BOY_LOG_EN = L"BOY_LOG";
+
     LPCWSTR INI_APP_NAME = L"APP";
     LPCWSTR INI_APP_NAME_CN = L"朗读";
     LPCWSTR INI_KEY_USE_SLAVE = L"USE_SLAVE";
@@ -40,8 +49,6 @@ namespace ini {
     LPCWSTR INI_KEY_USE_APPEND_CN = L"排队朗读";
     LPCWSTR INI_KEY_ALLOW_BREAK = L"ALLOW_BREAK";
     LPCWSTR INI_KEY_ALLOW_BREAK_CN = L"按键打断朗读";
-    LPCWSTR INI_KEY_GEN_DEBUG_LOG_EN = L"DEBUG_LOG";
-    LPCWSTR INI_KEY_GEN_DEBUG_LOG_CN = L"调试模式";
 
     /// 配置文件对象
     static CSimpleIniW ini;

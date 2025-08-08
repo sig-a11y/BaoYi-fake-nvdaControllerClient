@@ -77,7 +77,8 @@ namespace boy
 
         // -- 初始化 DLL
         // 开启调试日志(DEBUG_LOG=1)：生成保益的日志
-        auto logName = ini::GEN_DEBUG_LOG ? DLL_LOG_NAME : nullptr;
+        auto logName = ini::GEN_BOY_LOG ? DLL_LOG_NAME : nullptr;
+        spdlog::info(L"[loadBaoYiDll] boyCtrlInitialize(logName={})", logName ? logName : L"nullptr");
         auto err = boyCtrlInitialize(logName);
         if (err != e_bcerr_success)
         {

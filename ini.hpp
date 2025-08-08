@@ -6,11 +6,13 @@
 
 namespace nvdll {
 namespace ini {
+    extern bool GEN_DEBUG_LOG;
+    extern bool GEN_BOY_LOG;
+
     extern bool SPEAK_WITH_SLAVE;
     extern bool SPEAK_APPEND;
     extern bool SPEAK_ALLOW_BREAK;
     extern bool SPEAK_ALL_KEY_BREAK;
-    extern bool GEN_DEBUG_LOG;
 
     void loadIni(PCWSTR pszBaseDirIn);
 
