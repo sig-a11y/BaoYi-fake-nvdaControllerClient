@@ -262,7 +262,7 @@ error_status_t __stdcall cancelSpeech_impl()
     assert(nullptr != boyCtrlStopSpeaking);
 
     // 由 DLL 控制 && 并且不允许打断
-    if (nvdll::ini::BREAK_CTRL && !nvdll::ini::ALLOW_SR_INTERRUPT)
+    if (nvdll::ini::BREAK_CTRL && !nvdll::ini::SPEAK_ALLOW_BREAK)
     {
         return RPC_S_CANNOT_SUPPORT;
     }
