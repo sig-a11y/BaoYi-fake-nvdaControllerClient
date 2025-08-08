@@ -175,8 +175,9 @@ error_status_t __stdcall testIfRunning_impl()
         }
     }
     assert(nullptr != boyCtrlIsReaderRunning);
+    bool isRunning = boyCtrlIsReaderRunning();
 
-    return boyCtrlIsReaderRunning();
+    return isRunning ? e_bcerr_success : e_bcerr_fail;
 }
 
 /**
