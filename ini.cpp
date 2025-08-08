@@ -120,6 +120,10 @@ namespace ini {
         }
 
         // ==== 读取 ini 配置
+        int boy_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_BOY_LOG_EN, 0, iniPath);
+        GEN_BOY_LOG = 0 != boy_log;
+        SPDLOG_DEBUG("[loadIni]     boy_log={}; GEN_BOY_LOG={}", boy_log, GEN_BOY_LOG);
+
         int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
         SPEAK_WITH_SLAVE = 0 != slave;
         SPDLOG_DEBUG("[loadIni]     slave={}; SPEAK_WITH_SLAVE={}", slave, SPEAK_WITH_SLAVE);
