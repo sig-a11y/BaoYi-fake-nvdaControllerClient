@@ -166,7 +166,7 @@ error_status_t __stdcall testIfRunning_impl()
         bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
             spdlog::error("[testIfRunning_impl] loadBaoYiDll() load error!");
-            return RPC_X_SS_CONTEXT_MISMATCH;
+            return ERROR_INVALID_HANDLE;
         }
     }
 
@@ -218,7 +218,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
             spdlog::error("[speakText_impl] loadBaoYiDll() load error!");
-            return RPC_X_SS_CONTEXT_MISMATCH;
+            return ERROR_INVALID_HANDLE;
         }
 
         SPDLOG_DEBUG("[speakText_impl] loadBaoYiDll() load finished. boyCtrlSpeak={}", (void*)boyCtrlSpeak);
@@ -250,7 +250,7 @@ error_status_t __stdcall cancelSpeech_impl()
         bool has_error = nvdll::boy::loadBaoYiDll();
         if (has_error) {
             spdlog::error("[cancelSpeech_impl] loadBaoYiDll() load error!");
-            return RPC_X_SS_CONTEXT_MISMATCH;
+            return ERROR_INVALID_HANDLE;
         }
 
         SPDLOG_DEBUG("[cancelSpeech_impl] loadBaoYiDll() load finished. boyCtrlStopSpeaking={}", (void*)boyCtrlStopSpeaking);
