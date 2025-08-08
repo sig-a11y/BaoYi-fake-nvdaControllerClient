@@ -16,6 +16,9 @@ namespace nvdll {
         /// 保益 DLL 版本
         constexpr LPCSTR BOY_DLL_VERSION = "v1.7";
 
+        /// NVDA 接口版本
+        constexpr LPCSTR NVDA_API_VERSION = "v2.0";
+
 #ifdef _WIN64
         /// 保益 DLL 文件名
         constexpr LPCWSTR BOY_DLL_NAME = L"BoyCtrl-x64.dll";
@@ -36,6 +39,7 @@ namespace nvdll {
 #pragma region
 
 #pragma region 导出函数
+    void printDllInfo();
     void saveDllDirPath(HINSTANCE hinstDLL);
     FARPROC loadFunctionPtr(LPCSTR lpProcName);
     void freeDll();

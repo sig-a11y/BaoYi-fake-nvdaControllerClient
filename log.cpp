@@ -39,13 +39,13 @@ namespace log {
 
         // ==== 初始化完毕
         SPDLOG_DEBUG("spdlog init finished.");
-        SPDLOG_INFO("Compiled at: {} {}", __DATE__, __TIME__);
     }
 
     /// 初始化全局日志
     void init()
     {
         spdlog_init();
+        nvdll::printDllInfo();
     }
 
 } // nvdll::log::

@@ -18,6 +18,20 @@ namespace nvdll {
     HMODULE dllHandle;
 #pragma region
 
+    /**
+     * 打印 DLL 信息
+     */
+    void printDllInfo()
+    {
+        spdlog::info("BaoYi-fake-nvdaControllerClient");
+        spdlog::info("Github URL:  https://github.com/sig-a11y/BaoYi-fake-nvdaControllerClient");
+        spdlog::info("Author: inkydragon @ github");
+        spdlog::info("DLL Compiled at: {} {}", __DATE__, __TIME__);
+
+        // 接口信息
+        spdlog::info("NVDA Client API Version: {}", nvdll::boy::NVDA_API_VERSION);
+        spdlog::info("BaoYi Dll API Version: {}", nvdll::boy::BOY_DLL_VERSION);
+    }
 
     /**
      * @brief 获取并保存 DLL 所在文件夹路径.
@@ -31,7 +45,7 @@ namespace nvdll {
         GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
         // -- 打印完整路径
-        spdlog::info("BaoYi Dll API Version: {}", nvdll::boy::BOY_DLL_VERSION);
+        
         spdlog::info(L"DLL_PATH={}", DLL_PATH);
 
         // -- 拆分路径
