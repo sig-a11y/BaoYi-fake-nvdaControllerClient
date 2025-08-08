@@ -89,30 +89,62 @@ namespace ini {
             spdlog::warn("[loadIni] CSimpleIniW.LoadFile error: rc={}", rc);
             return false;
         }
-
         SPDLOG_DEBUG("[loadIni] ini.LoadFile rc={}", rc);
-        LPCWSTR pv;
 
-#ifdef _DEBUG
-        std::list<CSimpleIniW::Entry> allSec;
-        ini.GetAllSections(allSec);
-        SPDLOG_DEBUG("[loadIni] print all item in ini...");
-        for (CSimpleIniW::Entry s : allSec)
+        long pv;
+
+        /* [DEBUG_LOG] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__DEBUG_LOG, 0);
+        // 仅 1 生成调试日志；其他均保持默认。
+        GEN_DEBUG_LOG = 1 == pv;
+        SPDLOG_DEBUG("[CSimpleIni]  {}={}; GEN_DEBUG_LOG={}", INI_KEY__DEBUG_LOG, pv, GEN_DEBUG_LOG);
+        // NOTE: 动态设置 log 级别
+        if (GEN_DEBUG_LOG)
         {
-            SPDLOG_DEBUG(L"[loadIni] s.pItem[{}]={}", s.nOrder, std::wstring(s.pItem));
-            // TODO: 输出所有选项
+            spdlog::set_level(spdlog::level::debug);
+            spdlog::flush_on(spdlog::level::debug);
+            spdlog::debug("[loadIni] set dyn log level to ::debug");
         }
-#endif // def _DEBUG
 
-        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"-1");
-        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE={}", pv);
+        /* [BOY_LOG] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__BOY_LOG, 0);
+        // 仅 1 生成日志；其他均不生成
+        GEN_BOY_LOG = 1 == pv;
+        SPDLOG_DEBUG("[CSimpleIni]  {}={}; GEN_BOY_LOG={}", INI_KEY__BOY_LOG, pv, GEN_BOY_LOG);
 
-        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_APPEND, L"-1");
-        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND={}", pv);
+        /* [USE_CHANNEL] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__USE_CHANNEL, 0);
+        // 1=使用独立通道
+        SPEAK_WITH_SLAVE = 1 == pv;
+        SPDLOG_DEBUG("[CSimpleIni]  {}={}; SPEAK_WITH_SLAVE={}", INI_KEY__USE_CHANNEL, pv, SPEAK_WITH_SLAVE);
 
-        pv = ini.GetValue(INI_APP_NAME, INI_KEY_ALLOW_BREAK, L"-1");
-        SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK={}", pv);
-        
+        /* [BREAK_CTRL] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__BREAK_CTRL, 0);
+        // 0=（默认）程序决定; 1=由 DLL 控制。
+        BREAK_CTRL = 1 == pv;
+        SPDLOG_DEBUG("[CSimpleIni]  {}={}; BREAK_CTRL={}", INI_KEY__BREAK_CTRL, pv, BREAK_CTRL);
+
+        /* [USE_APPEND] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__USE_APPEND, 1);
+        // 打断控制=1时有效。 0=打断朗读; 1=（默认）排队朗读。
+        SPEAK_APPEND = 0 != pv;
+        SPDLOG_DEBUG("[CSimpleIni]  {}={}; SPEAK_APPEND={}", INI_KEY__USE_APPEND, pv, SPEAK_APPEND);
+
+        /* [INTERRUPT_MODE] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__INTERRUPT_MODE, 1);
+        // 0=按键不打断朗读; 1=（默认）仅按下打断键打断; 2=按下任意按键可以打断朗读
+        SPEAK_ALLOW_BREAK = 0 != pv;
+        SPEAK_ALL_KEY_BREAK = 2 == pv;
+        spdlog::debug(L"[CSimpleIni]  {}={}; SPEAK_ALLOW_BREAK={}; SPEAK_ALL_KEY_BREAK={}",
+            INI_KEY__INTERRUPT_MODE, pv,
+            SPEAK_ALLOW_BREAK, SPEAK_ALL_KEY_BREAK);
+
+        /* [ALLOW_SR_INTERRUPT] */
+        pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__ALLOW_SR_INTERRUPT, 1);
+        // 0=不允许; 1=（默认）允许
+        ALLOW_SR_INTERRUPT = 0 != pv;
+        SPDLOG_DEBUG("[CSimpleIni]  {}={}; ALLOW_SR_INTERRUPT={}", INI_KEY__ALLOW_SR_INTERRUPT, pv, ALLOW_SR_INTERRUPT);
+
         return true;
     }
 
