@@ -17,6 +17,9 @@ namespace ini {
     /// 是否生成【保益】调用日志。
     bool GEN_BOY_LOG = false;
 
+    /// 程序控制打断
+    bool BREAK_CTRL = true;
+
     /// false=使用读屏通道，true=使用独立通道
     bool SPEAK_WITH_SLAVE = true;
     /// 是否排队朗读
@@ -40,6 +43,9 @@ namespace ini {
     LPCWSTR INI_KEY_GEN_DEBUG_LOG_EN = L"DEBUG_LOG";
     // 生成保益日志
     LPCWSTR INI_KEY_GEN_BOY_LOG_EN = L"BOY_LOG";
+
+    // 打断控制。程序控制还是 DLL 控制
+    LPCWSTR INI_KEY_BREAK_CTRL_EN = L"BREAK_CTRL";
 
     LPCWSTR INI_APP_NAME = L"APP";
     LPCWSTR INI_APP_NAME_CN = L"朗读";
@@ -122,7 +128,8 @@ namespace ini {
         // ==== 读取 ini 配置
         /* [DEBUG_LOG] */
         int debug_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_DEBUG_LOG_EN, 0, iniPath);
-        GEN_DEBUG_LOG = 0 != debug_log;
+        // 仅 1 生成调试日志；其他均保持默认。
+        GEN_DEBUG_LOG = 1 == debug_log;
         SPDLOG_DEBUG("[loadIni]     debug_log={}; GEN_DEBUG_LOG={}", debug_log, GEN_DEBUG_LOG);
         // NOTE: 动态设置 log 级别
         if (GEN_DEBUG_LOG)
@@ -133,8 +140,15 @@ namespace ini {
         }
         /* [BOY_LOG] */
         int boy_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_BOY_LOG_EN, 0, iniPath);
-        GEN_BOY_LOG = 0 != boy_log;
+        // 仅 1 生成日志；其他均不生成
+        GEN_BOY_LOG = 1 == boy_log;
         SPDLOG_DEBUG("[loadIni]     boy_log={}; GEN_BOY_LOG={}", boy_log, GEN_BOY_LOG);
+
+        /* [BREAK_CTRL] */
+        int break_ctrl = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_BREAK_CTRL_EN, 1, iniPath);
+        // 仅 0 时才由程序控制，1和其他(非0)由 DLL 控制。
+        BREAK_CTRL = 0 != break_ctrl;
+        SPDLOG_DEBUG("[loadIni]     break_ctrl={}; BREAK_CTRL={}", break_ctrl, BREAK_CTRL);
 
         int slave = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_USE_SLAVE, 1, iniPath);
         SPEAK_WITH_SLAVE = 0 != slave;
@@ -154,7 +168,7 @@ namespace ini {
         SPDLOG_DEBUG("[loadIni] load ini finished.");
         spdlog::info("[loadIni] DEBUG_LOG={}", GEN_DEBUG_LOG);
         spdlog::info("[loadIni] BOY_LOG={}", GEN_BOY_LOG);
-
+        spdlog::info("[loadIni] BREAK_CTRL={}", BREAK_CTRL);
         spdlog::info("[loadIni] SPEAK_WITH_SLAVE={}", SPEAK_WITH_SLAVE);
         spdlog::info("[loadIni] SPEAK_APPEND={}", SPEAK_APPEND);
         spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
