@@ -17,44 +17,58 @@ namespace ini {
     /// 是否生成【保益】调用日志。
     bool GEN_BOY_LOG = false;
 
-    /// 程序控制打断
-    bool BREAK_CTRL = true;
-
     /// false=使用读屏通道，true=使用独立通道
-    bool SPEAK_WITH_SLAVE = true;
+    bool SPEAK_WITH_SLAVE = false;
+    /// 程序控制打断: false=程序控制打断，true=由 DLL 控制打断
+    bool BREAK_CTRL = false;
     /// 是否排队朗读
     bool SPEAK_APPEND = true;
-    /// 是否允许用户打断.使用读屏通道时该参数被忽略
+    /// 是否允许用户打断
     bool SPEAK_ALLOW_BREAK = true;
-    /// 是否任意按键打断（NVDLL 新增）
-    bool SPEAK_ALL_KEY_BREAK = true;
+    /// 是否任意按键打断
+    bool SPEAK_ALL_KEY_BREAK = false;
+    /// 是否允许读屏打断朗读
+    bool ALLOW_SR_INTERRUPT = true;
 
 #pragma region
 
 #pragma region 常量变量定义
-    // TODO: 使用枚举
-
     /// 保益 DLL 配置 ini 文件名. 
     LPCWSTR INI_NAME = L"nvdaCfg.ini";
     LPCWSTR INI_NAME_CN = L"朗读配置.ini";
 
     /* ini 配置项 */
-    // 记录调试级别日志
+    /* [NvdaDll] */
+    LPCWSTR INI_SEC__NvdaDll = L"NvdaDll";
+    //  记录调试级别日志
+    LPCWSTR INI_KEY__DEBUG_LOG = L"DEBUG_LOG";
+    //  独立通道: 
+    LPCWSTR INI_KEY__USE_CHANNEL = L"USE_CHANNEL";
+    //  打断控制: 程序控制还是 DLL 控制
+    LPCWSTR INI_KEY__BREAK_CTRL = L"BREAK_CTRL";
+    //  排队朗读: 
+    LPCWSTR INI_KEY__USE_APPEND = L"USE_APPEND";
+    //  按键打断模式: 
+    LPCWSTR INI_KEY__INTERRUPT_MODE = L"INTERRUPT_MODE";
+    //  允许读屏打断朗读: 
+    LPCWSTR INI_KEY__ALLOW_SR_INTERRUPT = L"ALLOW_SR_INTERRUPT";
+
+    // TODO: rm
+    LPCWSTR INI_APP_NAME = L"NvdaDll";
     LPCWSTR INI_KEY_GEN_DEBUG_LOG_EN = L"DEBUG_LOG";
-    // 生成保益日志
     LPCWSTR INI_KEY_GEN_BOY_LOG_EN = L"BOY_LOG";
-
-    // 打断控制。程序控制还是 DLL 控制
     LPCWSTR INI_KEY_BREAK_CTRL_EN = L"BREAK_CTRL";
-
-    LPCWSTR INI_APP_NAME = L"APP";
-    LPCWSTR INI_APP_NAME_CN = L"朗读";
     LPCWSTR INI_KEY_USE_SLAVE = L"USE_SLAVE";
-    LPCWSTR INI_KEY_USE_SLAVE_CN = L"独立通道";
     LPCWSTR INI_KEY_USE_APPEND = L"USE_APPEND";
-    LPCWSTR INI_KEY_USE_APPEND_CN = L"排队朗读";
     LPCWSTR INI_KEY_ALLOW_BREAK = L"ALLOW_BREAK";
-    LPCWSTR INI_KEY_ALLOW_BREAK_CN = L"按键打断朗读";
+
+    /* [BoySR] */
+    LPCWSTR INI_SEC__BoySR = L"BoySR";
+    //  生成保益日志
+    LPCWSTR INI_KEY__BOY_LOG = L"BOY_LOG";
+
+    /* [ZDSR] */
+    LPCWSTR INI_SEC__ZDSR = L"ZDSR";
 
     /// 配置文件对象
     static CSimpleIniW ini;
@@ -67,6 +81,7 @@ namespace ini {
     /// <returns>是否成功读取</returns>
     bool CSimpleIni_ReadIni(PWSTR iniPath)
     {
+        spdlog::info("[loadIni] Reading ini using CSimpleIniW.LoadFile");
         SI_Error rc = ini.LoadFile(iniPath);
         if (rc < 0)
         {
@@ -91,22 +106,17 @@ namespace ini {
 
         pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"-1");
         SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE={}", pv);
-        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_SLAVE_CN, L"-1");
-        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE_CN={}", pv);
 
         pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_APPEND, L"-1");
         SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND={}", pv);
-        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_APPEND_CN, L"-1");
-        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND_CN={}", pv);
 
         pv = ini.GetValue(INI_APP_NAME, INI_KEY_ALLOW_BREAK, L"-1");
         SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK={}", pv);
-        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_ALLOW_BREAK_CN, L"-1");
-        SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK_CN={}", pv);
         
         return true;
     }
 
+    /* 废弃不使用 */
     bool WinAPI_ReadIni(PWSTR iniPath)
     {
         spdlog::info(L"[loadIni] Reading ini file use GetPrivateProfileIntW");
@@ -184,11 +194,11 @@ namespace ini {
 
         bool iniLoaded = false;
         // 使用 CSimpleIniW 读取 ini 文件
-        //iniLoaded = CSimpleIni_ReadIni(iniPath);
+        iniLoaded = CSimpleIni_ReadIni(iniPath);
         if (!iniLoaded)
         {
             // 使用系统 API 重新读取 ini
-            iniLoaded = WinAPI_ReadIni(iniPath);
+            //iniLoaded = WinAPI_ReadIni(iniPath);
         }
         if (!iniLoaded)
         {
@@ -198,13 +208,17 @@ namespace ini {
         spdlog::info("[loadIni] load ini finished.");
 
         /* 输出当前配置 */
-        spdlog::info("[loadIni] DEBUG_LOG={}", GEN_DEBUG_LOG);
-        spdlog::info("[loadIni] BOY_LOG={}", GEN_BOY_LOG);
-        spdlog::info("[loadIni] BREAK_CTRL={}", BREAK_CTRL);
-        spdlog::info("[loadIni] SPEAK_WITH_SLAVE={}", SPEAK_WITH_SLAVE);
-        spdlog::info("[loadIni] SPEAK_APPEND={}", SPEAK_APPEND);
-        spdlog::info("[loadIni] SPEAK_ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
-        spdlog::info("[loadIni] SPEAK_ALL_KEY_BREAK={}", SPEAK_ALL_KEY_BREAK);
+        spdlog::info(L"[loadIni] Section: [{}]", INI_SEC__NvdaDll);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__DEBUG_LOG,     GEN_DEBUG_LOG);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__BOY_LOG,       GEN_BOY_LOG);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__USE_CHANNEL,   SPEAK_WITH_SLAVE);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__BREAK_CTRL,    BREAK_CTRL);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__USE_APPEND,    SPEAK_APPEND);
+        // TODO: INI_KEY__INTERRUPT_MODE
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__INTERRUPT_MODE, L"");
+        spdlog::info(L"[loadIni]      ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
+        spdlog::info(L"[loadIni]      ALL_KEY_BREAK={}", SPEAK_ALL_KEY_BREAK);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__ALLOW_SR_INTERRUPT, ALLOW_SR_INTERRUPT);
     }
 
 } // nvdll::ini::
