@@ -19,6 +19,7 @@ static BoyCtrlSpeakFunc boyCtrlSpeak;
 static BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
 static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
 static BoyCtrlIsReaderRunningFunc boyCtrlIsReaderRunning;
+static BoyCtrlSetAnyKeyStopSpeakingFunc boyCtrlSetAnyKeyStopSpeaking;
 #pragma region
 
 
@@ -74,6 +75,8 @@ namespace boy
         if (nullptr == boyCtrlPauseScreenReader) return EXIT_FAILURE;
         boyCtrlIsReaderRunning = (BoyCtrlIsReaderRunningFunc)loadFunctionPtr("BoyCtrlIsReaderRunning");
         if (nullptr == boyCtrlIsReaderRunning) return EXIT_FAILURE;
+        boyCtrlSetAnyKeyStopSpeaking = (BoyCtrlSetAnyKeyStopSpeakingFunc)loadFunctionPtr("BoyCtrlSetAnyKeyStopSpeaking");
+        if (nullptr == boyCtrlSetAnyKeyStopSpeaking) return EXIT_FAILURE;
 
         // -- 初始化 DLL
         // 开启调试日志(DEBUG_LOG=1)：生成保益的日志
@@ -88,11 +91,12 @@ namespace boy
             return EXIT_FAILURE;
         }
 
-        // 开启按任意键打断
-        if (ini::SPEAK_ALL_KEY_BREAK)
+        // 由 DLL 控制 && 开启按任意键打断
+        if (nvdll::ini::BREAK_CTRL && ini::SPEAK_ALL_KEY_BREAK)
         {
+            boyCtrlSetAnyKeyStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
             // input::runInputListener();
-            input::setInputHook();
+            //input::setInputHook();
         }
 
         spdlog::info(L"[loadBaoYiDll] BouAPI Ready! DLL initialize successful");

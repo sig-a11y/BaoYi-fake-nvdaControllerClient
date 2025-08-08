@@ -72,10 +72,11 @@ typedef void(__stdcall *BoyCtrlUninitializeFunc)();
 
 // 读屏是否正在运行，必须成功初始化才能使用此接口
 bool __stdcall BoyCtrlIsReaderRunning();
-typedef bool(__stdcall* BoyCtrlIsReaderRunningFunc)();
+typedef bool(__stdcall *BoyCtrlIsReaderRunningFunc)();
 
 // 验证
 bool __stdcall BoyCtrlVerify(const char* key);
 
 // 设置任意键打断，必须成功初始化后才能使用此接口
 bool __stdcall BoyCtrlSetAnyKeyStopSpeaking(bool withSlave);
+typedef bool(__stdcall *BoyCtrlSetAnyKeyStopSpeakingFunc)(bool withSlave);

@@ -37,8 +37,9 @@ BOOL WINAPI DllMain(
     case DLL_PROCESS_DETACH:
         {
             spdlog::info("[DLL_PROCESS_DETACH]");
+            /* 注意和 loadBaoYiDll() 中的挂钩配对 */
             // nvdll::input::killListenerThread();
-            nvdll::input::removeInputHook();
+            //nvdll::input::removeInputHook();
 
             if (__lpvReserved != nullptr)
             {
