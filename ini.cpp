@@ -60,79 +60,56 @@ namespace ini {
     static CSimpleIniW ini;
 #pragma region
 
-
-    /// 非0值作为 true
-    /**
-     * @brief 加载配置文件。非0值作为 true
-     * @param pszBaseDirIn 配置文件所在的文件夹
-     */
-    void loadIni(PCWSTR pszBaseDirIn)
+    /// <summary>
+    /// 使用 CSimpleIniW 读取 ini 文件。
+    /// </summary>
+    /// <param name="iniPath">ini 完整路径</param>
+    /// <returns>是否成功读取</returns>
+    bool CSimpleIni_ReadIni(PWSTR iniPath)
     {
-        SPDLOG_DEBUG("[loadIni] begin to load ini...");
-        /// ini 路径
-        //TCHAR iniPath[MAX_PATH] = L"E:\\game\\ShadowRine_FullVoice\\朗读配置.ini";
-        TCHAR iniPath[MAX_PATH];
-
-        // ==== 拼接 ini 完整路径，尝试加载
-        // TODO: 显式构造长路径 "\\?\"
-        // 从 DLL 旁完整路径读取 ini
-        PathCchCombineEx(iniPath, MAX_PATH, pszBaseDirIn, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
-        bool exist = PathFileExists(iniPath);
-        // 拼接的路径不存在，尝试直接读取 ini
-        if (!exist)
-        {
-            spdlog::warn(L"[loadIni] .ini file not exist: iniPath={}", iniPath);
-            PathCchCombineEx(iniPath, MAX_PATH, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
-        }
-        exist = PathFileExists(iniPath);
-        if (!exist)
-        {
-            spdlog::warn(L"[loadIni] .ini file not exist: iniPath={}", iniPath);
-            spdlog::error(L"[loadIni] stop read ini.");
-            return;
-        }
-
-        /* 开始读取 ini */
-        spdlog::info(L"[loadIni] Reading ini file: {}", iniPath);
         SI_Error rc = ini.LoadFile(iniPath);
         if (rc < 0)
         {
             // 出错
-            spdlog::warn("[loadIni] ini.LoadFile error: rc={}", rc);
+            spdlog::warn("[loadIni] CSimpleIniW.LoadFile error: rc={}", rc);
+            return false;
         }
-        else
-        {
-            SPDLOG_DEBUG("[loadIni] ini.LoadFile rc={}", rc);
-            LPCWSTR pv;
+
+        SPDLOG_DEBUG("[loadIni] ini.LoadFile rc={}", rc);
+        LPCWSTR pv;
 
 #ifdef _DEBUG
-            std::list<CSimpleIniW::Entry> allSec;
-            ini.GetAllSections(allSec);
-            SPDLOG_DEBUG("[loadIni] print all item in ini...");
-            for (CSimpleIniW::Entry s : allSec)
-            {
-                SPDLOG_DEBUG(L"[loadIni] s.pItem[{}]={}", s.nOrder, std::wstring(s.pItem));
-                // TODO: 输出所有选项
-            }
+        std::list<CSimpleIniW::Entry> allSec;
+        ini.GetAllSections(allSec);
+        SPDLOG_DEBUG("[loadIni] print all item in ini...");
+        for (CSimpleIniW::Entry s : allSec)
+        {
+            SPDLOG_DEBUG(L"[loadIni] s.pItem[{}]={}", s.nOrder, std::wstring(s.pItem));
+            // TODO: 输出所有选项
+        }
 #endif // def _DEBUG
 
-            pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"-1");
-            SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE={}", pv);
-            pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_SLAVE_CN, L"-1");
-            SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE_CN={}", pv);
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_SLAVE, L"-1");
+        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE={}", pv);
+        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_SLAVE_CN, L"-1");
+        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_SLAVE_CN={}", pv);
 
-            pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_APPEND, L"-1");
-            SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND={}", pv);
-            pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_APPEND_CN, L"-1");
-            SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND_CN={}", pv);
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_USE_APPEND, L"-1");
+        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND={}", pv);
+        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_USE_APPEND_CN, L"-1");
+        SPDLOG_DEBUG(L"[loadIni] INI_KEY_USE_APPEND_CN={}", pv);
 
-            pv = ini.GetValue(INI_APP_NAME, INI_KEY_ALLOW_BREAK, L"-1");
-            SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK={}", pv);
-            pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_ALLOW_BREAK_CN, L"-1");
-            SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK_CN={}", pv);
-        }
+        pv = ini.GetValue(INI_APP_NAME, INI_KEY_ALLOW_BREAK, L"-1");
+        SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK={}", pv);
+        pv = ini.GetValue(INI_APP_NAME_CN, INI_KEY_ALLOW_BREAK_CN, L"-1");
+        SPDLOG_DEBUG(L"[loadIni] INI_KEY_ALLOW_BREAK_CN={}", pv);
+        
+        return true;
+    }
 
-        // ==== 读取 ini 配置
+    bool WinAPI_ReadIni(PWSTR iniPath)
+    {
+        spdlog::info(L"[loadIni] Reading ini file use GetPrivateProfileIntW");
         /* [DEBUG_LOG] */
         int debug_log = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_GEN_DEBUG_LOG_EN, 0, iniPath);
         // 仅 1 生成调试日志；其他均保持默认。
@@ -168,11 +145,59 @@ namespace ini {
         int allowBreak = GetPrivateProfileIntW(INI_APP_NAME, INI_KEY_ALLOW_BREAK, 1, iniPath);
         SPEAK_ALLOW_BREAK = 0 != allowBreak;
         SPEAK_ALL_KEY_BREAK = 2 == allowBreak;
-        SPDLOG_DEBUG("[loadIni]     allowBreak={}; ALLOW_BREAK={}; ALL_KEY_BREAK={}", 
+        SPDLOG_DEBUG("[loadIni]     allowBreak={}; ALLOW_BREAK={}; ALL_KEY_BREAK={}",
             allowBreak, SPEAK_ALLOW_BREAK, SPEAK_ALL_KEY_BREAK);
-        
-        // --------------------------------------------------------------------
-        SPDLOG_DEBUG("[loadIni] load ini finished.");
+
+        return true;
+    }
+
+    /**
+     * @brief 加载配置文件。非0值作为 true
+     * @param pszBaseDirIn 配置文件所在的文件夹
+     */
+    void loadIni(PCWSTR pszBaseDirIn)
+    {
+        SPDLOG_DEBUG("[loadIni] begin to load ini...");
+        /// ini 路径
+        TCHAR iniPath[MAX_PATH];
+
+        // ==== 拼接 ini 完整路径，尝试加载
+        // 从 DLL 旁完整路径读取 ini
+        PathCchCombineEx(iniPath, MAX_PATH, pszBaseDirIn, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
+        bool exist = PathFileExists(iniPath);
+        // 拼接的路径不存在，尝试直接读取 ini
+        if (!exist)
+        {
+            spdlog::warn(L"[loadIni] .ini file not exist: iniPath={}", iniPath);
+            PathCchCombineEx(iniPath, MAX_PATH, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
+        }
+        exist = PathFileExists(iniPath);
+        if (!exist)
+        {
+            spdlog::warn(L"[loadIni] .ini file not exist: iniPath={}", iniPath);
+            spdlog::error(L"[loadIni] stop read ini.");
+            return;
+        }
+
+        /* 开始读取 ini */
+        spdlog::info(L"[loadIni] Reading ini file: {}", iniPath);
+
+        bool iniLoaded = false;
+        // 使用 CSimpleIniW 读取 ini 文件
+        //iniLoaded = CSimpleIni_ReadIni(iniPath);
+        if (!iniLoaded)
+        {
+            // 使用系统 API 重新读取 ini
+            iniLoaded = WinAPI_ReadIni(iniPath);
+        }
+        if (!iniLoaded)
+        {
+            spdlog::error(L"[loadIni] ini not loaded, stop read ini.");
+            return;
+        }
+        spdlog::info("[loadIni] load ini finished.");
+
+        /* 输出当前配置 */
         spdlog::info("[loadIni] DEBUG_LOG={}", GEN_DEBUG_LOG);
         spdlog::info("[loadIni] BOY_LOG={}", GEN_BOY_LOG);
         spdlog::info("[loadIni] BREAK_CTRL={}", BREAK_CTRL);
