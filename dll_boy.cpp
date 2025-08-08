@@ -222,13 +222,21 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         }
 
         SPDLOG_DEBUG("[speakText_impl] loadBaoYiDll() load finished. boyCtrlSpeak={}", (void*)boyCtrlSpeak);
-        assert(nullptr != boyCtrlSpeak);
+    }
+    assert(nullptr != boyCtrlSpeak);
+
+    // 默认排队
+    bool bAppend = true;
+    if (nvdll::ini::BREAK_CTRL)
+    {
+        // 仅在 BREAK_CTRL=1 时，使用 ini 中的打断设置
+        bAppend = nvdll::ini::SPEAK_APPEND;
     }
 
     auto err = boyCtrlSpeak(text, 
         nvdll::ini::SPEAK_WITH_SLAVE, 
-        nvdll::ini::SPEAK_APPEND, 
-        nvdll::ini::SPEAK_ALLOW_BREAK, 
+        bAppend,
+        nvdll::ini::ALLOW_SR_INTERRUPT,
         speakCompleteCallback);
     spdlog::debug(L"[speakText_impl]     ret={}", (int)err);  // 发布版本输出
 
