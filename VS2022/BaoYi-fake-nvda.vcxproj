@@ -123,7 +123,7 @@
       <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
+      <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"
 Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"</Command>
     </PostBuildEvent>
@@ -150,7 +150,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
+      <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl.dll" "$(TargetDir)"
 Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"</Command>
     </PostBuildEvent>
@@ -173,7 +173,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
+      <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
@@ -199,7 +199,7 @@ Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(Targe
       <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\朗读配置.ini" "$(TargetDir)"
+      <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
