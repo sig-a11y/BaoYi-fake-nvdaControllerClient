@@ -243,14 +243,16 @@ namespace ini {
         spdlog::info(L"[loadIni] Section: [{}]", INI_SEC__NvdaDll);
         spdlog::info(L"[loadIni]    {}={}", INI_KEY__DEBUG_LOG,     GEN_DEBUG_LOG);
         spdlog::info(L"[loadIni]    {}={}", INI_KEY__BOY_LOG,       GEN_BOY_LOG);
+
+        // SR 控制
         spdlog::info(L"[loadIni]    {}={}", INI_KEY__USE_CHANNEL,   SPEAK_WITH_SLAVE);
+        spdlog::info(L"[loadIni]    {}={}", INI_KEY__ALLOW_SR_INTERRUPT, ALLOW_SR_INTERRUPT);
+        // 程序打断处理
         spdlog::info(L"[loadIni]    {}={}", INI_KEY__BREAK_CTRL,    BREAK_CTRL);
         spdlog::info(L"[loadIni]    {}={}", INI_KEY__USE_APPEND,    SPEAK_APPEND);
-        // TODO: INI_KEY__INTERRUPT_MODE
         spdlog::info(L"[loadIni]    {}={}", INI_KEY__INTERRUPT_MODE, L"");
         spdlog::info(L"[loadIni]      ALLOW_BREAK={}", SPEAK_ALLOW_BREAK);
         spdlog::info(L"[loadIni]      ALL_KEY_BREAK={}", SPEAK_ALL_KEY_BREAK);
-        spdlog::info(L"[loadIni]    {}={}", INI_KEY__ALLOW_SR_INTERRUPT, ALLOW_SR_INTERRUPT);
     }
 
 } // nvdll::ini::
