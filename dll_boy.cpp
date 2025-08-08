@@ -39,14 +39,14 @@ namespace boy
         // 使用完整路径加载：保益 DLL 和 nvda 放在一起
         if (nullptr == dllHandle)
         {
-            SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
+            spdlog::info(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
             dllHandle = LoadLibrary(BOY_DLL_FULLPATH);
             SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
         }
         // 仅使用 DLL 名加载：保益 DLL 和主程序 exe 放在一起
         if (nullptr == dllHandle)
         {
-            SPDLOG_DEBUG(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
+            spdlog::info(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
             dllHandle = LoadLibrary(BOY_DLL_NAME);
             SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
         }
@@ -95,7 +95,7 @@ namespace boy
             input::setInputHook();
         }
 
-        SPDLOG_DEBUG(L"API Ready! DLL API 初始化成功。");
+        spdlog::info(L"[loadBaoYiDll] BouAPI Ready! DLL initialize successful");
         return EXIT_SUCCESS;
     }
 #pragma endregion
