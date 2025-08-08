@@ -85,10 +85,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\朗读配置.ini">
+    <None Include="..\dll.def">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="..\dll.def">
+    <None Include="..\nvdaCfg.ini">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

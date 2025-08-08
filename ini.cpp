@@ -62,7 +62,7 @@ namespace ini {
 
         // ==== 拼接 ini 完整路径，尝试加载
         // TODO: 显式构造长路径 "\\?\"
-        PathCchCombineEx(iniPath, MAX_PATH, pszBaseDirIn, INI_NAME_CN, PATHCCH_ALLOW_LONG_PATHS);
+        PathCchCombineEx(iniPath, MAX_PATH, pszBaseDirIn, INI_NAME, PATHCCH_ALLOW_LONG_PATHS);
         bool exist = PathFileExists(iniPath);
         spdlog::info(L"[loadIni] FileExists={}; iniPath={}", exist, iniPath);
 
