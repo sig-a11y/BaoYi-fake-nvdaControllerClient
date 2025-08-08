@@ -70,7 +70,7 @@ namespace ini {
         if (rc < 0)
         {
             // 出错
-            spdlog::warn("[loadIni] ini.LoadFile rc={}", rc);
+            spdlog::warn("[loadIni] ini.LoadFile error: rc={}", rc);
         }
         else
         {
@@ -109,7 +109,7 @@ namespace ini {
         {
             PathCchCombineEx(iniPath, MAX_PATH, INI_NAME, NULL, PATHCCH_ALLOW_LONG_PATHS);
             exist = PathFileExists(iniPath);
-            spdlog::warn(L"[loadIni] FileExists={}; iniPath={}", exist, iniPath);
+            spdlog::warn(L"[loadIni] Reload init: FileExists={}; iniPath={}", exist, iniPath);
         }
 
         // ==== 读取 ini 配置
