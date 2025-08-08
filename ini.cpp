@@ -120,19 +120,19 @@ namespace ini {
 
         /* [BREAK_CTRL] */
         pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__BREAK_CTRL, 0);
-        // 0=（默认）程序决定; 1=由 DLL 控制。
-        BREAK_CTRL = 1 == pv;
+        // 0=程序决定; 1=（默认）由 DLL 控制。
+        BREAK_CTRL = 0 != pv;
         SPDLOG_DEBUG("[CSimpleIni]  {}={}; BREAK_CTRL={}", INI_KEY__BREAK_CTRL, pv, BREAK_CTRL);
 
         /* [USE_APPEND] */
         pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__USE_APPEND, 1);
-        // 打断控制=1时有效。 0=打断朗读; 1=（默认）排队朗读。
+        // 【BREAK_CTRL=1时有效】 0=打断朗读; 1=（默认）排队朗读。
         SPEAK_APPEND = 0 != pv;
         SPDLOG_DEBUG("[CSimpleIni]  {}={}; SPEAK_APPEND={}", INI_KEY__USE_APPEND, pv, SPEAK_APPEND);
 
         /* [INTERRUPT_MODE] */
         pv = ini.GetLongValue(INI_SEC__NvdaDll, INI_KEY__INTERRUPT_MODE, 1);
-        // 0=按键不打断朗读; 1=（默认）仅按下打断键打断; 2=按下任意按键可以打断朗读
+        // 【BREAK_CTRL=1时有效】 0=按键不打断朗读; 1=（默认）仅按下打断键打断; 2=按下任意按键可以打断朗读
         SPEAK_ALLOW_BREAK = 0 != pv;
         SPEAK_ALL_KEY_BREAK = 2 == pv;
         spdlog::debug(L"[CSimpleIni]  {}={}; SPEAK_ALLOW_BREAK={}; SPEAK_ALL_KEY_BREAK={}",
