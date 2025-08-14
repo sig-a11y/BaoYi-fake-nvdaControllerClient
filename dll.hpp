@@ -26,10 +26,30 @@ namespace nvdll {
         /// 保益 DLL 文件名
         constexpr LPCWSTR BOY_DLL_NAME = L"BoyCtrl.dll";
 #endif // def _WIN64
+
+        error_status_t __stdcall testIfRunning_impl();
+        error_status_t __stdcall speakText_impl(const wchar_t* text);
+        error_status_t __stdcall cancelSpeech_impl();
     } // nvdll::boy::
 
     /// 保益 DLL 输出日志名称。日志放在当前工作目录
     constexpr LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
+
+    /// <summary>
+    /// 争渡读屏 ZDSR 的接口定义
+    /// </summary>
+    namespace zdsr
+    {
+        /// DLL 完整路径
+        extern TCHAR DLL_FULLPATH[MAX_PATH];
+        extern HMODULE dllHandle;
+
+        bool loadDLL();
+
+        error_status_t __stdcall testIfRunning_impl();
+        error_status_t __stdcall speakText_impl(const wchar_t* text);
+        error_status_t __stdcall cancelSpeech_impl();
+    }
 #pragma region
 
 #pragma region 全局变量定义

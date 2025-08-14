@@ -16,14 +16,14 @@
     <Filter Include="头文件\utils">
       <UniqueIdentifier>{9701cd49-0fdd-431d-b310-5b41930c1f1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\boy">
-      <UniqueIdentifier>{0713c039-9125-49cf-8edb-9c8e50d738cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\utils">
       <UniqueIdentifier>{6c8fda15-b7a5-425c-9024-e40899a9b13b}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\utils\simpleini">
       <UniqueIdentifier>{f654f1e7-86e2-4a14-ab77-290e1ad5d802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\sr">
+      <UniqueIdentifier>{3e925add-b0d2-4698-a84d-c29e849818bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +48,9 @@
     <ClCompile Include="..\input.cpp">
       <Filter>源文件\utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\zdsr_impl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\deps\simpleini\ConvertUTF.h">
@@ -65,9 +68,6 @@
     <ClInclude Include="..\deps\simpleini\SimpleIni.h">
       <Filter>头文件\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
-      <Filter>头文件\boy</Filter>
-    </ClInclude>
     <ClInclude Include="..\nvdll_impl.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -83,12 +83,21 @@
     <ClInclude Include="..\input.hpp">
       <Filter>头文件\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\baoyi-dll\BoyCtrl.h">
+      <Filter>头文件\sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zdsr\zdsr.hpp">
+      <Filter>头文件\sr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\dll.def">
       <Filter>资源文件</Filter>
     </None>
     <None Include="..\nvdaCfg.ini">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\zdsr\ZDSRAPI.ini">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

@@ -18,6 +18,8 @@ Global
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		ZDSR-Rel|x64 = ZDSR-Rel|x64
+		ZDSR-Rel|x86 = ZDSR-Rel|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.Debug|x64.ActiveCfg = Debug|x64
@@ -28,10 +30,18 @@ Global
 		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.Release|x64.Build.0 = Release|x64
 		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.Release|x86.ActiveCfg = Release|Win32
 		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.Release|x86.Build.0 = Release|Win32
+		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.ZDSR-Rel|x64.ActiveCfg = ZDSR-Rel|x64
+		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.ZDSR-Rel|x64.Build.0 = ZDSR-Rel|x64
+		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.ZDSR-Rel|x86.ActiveCfg = ZDSR-Rel|Win32
+		{0B6A9A8D-4E40-4B85-9312-6BB5BEEBEC52}.ZDSR-Rel|x86.Build.0 = ZDSR-Rel|Win32
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Debug|x64.ActiveCfg = Debug|x64
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Debug|x86.ActiveCfg = Debug|Win32
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Release|x64.ActiveCfg = Release|x64
 		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.Release|x86.ActiveCfg = Release|Win32
+		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.ZDSR-Rel|x64.ActiveCfg = Release|x64
+		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.ZDSR-Rel|x64.Build.0 = Release|x64
+		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.ZDSR-Rel|x86.ActiveCfg = Release|Win32
+		{D82FE6CA-E957-4D50-BFCB-2B38C2FCEB0F}.ZDSR-Rel|x86.Build.0 = Release|Win32
 		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x64.ActiveCfg = Debug|x64
 		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x64.Build.0 = Debug|x64
 		{DB34779A-3225-4D69-9799-370A1719788B}.Debug|x86.ActiveCfg = Debug|Win32
@@ -40,6 +50,10 @@ Global
 		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x64.Build.0 = Release|x64
 		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x86.ActiveCfg = Release|Win32
 		{DB34779A-3225-4D69-9799-370A1719788B}.Release|x86.Build.0 = Release|Win32
+		{DB34779A-3225-4D69-9799-370A1719788B}.ZDSR-Rel|x64.ActiveCfg = Release|x64
+		{DB34779A-3225-4D69-9799-370A1719788B}.ZDSR-Rel|x64.Build.0 = Release|x64
+		{DB34779A-3225-4D69-9799-370A1719788B}.ZDSR-Rel|x86.ActiveCfg = Release|Win32
+		{DB34779A-3225-4D69-9799-370A1719788B}.ZDSR-Rel|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

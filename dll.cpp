@@ -1,5 +1,6 @@
 ﻿#include "nvdll_impl.h" // API 导出
 #include "dll.hpp" // 项目内导出
+#include "zdsr.hpp"
 // -- [sys] win
 #include <stdlib.h> // _wsplitpath_s, _wmakepath_s
 #include <strsafe.h> // StringCchPrintf
@@ -30,7 +31,12 @@ namespace nvdll {
 
         // 接口信息
         spdlog::info("NVDA Client API Version: {}", nvdll::boy::NVDA_API_VERSION);
+
+#   ifdef FAKE_NVDA_ZDSR
+        spdlog::info(L"ZDSR Dll API Version: {}", zdsr_api::DLL_VERSION);
+#   else
         spdlog::info("BaoYi Dll API Version: {}", nvdll::boy::BOY_DLL_VERSION);
+#   endif
     }
 
     /**
@@ -68,9 +74,14 @@ namespace nvdll {
         // 打印文件夹路径
         spdlog::info(L"DLL_DIR_PATH={}", DLL_DIR_PATH);
 
-        // -- 拼接保益 DLL 完整路径
+        // -- 拼接 DLL 完整路径
+#   ifdef FAKE_NVDA_ZDSR
+        StringCchPrintfW(zdsr::DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, zdsr_api::DLL_NAME);
+        spdlog::info(L"DLL fullpath={}", zdsr::DLL_FULLPATH);
+#   else
         StringCchPrintfW(boy::BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, boy::BOY_DLL_NAME);
-        spdlog::info(L"BOY_DLL_FULLPATH={}", boy::BOY_DLL_FULLPATH);
+        spdlog::info(L"DLL fullpath={}", boy::BOY_DLL_FULLPATH);
+#   endif
     }
 
     /// 加载函数指针
@@ -118,3 +129,72 @@ namespace nvdll {
     }
 
 } // nvdll::
+
+
+#pragma region DLL 导出函数实现
+
+error_status_t __stdcall testIfRunning_impl()
+{
+#ifdef FAKE_NVDA_ZDSR
+    return nvdll::zdsr::testIfRunning_impl();
+#else
+    return nvdll::boy::testIfRunning_impl();
+#endif
+}
+
+error_status_t __stdcall speakText_impl(const wchar_t* text)
+{
+#ifdef FAKE_NVDA_ZDSR
+    return nvdll::zdsr::speakText_impl(text);
+#else
+    return nvdll::boy::speakText_impl(text);
+#endif
+}
+
+error_status_t __stdcall cancelSpeech_impl()
+{
+#ifdef FAKE_NVDA_ZDSR
+    return nvdll::zdsr::cancelSpeech_impl();
+#else
+    return nvdll::boy::cancelSpeech_impl();
+#endif
+}
+
+error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
+{
+    return RPC_S_CANNOT_SUPPORT;
+}
+
+
+/* V2.0 functions */
+
+error_status_t __stdcall getProcessId_impl(unsigned long* pid)
+{
+    if (nullptr != pid)
+    {
+        spdlog::debug("[getProcessId_impl] *pid={}", *pid);  // 发布版本输出
+    }
+    spdlog::debug("[getProcessId_impl] pid={}", (void*)pid);  // 发布版本输出
+
+    return RPC_S_CANNOT_SUPPORT;
+}
+
+error_status_t __stdcall speakSsml_impl(
+    const wchar_t* ssml,
+    const enum SYMBOL_LEVEL symbolLevel = SYMBOL_LEVEL_UNCHANGED,
+    const enum SPEECH_PRIORITY priority = SPEECH_PRIORITY_NORMAL,
+    const bool asynchronous = true)
+{
+    spdlog::debug(L"[speakSsml_impl] ssml={}, symbolLevel={}, priority={}, asynchronous={}",
+        ssml, (int)symbolLevel, (int)priority, asynchronous);
+
+    return RPC_S_CANNOT_SUPPORT;
+}
+
+error_status_t __stdcall setOnSsmlMarkReachedCallback_impl(onSsmlMarkReachedFuncType callback)
+{
+    spdlog::debug("[setOnSsmlMarkReachedCallback_impl] callback={}", (void*)callback);
+    return RPC_S_CANNOT_SUPPORT;
+}
+
+#pragma endregion

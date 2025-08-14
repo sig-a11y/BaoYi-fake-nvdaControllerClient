@@ -17,6 +17,14 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="ZDSR-Rel|Win32">
+      <Configuration>ZDSR-Rel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ZDSR-Rel|x64">
+      <Configuration>ZDSR-Rel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c" />
@@ -26,6 +34,7 @@
     <ClCompile Include="..\input.cpp" />
     <ClCompile Include="..\log.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\zdsr_impl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
@@ -39,10 +48,12 @@
     <ClInclude Include="..\dll.hpp" />
     <ClInclude Include="..\ini.hpp" />
     <ClInclude Include="..\log.hpp" />
+    <ClInclude Include="..\zdsr\zdsr.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\dll.def" />
     <None Include="..\nvdaCfg.ini" />
+    <None Include="..\zdsr\ZDSRAPI.ini" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -65,6 +76,13 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -72,6 +90,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -89,10 +114,16 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -102,10 +133,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>nvdaControllerClient32</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|Win32'">
+    <TargetName>nvdaControllerClient32</TargetName>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>nvdaControllerClient64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>nvdaControllerClient64</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|x64'">
     <TargetName>nvdaControllerClient64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -114,7 +151,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;$(SolutionDir)..\zdsr\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,7 +176,7 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;$(SolutionDir)..\zdsr\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -158,13 +195,40 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <Message>复制依赖 DLL</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;FAKE_NVDA_ZDSR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;$(SolutionDir)..\zdsr\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy /Y  "$(SolutionDir)..\zdsr\ZDSRAPI.ini" "$(TargetDir)"
+Copy /Y  "$(SolutionDir)..\zdsr\$(PlatformTarget)\ZDSRAPI.dll" "$(TargetDir)"
+Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>复制依赖 DLL</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\loguru\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;$(SolutionDir)..\zdsr\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -188,7 +252,7 @@ Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(Targe
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;$(SolutionDir)..\zdsr\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -201,6 +265,32 @@ Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(Targe
     <PostBuildEvent>
       <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>复制依赖 DLL</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ZDSR-Rel|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;FAKE_NVDA_ZDSR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\spdlog\include\;$(SolutionDir)..\deps\simpleini\;$(SolutionDir)..\baoyi-dll\;$(SolutionDir)..\zdsr\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>Copy /Y  "$(SolutionDir)..\zdsr\ZDSRAPI.ini" "$(TargetDir)"
+Copy /Y  "$(SolutionDir)..\zdsr\$(PlatformTarget)\ZDSRAPI_x64.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>复制依赖 DLL</Message>

@@ -103,6 +103,7 @@ namespace boy
         return EXIT_SUCCESS;
     }
 #pragma endregion
+
 } // nvdll::boy::
 
 #pragma region nvdll:: 导出
@@ -134,7 +135,7 @@ namespace boy
 
 
 #pragma region DLL 导出函数实现
-/// 返回值转换：BoyCtrlError => error_status_t
+    /// 返回值转换：BoyCtrlError => error_status_t
 error_status_t convertBoyCtrlError(BoyCtrlError err)
 {
     switch (err)
@@ -163,7 +164,7 @@ void initDllIfNull()
     }
 }
 
-error_status_t __stdcall testIfRunning_impl()
+error_status_t __stdcall nvdll::boy::testIfRunning_impl()
 {
     spdlog::debug(L"[testIfRunning_impl]");  // 发布版本输出
     if (nullptr == boyCtrlIsReaderRunning)
@@ -214,7 +215,7 @@ void __stdcall speakCompleteCallback(int reason)
     return;
 }
 
-error_status_t __stdcall speakText_impl(const wchar_t* text)
+error_status_t __stdcall nvdll::boy::speakText_impl(const wchar_t* text)
 {
     spdlog::debug(L"[speakText_impl] text={}", text);  // 发布版本输出
 
@@ -238,8 +239,8 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
         bAppend = nvdll::ini::SPEAK_APPEND;
     }
 
-    auto err = boyCtrlSpeak(text, 
-        nvdll::ini::SPEAK_WITH_SLAVE, 
+    auto err = boyCtrlSpeak(text,
+        nvdll::ini::SPEAK_WITH_SLAVE,
         bAppend,
         nvdll::ini::ALLOW_SR_INTERRUPT,
         speakCompleteCallback);
@@ -248,7 +249,7 @@ error_status_t __stdcall speakText_impl(const wchar_t* text)
     return convertBoyCtrlError(err);
 }
 
-error_status_t __stdcall cancelSpeech_impl()
+error_status_t __stdcall nvdll::boy::cancelSpeech_impl()
 {
     if (nullptr == boyCtrlStopSpeaking)
     {
@@ -273,42 +274,4 @@ error_status_t __stdcall cancelSpeech_impl()
     spdlog::debug("[cancelSpeech_impl] ret={}", (int)err);  // 发布版本输出
     return convertBoyCtrlError(err);
 }
-
-error_status_t __stdcall brailleMessage_impl(const wchar_t* message)
-{
-    return RPC_S_CANNOT_SUPPORT;
-}
-
-
-/* V2.0 functions */
-
-error_status_t __stdcall getProcessId_impl(unsigned long* pid)
-{
-    if (nullptr != pid)
-    {
-        spdlog::debug("[getProcessId_impl] *pid={}", *pid);  // 发布版本输出
-    }
-    spdlog::debug("[getProcessId_impl] pid={}", (void*)pid);  // 发布版本输出
-
-    return RPC_S_CANNOT_SUPPORT;
-}
-
-error_status_t __stdcall speakSsml_impl(
-    const wchar_t* ssml,
-    const enum SYMBOL_LEVEL symbolLevel = SYMBOL_LEVEL_UNCHANGED,
-    const enum SPEECH_PRIORITY priority = SPEECH_PRIORITY_NORMAL,
-    const bool asynchronous = true)
-{
-    spdlog::debug(L"[speakSsml_impl] ssml={}, symbolLevel={}, priority={}, asynchronous={}",
-        ssml, (int)symbolLevel, (int)priority, asynchronous);
-
-    return RPC_S_CANNOT_SUPPORT;
-}
-
-error_status_t __stdcall setOnSsmlMarkReachedCallback_impl(onSsmlMarkReachedFuncType callback)
-{
-    spdlog::debug("[setOnSsmlMarkReachedCallback_impl] callback={}", (void*)callback);
-    return RPC_S_CANNOT_SUPPORT;
-}
-
 #pragma endregion

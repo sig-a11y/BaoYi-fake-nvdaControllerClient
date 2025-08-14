@@ -1,14 +1,19 @@
-#pragma once
+﻿#pragma once
 
 #ifndef __ZDSR_API__
 #define __ZDSR_API__
+#include <string>
 
-namespace ZDSRAPI;
+namespace zdsr_api
+{
+
+/// DLL 版本
+constexpr wchar_t DLL_VERSION[] = L"v1.0.0.1";
 
 #if _WIN64
-    const string DLL_FNAME = "ZDSRAPI_x64.dll";
+constexpr wchar_t DLL_NAME[] = L"ZDSRAPI_x64.dll";
 #else
-    const string DLL_FNAME = "ZDSRAPI.dll";
+constexpr wchar_t DLL_NAME[] = L"ZDSRAPI.dll";
 #endif
 
 /**
@@ -46,4 +51,5 @@ typedef int (__stdcall *GetSpeakStateFunc)();
 void __stdcall StopSpeak();
 typedef void (__stdcall *StopSpeakFunc)();
 
+}
 #endif // __ZDSR_API__
