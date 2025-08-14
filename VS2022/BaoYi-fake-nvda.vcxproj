@@ -214,7 +214,8 @@ Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"<
       <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\zdsr\ZDSRAPI.ini" "$(TargetDir)"
+      <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
+Copy /Y  "$(SolutionDir)..\zdsr\ZDSRAPI.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\zdsr\$(PlatformTarget)\ZDSRAPI.dll" "$(TargetDir)"
 Copy /Y  "$(TargetDir)$(TargetFileName)" "$(TargetDir)nvdaControllerClient.dll"</Command>
     </PostBuildEvent>
@@ -289,7 +290,8 @@ Copy /Y  "$(SolutionDir)..\baoyi-dll\$(PlatformTarget)\BoyCtrl-x64.dll" "$(Targe
       <ModuleDefinitionFile>..\dll.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
-      <Command>Copy /Y  "$(SolutionDir)..\zdsr\ZDSRAPI.ini" "$(TargetDir)"
+      <Command>Copy /Y  "$(SolutionDir)..\nvdaCfg.ini" "$(TargetDir)"
+Copy /Y  "$(SolutionDir)..\zdsr\ZDSRAPI.ini" "$(TargetDir)"
 Copy /Y  "$(SolutionDir)..\zdsr\$(PlatformTarget)\ZDSRAPI_x64.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
