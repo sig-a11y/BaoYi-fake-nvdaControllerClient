@@ -27,7 +27,6 @@ namespace nvdll
 {
 namespace boy
 {
-#pragma region 加载保益 DLL
     /// 保益 DLL 完整路径
     TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
@@ -102,11 +101,21 @@ namespace boy
         spdlog::info(L"[loadBaoYiDll] BouAPI Ready! DLL initialize successful");
         return EXIT_SUCCESS;
     }
-#pragma endregion
+
+    /// 单例模式。尝试在第一次使用时加载 DLL
+    void loadDLL()
+    {
+        if (nullptr == nvdll::dllHandle)
+        {
+            spdlog::info("nullptr==dllHandle: trying to load dll...");
+            nvdll::boy::loadBaoYiDll();
+        }
+    }
 
 } // nvdll::boy::
 
 #pragma region nvdll:: 导出
+
     /** 【DLL 内部函数】
      * @brief 获取读屏器状态
      * @param -
@@ -154,15 +163,6 @@ error_status_t convertBoyCtrlError(BoyCtrlError err)
     }
 }
 
-/// 单例模式。尝试在第一次使用时加载 DLL
-void initDllIfNull()
-{
-    if (nullptr == nvdll::dllHandle)
-    {
-        spdlog::info("nullptr==dllHandle: trying to load dll...");
-        nvdll::boy::loadBaoYiDll();
-    }
-}
 
 error_status_t __stdcall nvdll::boy::testIfRunning_impl()
 {

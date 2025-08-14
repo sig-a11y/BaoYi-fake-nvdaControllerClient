@@ -18,7 +18,7 @@ namespace zdsr
     using namespace zdsr_api;
 
     TCHAR DLL_FULLPATH[MAX_PATH];
-    HMODULE dllHandle;
+    //HMODULE dllHandle;
 
     InitTTSFunc InitTTS;
     SpeakFunc Speak;

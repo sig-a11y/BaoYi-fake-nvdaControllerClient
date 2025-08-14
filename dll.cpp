@@ -107,6 +107,15 @@ namespace nvdll {
         return funcHandle;
     }
 
+    void loadDLL()
+    {
+#ifdef FAKE_NVDA_ZDSR
+        nvdll::zdsr::loadDLL();
+#else
+        nvdll::boy::loadDLL();
+#endif
+    }
+
     /// 释放 DLL
     void freeDll()
     {

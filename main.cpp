@@ -23,6 +23,7 @@ BOOL WINAPI DllMain(
             // Initialize once for each new process.
             nvdll::log::init();
             nvdll::saveDllDirPath(hinstDLL);
+            nvdll::loadDLL();
         }
         break;
 

@@ -27,6 +27,9 @@ namespace nvdll {
         constexpr LPCWSTR BOY_DLL_NAME = L"BoyCtrl.dll";
 #endif // def _WIN64
 
+        void loadDLL();
+        //void freeDll();
+
         error_status_t __stdcall testIfRunning_impl();
         error_status_t __stdcall speakText_impl(const wchar_t* text);
         error_status_t __stdcall cancelSpeech_impl();
@@ -42,9 +45,10 @@ namespace nvdll {
     {
         /// DLL 完整路径
         extern TCHAR DLL_FULLPATH[MAX_PATH];
-        extern HMODULE dllHandle;
+        //extern HMODULE dllHandle;
 
         bool loadDLL();
+        //void freeDll();
 
         error_status_t __stdcall testIfRunning_impl();
         error_status_t __stdcall speakText_impl(const wchar_t* text);
@@ -62,6 +66,8 @@ namespace nvdll {
     void printDllInfo();
     void saveDllDirPath(HINSTANCE hinstDLL);
     FARPROC loadFunctionPtr(LPCSTR lpProcName);
+
+    void loadDLL();
     void freeDll();
 
     bool IsScreenReaderRunning();
