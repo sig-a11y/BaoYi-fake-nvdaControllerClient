@@ -164,7 +164,8 @@ error_status_t __stdcall nvdll::boy::testIfRunning_impl()
     assert(nullptr != boyCtrlIsReaderRunning);
     bool isRunning = boyCtrlIsReaderRunning();
 
-    return isRunning ? e_bcerr_success : e_bcerr_fail;
+    auto err = isRunning ? e_bcerr_success : e_bcerr_fail;
+    return convertBoyCtrlError(err);
 }
 
 /**
