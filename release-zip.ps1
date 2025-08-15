@@ -135,8 +135,8 @@ try {
     exit 1
 }
 
-# 暂停以便查看结果
-if ($Host.Name -eq "ConsoleHost") {
-    Write-Host "`n按任意键退出..." -ForegroundColor Gray
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-}
+# # 暂停以便查看结果
+# if ($Host.Name -eq "ConsoleHost") {
+#     Write-Host "`n按任意键退出..." -ForegroundColor Gray
+#     $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+# }

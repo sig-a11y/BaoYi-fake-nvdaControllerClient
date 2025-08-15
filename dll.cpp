@@ -27,17 +27,16 @@ namespace nvdll {
     void printDllInfo()
     {
         spdlog::info("BaoYi-fake-nvdaControllerClient");
-        spdlog::info("Github URL:  https://github.com/sig-a11y/BaoYi-fake-nvdaControllerClient");
-        spdlog::info("Author: inkydragon @ github");
+        spdlog::info("  Github URL:  https://github.com/sig-a11y/BaoYi-fake-nvdaControllerClient");
+        spdlog::info("  Author: inkydragon @ github");
+
+        // DLL 接口信息
         spdlog::info("DLL Compiled at: {} {}", __DATE__, __TIME__);
-
-        // 接口信息
-        spdlog::info("NVDA Client API Version: {}", nvdll::NVDA_API_VERSION);
-
+        spdlog::info("  NVDA Client API Version: {}", nvdll::NVDA_API_VERSION);
 #   ifdef FAKE_NVDA_ZDSR
-        spdlog::info(L"ZDSR Dll API Version: {}", zdsr_api::DLL_VERSION);
+        spdlog::info(L"  ZDSR Dll API Version: {}", zdsr_api::DLL_VERSION);
 #   else
-        spdlog::info(L"BaoYi Dll API Version: {}", boysr_api::DLL_VERSION);
+        spdlog::info(L"  BaoYi Dll API Version: {}", boysr_api::DLL_VERSION);
 #   endif
     }
 
@@ -47,14 +46,15 @@ namespace nvdll {
      */
     void saveDllDirPath(HINSTANCE hinstDLL)
     {
+        spdlog::info(L"Get DLL Path...");
+
         /// DLL 路径
         TCHAR DLL_PATH[MAX_PATH];
         // 获取 DLL 完整路径
         GetModuleFileName(hinstDLL, DLL_PATH, MAX_PATH);
 
         // -- 打印完整路径
-        
-        spdlog::info(L"DLL_PATH={}", DLL_PATH);
+        spdlog::debug(L"  NVDA DLL Path:\t{}", DLL_PATH);
 
         // -- 拆分路径
         std::wstring filename;
@@ -74,15 +74,15 @@ namespace nvdll {
         // 拼接文件夹路径
         _wmakepath_s(DLL_DIR_PATH, disk.data(), dirname.data(), NULL, NULL);
         // 打印文件夹路径
-        spdlog::info(L"DLL_DIR_PATH={}", DLL_DIR_PATH);
+        spdlog::debug(L"  DLL DIR PATH:\t{}", DLL_DIR_PATH);
 
         // -- 拼接 DLL 完整路径
 #   ifdef FAKE_NVDA_ZDSR
         StringCchPrintfW(zdsr::DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, zdsr_api::DLL_NAME);
-        spdlog::info(L"DLL fullpath={}", zdsr::DLL_FULLPATH);
+        spdlog::info(L"  SR DLL path:\t{}", zdsr::DLL_FULLPATH);
 #   else
         StringCchPrintfW(boy::BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, boysr_api::DLL_NAME);
-        spdlog::info(L"DLL fullpath={}", boy::BOY_DLL_FULLPATH);
+        spdlog::info(L"  SR DLL path:\t{}", boy::BOY_DLL_FULLPATH);
 #   endif
     }
 
