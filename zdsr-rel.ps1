@@ -62,27 +62,27 @@ try {
     }
 
     # 3. 复制 x86 文件
-    # Write-Host "`n[3/6] 复制 x86 文件..." -ForegroundColor Cyan
+    Write-Host "`n[3/6] 复制 x86 文件..." -ForegroundColor Cyan
     
-    # $x86Files = @{
-    #     "nvdaCfg.ini" = "nvdaCfg.ini"
-    #     "zdsr\ZDSRAPI.ini" = "ZDSRAPI.ini"
-    #     "VS2022\Release\BoyCtrl.dll" = "BoyCtrl.dll"
-    #     "VS2022\Release\nvdaControllerClient.dll" = "nvdaControllerClient.dll"
-    #     "VS2022\Release\nvdaControllerClient32.dll" = "nvdaControllerClient32.dll"
-    # }
+    $x86Files = @{
+        "nvdaCfg.ini" = "nvdaCfg.ini"
+        "zdsr\ZDSRAPI.ini" = "ZDSRAPI.ini"
+        "VS2022\ZDSR-Rel\ZDSRAPI.dll" = "ZDSRAPI.dll"
+        "VS2022\ZDSR-Rel\nvdaControllerClient.dll" = "nvdaControllerClient.dll"
+        "VS2022\ZDSR-Rel\nvdaControllerClient32.dll" = "nvdaControllerClient32.dll"
+    }
     
-    # foreach ($file in $x86Files.GetEnumerator()) {
-    #     $sourcePath = $file.Key
-    #     $targetPath = "$x86Dir\$($file.Value)"
+    foreach ($file in $x86Files.GetEnumerator()) {
+        $sourcePath = $file.Key
+        $targetPath = "$x86Dir\$($file.Value)"
         
-    #     if (Test-Path $sourcePath) {
-    #         Copy-Item -Path $sourcePath -Destination $targetPath -Force
-    #         Write-Host "  ✓ $sourcePath -> $targetPath" -ForegroundColor Green
-    #     } else {
-    #         Write-Warning "  ✗ 源文件不存在: $sourcePath"
-    #     }
-    # }
+        if (Test-Path $sourcePath) {
+            Copy-Item -Path $sourcePath -Destination $targetPath -Force
+            Write-Host "  ✓ $sourcePath -> $targetPath" -ForegroundColor Green
+        } else {
+            Write-Warning "  ✗ 源文件不存在: $sourcePath"
+        }
+    }
 
     # 4. 复制整个 nvda2zdsr 文件夹到带时间戳的目录
     Write-Host "`n[4/6] 创建带时间戳的发布目录..." -ForegroundColor Cyan
