@@ -1,8 +1,8 @@
-# BaoYi-fake-nvda
+# NVDA Client Bridge
 
-> A fake `nvdaControllerClient.dll`, but take BaoYi as its backend.
+> A fake `nvdaControllerClient.dll`, but take BoyPCReader and ZDSR as its backend.
 
-让 `nvdaControllerClient.dll` 对接保益读屏
+让 `nvdaControllerClient.dll` 对接保益、争渡读屏。
 
 ## 背景
 
@@ -44,7 +44,8 @@ NVDA 是一款开源的读屏软件，很多国外的软件、游戏会对接它
 > All rights reserved
 > 保留所有权利
 
-- `baoyi-dll/` 文件夹下的除 `.md` 文件外，所有文件都归属保益读屏所有。
+- `baoyi-dll/` 文件夹下的所有文件都归属保益读屏所有。
+- `zdsr/` 文件夹下的所有文件都归属争渡读屏所有。
 - `deps/` 文件夹为第三方依赖，各自有独立的版权协议
   - `simpleini`: [MIT](deps/simpleini/LICENCE.txt)
   - `spdlog`: [MIT](deps/spdlog/LICENSE)
