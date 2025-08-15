@@ -1,8 +1,6 @@
 ﻿#pragma once
-
 #ifndef __ZDSR_API__
 #define __ZDSR_API__
-#include <string>
 
 namespace zdsr_api
 {

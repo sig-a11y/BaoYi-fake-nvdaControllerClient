@@ -42,7 +42,7 @@
     <ClCompile Include="..\log.cpp">
       <Filter>源文件\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\dll_boy.cpp">
+    <ClCompile Include="..\boy_impl.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\input.cpp">
@@ -87,6 +87,9 @@
       <Filter>头文件\sr</Filter>
     </ClInclude>
     <ClInclude Include="..\zdsr\zdsr.hpp">
+      <Filter>头文件\sr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\baoyi-dll\boysr.hpp">
       <Filter>头文件\sr</Filter>
     </ClInclude>
   </ItemGroup>

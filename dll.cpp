@@ -1,12 +1,14 @@
-﻿#include "nvdll_impl.h" // API 导出
-#include "dll.hpp" // 项目内导出
-#include "zdsr.hpp"
+﻿#include "dll.hpp" // 项目内导出
+#include "nvdll_impl.h" // API 导出
 // -- [sys] win
 #include <stdlib.h> // _wsplitpath_s, _wmakepath_s
 #include <strsafe.h> // StringCchPrintf
 #include <sstream> // stringstream
 #include <string> // wstring
 #include <vector> // vector
+// -- 3rd
+#include "boysr.hpp"
+#include "zdsr.hpp"
 // -- [proj]
 #include "log.hpp" // nvdll::log::; DLOG_F
 
@@ -30,12 +32,12 @@ namespace nvdll {
         spdlog::info("DLL Compiled at: {} {}", __DATE__, __TIME__);
 
         // 接口信息
-        spdlog::info("NVDA Client API Version: {}", nvdll::boy::NVDA_API_VERSION);
+        spdlog::info("NVDA Client API Version: {}", nvdll::NVDA_API_VERSION);
 
 #   ifdef FAKE_NVDA_ZDSR
         spdlog::info(L"ZDSR Dll API Version: {}", zdsr_api::DLL_VERSION);
 #   else
-        spdlog::info("BaoYi Dll API Version: {}", nvdll::boy::BOY_DLL_VERSION);
+        spdlog::info(L"BaoYi Dll API Version: {}", boysr_api::DLL_VERSION);
 #   endif
     }
 
@@ -79,7 +81,7 @@ namespace nvdll {
         StringCchPrintfW(zdsr::DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, zdsr_api::DLL_NAME);
         spdlog::info(L"DLL fullpath={}", zdsr::DLL_FULLPATH);
 #   else
-        StringCchPrintfW(boy::BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, boy::BOY_DLL_NAME);
+        StringCchPrintfW(boy::BOY_DLL_FULLPATH, MAX_PATH, L"%s\\%s", DLL_DIR_PATH, boysr_api::DLL_NAME);
         spdlog::info(L"DLL fullpath={}", boy::BOY_DLL_FULLPATH);
 #   endif
     }

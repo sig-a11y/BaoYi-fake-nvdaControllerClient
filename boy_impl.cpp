@@ -1,34 +1,37 @@
-﻿#include "nvdll_impl.h" // API 导出
-#include "dll.hpp" // 项目内导出
+﻿#include "dll.hpp" // 项目内导出
+#include "nvdll_impl.h" // API 导出
 // -- [sys] win 
 #include <sstream> // stringstream
 #include <cassert> // assert
 #include <iostream> // wcout
 // -- [3rd]
-#include "BoyCtrl.h" // 保益 DLL 接口导入
+#include "boysr.hpp" // 保益 DLL 接口导入
 // -- [proj]
 #include "log.hpp" // nvdll::log::; DLOG_F
 #include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
 #include "input.hpp"
 
-
-#pragma region 局部变量定义
-static BoyCtrlInitializeFunc boyCtrlInitialize;
-static BoyCtrlUninitializeFunc boyCtrlUninitialize;
-static BoyCtrlSpeakFunc boyCtrlSpeak;
-static BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
-static BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
-static BoyCtrlIsReaderRunningFunc boyCtrlIsReaderRunning;
-static BoyCtrlSetAnyKeyStopSpeakingFunc boyCtrlSetAnyKeyStopSpeaking;
-#pragma region
-
+using namespace boysr_api;
 
 namespace nvdll 
 {
 namespace boy
 {
+    /// 保益 DLL 输出日志名称。日志放在当前工作目录
+    constexpr LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
+
     /// 保益 DLL 完整路径
     TCHAR BOY_DLL_FULLPATH[MAX_PATH];
+
+#pragma region 局部变量定义
+    BoyCtrlInitializeFunc boyCtrlInitialize;
+    BoyCtrlUninitializeFunc boyCtrlUninitialize;
+    BoyCtrlSpeakFunc boyCtrlSpeak;
+    BoyCtrlStopSpeakingFunc boyCtrlStopSpeaking;
+    BoyCtrlPauseScreenReaderFunc boyCtrlPauseScreenReader;
+    BoyCtrlIsReaderRunningFunc boyCtrlIsReaderRunning;
+    BoyCtrlSetAnyKeyStopSpeakingFunc boyCtrlSetAnyKeyStopSpeaking;
+#pragma region
 
     /// 加载 DLL 及导入函数
     bool loadBaoYiDll()
@@ -47,13 +50,13 @@ namespace boy
         if (nullptr == dllHandle)
         {
             spdlog::info(L"[loadBaoYiDll] trying to load dll: {}", BOY_DLL_FULLPATH);
-            dllHandle = LoadLibrary(BOY_DLL_NAME);
+            dllHandle = LoadLibrary(DLL_NAME);
             SPDLOG_DEBUG(L"[loadBaoYiDll]   dllHandle={}", (void*)dllHandle);
         }
         // 检查 DLL 是否成功加载
         if (!dllHandle)
         {
-            spdlog::error(L"[loadBaoYiDll] Failed to load DLL '{}'. 尝试加载 DLL 失败。", BOY_DLL_NAME);
+            spdlog::error(L"[loadBaoYiDll] Failed to load DLL '{}'. 尝试加载 DLL 失败。", DLL_NAME);
             spdlog::error(L"[loadBaoYiDll] GetLastError={}", GetLastError());
             return EXIT_FAILURE;
         }
@@ -117,18 +120,6 @@ namespace boy
 #pragma region nvdll:: 导出
 
     /** 【DLL 内部函数】
-     * @brief 获取读屏器状态
-     * @param -
-     * @return 返回读屏是否在运行
-     */
-    bool IsScreenReaderRunning()
-    {
-        // NOTE: 调用者确保 DLL 已经初始化
-        assert(nullptr != boyCtrlIsReaderRunning);
-        return boyCtrlIsReaderRunning();
-    }
-
-    /** 【DLL 内部函数】
      * @brief 打断并终止读屏输出
      * @param [全局变量] nvdll::ini::SPEAK_WITH_SLAVE 
      * @return 调用状态码
@@ -136,8 +127,8 @@ namespace boy
     error_status_t StopSpeaking()
     {
         // NOTE: 调用者确保 DLL 已经初始化
-        assert(nullptr != boyCtrlStopSpeaking);
-        return boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
+        assert(nullptr != nvdll::boy::boyCtrlStopSpeaking);
+        return nvdll::boy::boyCtrlStopSpeaking(nvdll::ini::SPEAK_WITH_SLAVE);
     }
 #pragma endregion
 } // nvdll::

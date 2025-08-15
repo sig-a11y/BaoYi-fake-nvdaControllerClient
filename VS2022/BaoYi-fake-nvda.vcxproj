@@ -29,7 +29,7 @@
   <ItemGroup>
     <ClCompile Include="..\deps\simpleini\ConvertUTF.c" />
     <ClCompile Include="..\dll.cpp" />
-    <ClCompile Include="..\dll_boy.cpp" />
+    <ClCompile Include="..\boy_impl.cpp" />
     <ClCompile Include="..\ini.cpp" />
     <ClCompile Include="..\input.cpp" />
     <ClCompile Include="..\log.cpp" />
@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\baoyi-dll\BoyCtrl.h" />
+    <ClInclude Include="..\baoyi-dll\boysr.hpp" />
     <ClInclude Include="..\deps\spdlog\include\spdlog\spdlog.h" />
     <ClInclude Include="..\deps\spdlog\include\spdlog\tweakme.h" />
     <ClInclude Include="..\input.hpp" />

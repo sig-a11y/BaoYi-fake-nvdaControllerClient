@@ -5,27 +5,12 @@
 #include <wtypes.h> // LPCSTR; LPCWSTR; TCHAR
 #include <minwindef.h> // HINSTANCE
 
-
 namespace nvdll {
-#pragma region 常量定义
+
     namespace boy
     {
         /// 保益 DLL 完整路径
         extern TCHAR BOY_DLL_FULLPATH[MAX_PATH];
-
-        /// 保益 DLL 版本
-        constexpr LPCSTR BOY_DLL_VERSION = "v1.7";
-
-        /// NVDA 接口版本
-        constexpr LPCSTR NVDA_API_VERSION = "v2.0";
-
-#ifdef _WIN64
-        /// 保益 DLL 文件名
-        constexpr LPCWSTR BOY_DLL_NAME = L"BoyCtrl-x64.dll";
-#else
-        /// 保益 DLL 文件名
-        constexpr LPCWSTR BOY_DLL_NAME = L"BoyCtrl.dll";
-#endif // def _WIN64
 
         void loadDLL();
         //void freeDll();
@@ -34,9 +19,6 @@ namespace nvdll {
         error_status_t __stdcall speakText_impl(const wchar_t* text);
         error_status_t __stdcall cancelSpeech_impl();
     } // nvdll::boy::
-
-    /// 保益 DLL 输出日志名称。日志放在当前工作目录
-    constexpr LPCWSTR DLL_LOG_NAME = L"boyCtrl-debug.log";
 
     /// <summary>
     /// 争渡读屏 ZDSR 的接口定义
@@ -54,7 +36,9 @@ namespace nvdll {
         error_status_t __stdcall speakText_impl(const wchar_t* text);
         error_status_t __stdcall cancelSpeech_impl();
     }
-#pragma region
+
+    /// NVDA 接口版本
+    constexpr LPCSTR NVDA_API_VERSION = "v2.0";
 
 #pragma region 全局变量定义
     /// DLL 所在文件夹路径
@@ -70,7 +54,6 @@ namespace nvdll {
     void loadDLL();
     void freeDll();
 
-    bool IsScreenReaderRunning();
     error_status_t StopSpeaking();
 #pragma region
 } // nvdll::
