@@ -12,7 +12,7 @@ namespace nvdll {
         /// 保益 DLL 完整路径
         extern TCHAR BOY_DLL_FULLPATH[MAX_PATH];
 
-        void loadDLL();
+        bool loadDLL();
         //void freeDll();
 
         error_status_t __stdcall testIfRunning_impl();
