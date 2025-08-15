@@ -1,15 +1,12 @@
 ﻿#include "nvdll_impl.h" // API 导出
 #include "dll.hpp" // 项目内导出
 // -- [sys] win 
-#include <sstream> // stringstream
 #include <cassert> // assert
-#include <iostream> // wcout
 // -- [3rd]
 #include "zdsr.hpp"
 // -- [proj]
 #include "log.hpp" // nvdll::log::; DLOG_F
 #include "ini.hpp" // ini:: loadIni; SPEAK_WITH_SLAVE, SPEAK_APPEND, SPEAK_ALLOW_BREAK
-#include "input.hpp"
 
 namespace nvdll
 {
@@ -28,8 +25,6 @@ namespace zdsr
     /// 加载 DLL 及导入函数
     bool loadDLL()
     {
-        std::stringstream eout;
-
         // -- 加载 DLL
         // 使用完整路径加载：DLL 和 nvda 放在一起
         if (nullptr == dllHandle)
@@ -106,7 +101,7 @@ namespace zdsr
 
         int state = GetSpeakState();
         // 1:版本不匹配; 2:ZDSR没有运行或没有授权; 3:正在朗读; 4:没有朗读
-        bool isRunning = (state == 4) || (state == 4);
+        bool isRunning = (state == 3) || (state == 4);
 
         return isRunning ? EXIT_SUCCESS : EXIT_FAILURE;
     }
